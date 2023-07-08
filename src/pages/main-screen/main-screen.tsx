@@ -17,7 +17,7 @@ const CARD_COUNT = 6;
 function MainScreen({offersCount}: MainScreenProps): JSX.Element {
   return (
     <div className="page page--gray page--main">
-      <Header theme={'withUserBlock'} />
+      <Header isUserBlock />
 
       <main className="page__main page__main--index">
         <h1 className="visually-hidden">Cities</h1>

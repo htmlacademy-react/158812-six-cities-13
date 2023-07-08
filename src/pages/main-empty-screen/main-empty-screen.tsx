@@ -3,7 +3,7 @@ import Header from '../../components/header/header';
 function MainEmptyScreen(): JSX.Element {
   return (
     <div className="page page--gray page--main">
-      <Header theme={'withUserBlock'} />
+      <Header isUserBlock />
 
       <main className="page__main page__main--index page__main--index-empty">
         <h1 className="visually-hidden">Cities</h1>

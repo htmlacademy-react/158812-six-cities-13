@@ -4,7 +4,7 @@ import Header from '../../components/header/header';
 function FavoritesScreen(): JSX.Element {
   return (
     <div className="page">
-      <Header theme={'withUserBlock'} />
+      <Header isUserBlock />
 
       <main className="page__main page__main--favorites">
         <div className="page__favorites-container container">

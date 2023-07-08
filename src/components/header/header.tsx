@@ -2,10 +2,10 @@ import Logo from '../logo/logo';
 import UserBlock from '../user-block/user-block';
 
 type HeaderProps = {
-  theme: 'withUserBlock' | 'withoutUserBlock';
+  isUserBlock?: boolean;
 }
 
-function Header({theme}: HeaderProps): JSX.Element {
+function Header({isUserBlock}: HeaderProps): JSX.Element {
   return (
     <header className="header">
       <div className="container">
@@ -13,7 +13,7 @@ function Header({theme}: HeaderProps): JSX.Element {
           <div className="header__left">
             <Logo />
           </div>
-          { theme === 'withUserBlock' && <UserBlock />}
+          { isUserBlock && <UserBlock />}
         </div>
       </div>
     </header>

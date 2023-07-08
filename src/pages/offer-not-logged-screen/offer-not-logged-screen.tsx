@@ -4,7 +4,7 @@ import PlaceCard from '../../components/place-card/place-card';
 function OfferNotLoggedScreen(): JSX.Element {
   return (
     <div className="page">
-      <Header theme={'withUserBlock'} />
+      <Header isUserBlock />
 
       <main className="page__main page__main--offer">
         <section className="offer">
