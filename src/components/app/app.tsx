@@ -1,10 +1,10 @@
 import MainScreen from '../../pages/main-screen/main-screen';
 
-type AppScreenProps = {
+type AppProps = {
   offersCount: number;
 }
 
-function App({offersCount}: AppScreenProps): JSX.Element {
+function App({offersCount}: AppProps): JSX.Element {
   return (
     <MainScreen offersCount={offersCount} />
   );
