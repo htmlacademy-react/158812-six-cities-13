@@ -163,7 +163,7 @@ function OfferScreen({offers}: OfferScreenProps): JSX.Element {
                     <div className="reviews__info">
                       <div className="reviews__rating rating">
                         <div className="reviews__stars rating__stars">
-                          <span className="width: 80%"></span>
+                          <span style={{width: '80%'}}/>
                           <span className="visually-hidden">Rating</span>
                         </div>
                       </div>
@@ -184,7 +184,7 @@ function OfferScreen({offers}: OfferScreenProps): JSX.Element {
           <section className="near-places places">
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
             <div className="near-places__list places__list">
-              <OffersList offers={otherOffers} variant={'cities'}/>
+              <OffersList offers={otherOffers} />
             </div>
           </section>
         </div>

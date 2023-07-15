@@ -4,8 +4,20 @@ function ReviewForm(): JSX.Element {
 
   const ratingValues: number[] = [5, 4, 3, 2, 1];
 
-  const [rating, setRating] = useState(0);
-  const [review, setReview] = useState('');
+  const [formData, setFormData] = useState({
+    rating: '',
+    comment: '',
+  });
+
+  const handleInputChange = (evt: React.ChangeEvent<HTMLInputElement>) => {
+    const {value} = evt.target;
+    setFormData({...formData, rating: value});
+  };
+
+  const handleTextareaChange = (evt: React.ChangeEvent<HTMLTextAreaElement>) => {
+    const {value} = evt.target;
+    setFormData({...formData, comment: value});
+  };
 
   return (
     <form className="reviews__form form" action="#" method="post">
@@ -20,13 +32,11 @@ function ReviewForm(): JSX.Element {
                 value={score}
                 id={`${score}-stars`}
                 type="radio"
-                checked={score === rating}
-                onChange = {(evt) => setRating(Number(evt.target.value))}
+                onChange={handleInputChange}
               />
               <label
                 htmlFor={`${score}-stars`}
                 className="reviews__rating-label form__rating-label"
-                title="good"
               >
                 <svg className="form__star-image" width={37} height={33}>
                   <use xlinkHref="#icon-star"></use>
@@ -41,8 +51,8 @@ function ReviewForm(): JSX.Element {
         name="review"
         id="review"
         placeholder="Tell how was your stay, what you like and what can be improved"
-        value={review}
-        onChange={(evt) => setReview(evt.target.value)}
+        onChange={handleTextareaChange}
+        value={formData.comment}
       />
       <div className="reviews__button-wrapper">
         <p className="reviews__help">
