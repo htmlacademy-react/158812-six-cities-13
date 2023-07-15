@@ -1,5 +1,6 @@
 import {Offer} from '../../types/offers';
 import {Link} from 'react-router-dom';
+import { calcRating } from '../../utils/utils';
 
 type PlaceCardProps = {
   offer: Offer;
@@ -7,9 +8,6 @@ type PlaceCardProps = {
   setActive: React.Dispatch<React.SetStateAction<string | undefined>>;
   variant: 'cities' | 'favorites';
 }
-
-const COUNT_STARS = 5;
-const calcRating = (rating: number) => `${Math.round(rating) / COUNT_STARS * 100}%`;
 
 function PlaceCard({offer, setActive, activeCard, variant}: PlaceCardProps): JSX.Element {
 
