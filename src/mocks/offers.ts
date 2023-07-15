@@ -20,8 +20,8 @@ export const offers: Offer[] = [
       zoom: 8
     },
     isFavorite: false,
-    isPremium: false,
-    rating: 4,
+    isPremium: true,
+    rating: 5,
     previewImage: 'img/apartment-01.jpg'
   },
   {
@@ -42,7 +42,7 @@ export const offers: Offer[] = [
       longitude: 4.673877537499948,
       zoom: 8
     },
-    isFavorite: false,
+    isFavorite: true,
     isPremium: false,
     rating: 4,
     previewImage: 'img/apartment-02.jpg'
@@ -67,7 +67,7 @@ export const offers: Offer[] = [
     },
     isFavorite: false,
     isPremium: false,
-    rating: 4,
+    rating: 3,
     previewImage: 'img/apartment-03.jpg'
   },
   {
@@ -90,7 +90,7 @@ export const offers: Offer[] = [
     },
     isFavorite: false,
     isPremium: false,
-    rating: 4,
+    rating: 2,
     previewImage: 'img/apartment-01.jpg'
   },
 ];
