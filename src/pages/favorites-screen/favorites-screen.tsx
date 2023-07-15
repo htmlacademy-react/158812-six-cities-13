@@ -52,7 +52,6 @@ function FavoritesScreen({offers}: FavoritesScreenProps): JSX.Element {
           </section>
         </div>
       </main>
-
       <Footer />
     </div>
   );
