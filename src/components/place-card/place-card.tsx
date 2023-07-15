@@ -5,12 +5,13 @@ type PlaceCardProps = {
   offer: Offer;
   activeCard: string | undefined;
   setActive: React.Dispatch<React.SetStateAction<string | undefined>>;
+  variant: 'cities' | 'favorites';
 }
 
 const COUNT_STARS = 5;
 const calcRating = (rating: number) => `${Math.round(rating) / COUNT_STARS * 100}%`;
 
-function PlaceCard({offer, setActive, activeCard}: PlaceCardProps): JSX.Element {
+function PlaceCard({offer, setActive, activeCard, variant}: PlaceCardProps): JSX.Element {
 
   const handleMouseEnter = () => {
     setActive(offer.id);
@@ -21,14 +22,24 @@ function PlaceCard({offer, setActive, activeCard}: PlaceCardProps): JSX.Element 
   };
 
   return (
-    <article className={`cities__card place-card ${activeCard === offer.id ? 'place-card--active' : ''}`} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
+    <article
+      className={`${variant}__card place-card ${activeCard === offer.id ? 'place-card--active' : ''}`}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+    >
       {offer.isPremium === true &&
         <div className="place-card__mark">
           <span>Premium</span>
         </div>}
-      <div className="cities__image-wrapper place-card__image-wrapper">
+      <div className={`${variant}__image-wrapper place-card__image-wrapper`}>
         <Link to={`/offer/:${offer.id}`}>
-          <img className="place-card__image" src={offer.previewImage} width="260" height="200" alt={offer.title}/>
+          <img
+            className="place-card__image"
+            src={offer.previewImage}
+            width={variant === 'cities' ? '250' : '150'}
+            height={variant === 'cities' ? '200' : '110'}
+            alt={offer.title}
+          />
         </Link>
       </div>
       <div className="place-card__info">

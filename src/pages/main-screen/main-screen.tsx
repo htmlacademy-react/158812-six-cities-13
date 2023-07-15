@@ -70,7 +70,7 @@ function MainScreen({offersCount, offers}: MainScreenProps): JSX.Element {
                   <li className="places__option" tabIndex={0}>Top rated first</li>
                 </ul>
               </form>
-              <OffersList offers={offers}/>
+              <OffersList offers={offers} variant={'cities'}/>
             </section>
             <div className="cities__right-section">
               <section className="cities__map map"></section>

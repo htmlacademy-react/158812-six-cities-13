@@ -4,20 +4,22 @@ import { useState } from 'react';
 
 type OffersListProps = {
   offers: Offer[];
+  variant: 'cities' | 'favorites';
 }
 
-function OffersList ({offers}: OffersListProps): JSX.Element {
+function OffersList ({offers, variant}: OffersListProps): JSX.Element {
 
   const [activeCard, setActiveCard] = useState<string | undefined>(undefined);
 
   return (
-    <div className="cities__places-list places__list tabs__content">
+    <div className={`${variant}__places-list places__list tabs__content`}>
       {offers.map((offer) => (
         <PlaceCard
           key={offer.id}
           offer={offer}
           setActive={setActiveCard}
           activeCard={activeCard}
+          variant={variant}
         />
       ))}
     </div>

@@ -30,7 +30,7 @@ export const offers: Offer[] = [
     type: 'private room',
     price: 120,
     city: {
-      name: 'Paris',
+      name: 'Cologne',
       location: {
         latitude: 52.35514938496378,
         longitude: 4.673877537499948,
