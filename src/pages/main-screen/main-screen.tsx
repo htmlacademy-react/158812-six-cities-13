@@ -1,20 +1,13 @@
 import Header from '../../components/header/header';
 import PlaceCard from '../../components/place-card/place-card';
+import {Offer} from '../../types/offers';
 
 type MainScreenProps = {
   offersCount: number;
+  offers: Offer[];
 }
 
-function somePlaceCards(counterCard: number) {
-  const cards = [];
-  for (let i = 0; i < counterCard; i++) {
-    cards.push(<PlaceCard key = {i}/>);
-  }
-  return cards;
-}
-const CARD_COUNT = 6;
-
-function MainScreen({offersCount}: MainScreenProps): JSX.Element {
+function MainScreen({offersCount, offers}: MainScreenProps): JSX.Element {
   return (
     <div className="page page--gray page--main">
       <Header isUserBlock />
@@ -78,7 +71,11 @@ function MainScreen({offersCount}: MainScreenProps): JSX.Element {
                 </ul>
               </form>
               <div className="cities__places-list places__list tabs__content">
-                {somePlaceCards(CARD_COUNT)}
+                <PlaceCard />
+                <PlaceCard />
+                <PlaceCard />
+                <PlaceCard />
+                <PlaceCard />
               </div>
             </section>
             <div className="cities__right-section">
