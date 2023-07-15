@@ -91,7 +91,7 @@ export const offers: Offer[] = [
     isFavorite: false,
     isPremium: false,
     rating: 4,
-    previewImage: 'img/apartment-04.jpg'
+    previewImage: 'img/apartment-01.jpg'
   },
 ];
 
