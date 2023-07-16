@@ -3,7 +3,6 @@ import Footer from '../../components/footer/footer';
 import Header from '../../components/header/header';
 import PlaceCard from '../../components/place-card/place-card';
 import {Offer} from '../../types/offers';
-import { useState } from 'react';
 
 type FavoritesScreenProps = {
   offers: Offer[];
@@ -12,8 +11,6 @@ type FavoritesScreenProps = {
 function FavoritesScreen({offers}: FavoritesScreenProps): JSX.Element {
 
   const cities = Array.from(new Set(offers.map((offer) => offer.city.name)));
-
-  const [activeCard, setActiveCard] = useState<string | undefined>(undefined);
 
   return (
     <div className="page">
@@ -39,8 +36,6 @@ function FavoritesScreen({offers}: FavoritesScreenProps): JSX.Element {
                       <Fragment key={offer.id}>
                         <PlaceCard
                           offer={offer}
-                          setActive={setActiveCard}
-                          activeCard={activeCard}
                           variant={'favorites'}
                         />
                       </Fragment>

@@ -1,22 +1,23 @@
 import {Offer} from '../../types/offers';
 import {Link} from 'react-router-dom';
 import { calcRating } from '../../utils/utils';
+import { useState } from 'react';
 
 type PlaceCardProps = {
   offer: Offer;
-  activeCard: string | undefined;
-  setActive: React.Dispatch<React.SetStateAction<string | undefined>>;
   variant: 'cities' | 'favorites';
 }
 
-function PlaceCard({offer, setActive, activeCard, variant}: PlaceCardProps): JSX.Element {
+function PlaceCard({offer, variant}: PlaceCardProps): JSX.Element {
+
+  const [activeCard, setActiveCard] = useState<string | undefined>(undefined);
 
   const handleMouseEnter = () => {
-    setActive(offer.id);
+    setActiveCard(offer.id);
   };
 
   const handleMouseLeave = () => {
-    setActive(undefined);
+    setActiveCard(undefined);
   };
 
   return (
