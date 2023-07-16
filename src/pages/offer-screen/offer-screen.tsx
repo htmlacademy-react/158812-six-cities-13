@@ -5,6 +5,7 @@ import ReviewForm from '../../components/review-form/review-form';
 import {Offer} from '../../types/offers';
 import NotFoundScreen from '../not-found-screen/not-found-screen';
 import { calcRating } from '../../utils/utils';
+import cn from 'classnames';
 
 type OfferScreenProps = {
   offers: Offer[];
@@ -52,7 +53,7 @@ function OfferScreen({offers}: OfferScreenProps): JSX.Element {
           </div>
           <div className="offer__container container">
             <div className="offer__wrapper">
-              {currentOffer.isPremium === true &&
+              {currentOffer.isPremium &&
               <div className="offer__mark">
                 <span>Premium</span>
               </div>}
@@ -61,7 +62,11 @@ function OfferScreen({offers}: OfferScreenProps): JSX.Element {
                   {currentOffer.title}
                 </h1>
                 <button
-                  className={`offer__bookmark-button ${currentOffer.isFavorite ? 'offer__bookmark-button--active' : '' } button`}
+                  className={cn(
+                    'offer__bookmark-button',
+                    'button',
+                    {'offer__bookmark-button--active': currentOffer.isFavorite},
+                  )}
                 >
                   <svg className="offer__bookmark-icon" width="31" height="33">
                     <use xlinkHref="#icon-bookmark"></use>
