@@ -1,18 +1,78 @@
-function PlaceCard(): JSX.Element {
+import {Offer} from '../../types/offers';
+import {Link} from 'react-router-dom';
+import { calcRating, getCapitalizeFirstLetter } from '../../utils/utils';
+import { useState } from 'react';
+import cn from 'classnames';
+
+type PlaceCardProps = {
+  offer: Offer;
+  variant: 'cities' | 'favorites';
+}
+
+function PlaceCard({offer, variant}: PlaceCardProps): JSX.Element {
+
+  const [activeCard, setActiveCard] = useState<string | null>(null);
+
+  const handleMouseEnter = () => {
+    setActiveCard(offer.id);
+  };
+
+  const handleMouseLeave = () => {
+    setActiveCard(null);
+  };
+
   return (
-    <article className="cities__card place-card">
-      <div className="cities__image-wrapper place-card__image-wrapper">
-        <a href="#">
-          <img className="place-card__image" src="img/room.jpg" width="260" height="200" alt="Place image"/>
-        </a>
+    <article
+      className={cn(
+        [`${variant}__card`],
+        'place-card',
+        {'place-card--active': activeCard === offer.id},
+      )}
+      onMouseEnter={() => {
+        if (variant === 'cities') {
+          handleMouseEnter();
+        }
+      }}
+      onMouseLeave={() => {
+        if (variant === 'cities') {
+          handleMouseLeave();
+        }
+      }}
+    >
+      {offer.isPremium &&
+        <div className="place-card__mark">
+          <span>Premium</span>
+        </div>}
+      <div
+        className={cn(
+          [`${variant}__image-wrapper`],
+          'place-card__image-wrapper'
+        )}
+      >
+        <Link to={`/offer/:${offer.id}`}>
+          <img
+            className="place-card__image"
+            src={offer.previewImage}
+            width={variant === 'cities' ? '260' : '150'}
+            height={variant === 'cities' ? '200' : '110'}
+            alt={offer.title}
+          />
+        </Link>
       </div>
       <div className="place-card__info">
         <div className="place-card__price-wrapper">
           <div className="place-card__price">
-            <b className="place-card__price-value">&euro;80</b>
+            <b className="place-card__price-value">&euro;{offer.price}</b>
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
-          <button className="place-card__bookmark-button place-card__bookmark-button--active button" type="button">
+          <button
+            className={cn(
+              'place-card__bookmark-button',
+              'button',
+              {'place-card__bookmark-button--active': offer.isFavorite},
+            )}
+            type="button"
+          >
             <svg className="place-card__bookmark-icon" width="18" height="19">
               <use xlinkHref="#icon-bookmark"></use>
             </svg>
@@ -21,14 +81,14 @@ function PlaceCard(): JSX.Element {
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
-            <span style={{width: '80%'}}></span>
+            <span style={{ width: calcRating(offer.rating) }} />
             <span className="visually-hidden">Rating</span>
           </div>
         </div>
         <h2 className="place-card__name">
-          <a href="#">Wood and stone place</a>
+          <Link to={`/offer/:${offer.id}`}>{offer.title}</Link>
         </h2>
-        <p className="place-card__type">Private room</p>
+        <p className="place-card__type">{getCapitalizeFirstLetter(offer.type)}</p>
       </div>
     </article>
   );
