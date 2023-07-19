@@ -1,4 +1,3 @@
-import { Fragment } from 'react';
 import Footer from '../../components/footer/footer';
 import Header from '../../components/header/header';
 import PlaceCard from '../../components/place-card/place-card';
@@ -33,12 +32,11 @@ function FavoritesScreen({offers}: FavoritesScreenProps): JSX.Element {
                   </div>
                   <div className="favorites__places">
                     {offers.filter((offer) => offer.city.name === city).map((offer) => (
-                      <Fragment key={offer.id}>
-                        <PlaceCard
-                          offer={offer}
-                          variant={'favorites'}
-                        />
-                      </Fragment>
+                      <PlaceCard
+                        key={offer.id}
+                        offer={offer}
+                        variant={'favorites'}
+                      />
                     ))}
                   </div>
                 </li>

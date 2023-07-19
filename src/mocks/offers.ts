@@ -44,7 +44,7 @@ export const offers: Offer[] = [
     },
     isFavorite: true,
     isPremium: false,
-    rating: 4,
+    rating: 4.5,
     previewImage: 'img/apartment-02.jpg'
   },
   {
@@ -67,7 +67,7 @@ export const offers: Offer[] = [
     },
     isFavorite: false,
     isPremium: false,
-    rating: 3,
+    rating: 3.25,
     previewImage: 'img/apartment-03.jpg'
   },
   {
@@ -90,7 +90,7 @@ export const offers: Offer[] = [
     },
     isFavorite: false,
     isPremium: false,
-    rating: 2,
+    rating: 2.5,
     previewImage: 'img/apartment-01.jpg'
   },
 ];

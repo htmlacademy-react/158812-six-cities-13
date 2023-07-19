@@ -1,6 +1,6 @@
 import {Offer} from '../../types/offers';
 import {Link} from 'react-router-dom';
-import { calcRating } from '../../utils/utils';
+import { calcRating, getCapitalizeFirstLetter } from '../../utils/utils';
 import { useState } from 'react';
 import cn from 'classnames';
 
@@ -11,14 +11,14 @@ type PlaceCardProps = {
 
 function PlaceCard({offer, variant}: PlaceCardProps): JSX.Element {
 
-  const [activeCard, setActiveCard] = useState<string | undefined>(undefined);
+  const [activeCard, setActiveCard] = useState<string | null>(null);
 
   const handleMouseEnter = () => {
     setActiveCard(offer.id);
   };
 
   const handleMouseLeave = () => {
-    setActiveCard(undefined);
+    setActiveCard(null);
   };
 
   return (
@@ -28,8 +28,16 @@ function PlaceCard({offer, variant}: PlaceCardProps): JSX.Element {
         'place-card',
         {'place-card--active': activeCard === offer.id},
       )}
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
+      onMouseEnter={() => {
+        if (variant === 'cities') {
+          handleMouseEnter();
+        }
+      }}
+      onMouseLeave={() => {
+        if (variant === 'cities') {
+          handleMouseLeave();
+        }
+      }}
     >
       {offer.isPremium &&
         <div className="place-card__mark">
@@ -80,7 +88,7 @@ function PlaceCard({offer, variant}: PlaceCardProps): JSX.Element {
         <h2 className="place-card__name">
           <Link to={`/offer/:${offer.id}`}>{offer.title}</Link>
         </h2>
-        <p className="place-card__type">{offer.type}</p>
+        <p className="place-card__type">{getCapitalizeFirstLetter(offer.type)}</p>
       </div>
     </article>
   );
