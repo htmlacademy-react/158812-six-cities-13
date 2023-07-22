@@ -1,41 +1,33 @@
 import {Offer} from '../../types/offers';
 import {Link} from 'react-router-dom';
 import { calcRating, getCapitalizeFirstLetter } from '../../utils/utils';
-import { useState } from 'react';
 import cn from 'classnames';
 
 type PlaceCardProps = {
   offer: Offer;
   variant: 'cities' | 'favorites';
+  handleCardMouse: (mousedOffer: Offer | null) => void;
+  handleCardLeave: () => void;
 }
 
-function PlaceCard({offer, variant}: PlaceCardProps): JSX.Element {
-
-  const [activeCard, setActiveCard] = useState<string | null>(null);
-
-  const handleMouseEnter = () => {
-    setActiveCard(offer.id);
-  };
-
-  const handleMouseLeave = () => {
-    setActiveCard(null);
-  };
+function PlaceCard({offer, variant, handleCardMouse, handleCardLeave}: PlaceCardProps): JSX.Element {
 
   return (
     <article
       className={cn(
         [`${variant}__card`],
         'place-card',
-        {'place-card--active': activeCard === offer.id},
       )}
+
       onMouseEnter={() => {
         if (variant === 'cities') {
-          handleMouseEnter();
+          handleCardMouse(offer);
         }
       }}
+
       onMouseLeave={() => {
         if (variant === 'cities') {
-          handleMouseLeave();
+          handleCardLeave();
         }
       }}
     >
