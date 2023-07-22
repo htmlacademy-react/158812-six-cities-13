@@ -99,6 +99,7 @@ function MainScreen({offers}: MainScreenProps): JSX.Element {
                 city={city}
                 points={points}
                 selectedPoint={selectedPoint}
+                variant={'cities'}
               />
             </div>
           </div>
