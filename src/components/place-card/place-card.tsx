@@ -6,11 +6,11 @@ import cn from 'classnames';
 type PlaceCardProps = {
   offer: Offer;
   variant: 'cities' | 'favorites';
-  handleCardMouse: (mousedOffer: Offer | null) => void;
-  handleCardLeave: () => void;
+  handleCardMouseEnter: (mousedOffer: Offer | null) => void;
+  handleCardLeaveEnter: () => void;
 }
 
-function PlaceCard({offer, variant, handleCardMouse, handleCardLeave}: PlaceCardProps): JSX.Element {
+function PlaceCard({offer, variant, handleCardMouseEnter, handleCardLeaveEnter}: PlaceCardProps): JSX.Element {
 
   return (
     <article
@@ -21,13 +21,13 @@ function PlaceCard({offer, variant, handleCardMouse, handleCardLeave}: PlaceCard
 
       onMouseEnter={() => {
         if (variant === 'cities') {
-          handleCardMouse(offer);
+          handleCardMouseEnter(offer);
         }
       }}
 
       onMouseLeave={() => {
         if (variant === 'cities') {
-          handleCardLeave();
+          handleCardLeaveEnter();
         }
       }}
     >

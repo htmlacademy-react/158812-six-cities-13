@@ -15,14 +15,14 @@ function MainScreen({offers}: MainScreenProps): JSX.Element {
 
   const [selectedPoint, setSelectedPoint] = useState<Point | undefined>(undefined);
 
-  const handleCardMouse = (mousedOffer: Offer | null) => {
+  const handleCardMouseEnter = (mousedOffer: Offer | null) => {
     const currentOffer = offers.find((offer) =>
       offer.id === mousedOffer?.id,
     );
     setSelectedPoint(currentOffer?.location);
   };
 
-  const handleCardLeave = () => {
+  const handleCardLeaveEnter = () => {
     setSelectedPoint(undefined);
   };
 
@@ -90,8 +90,8 @@ function MainScreen({offers}: MainScreenProps): JSX.Element {
               </form>
               <OffersList
                 offers={offers}
-                handleCardMouse={handleCardMouse}
-                handleCardLeave={handleCardLeave}
+                handleCardMouseEnter={handleCardMouseEnter}
+                handleCardLeaveEnter={handleCardLeaveEnter}
               />
             </section>
             <div className="cities__right-section">

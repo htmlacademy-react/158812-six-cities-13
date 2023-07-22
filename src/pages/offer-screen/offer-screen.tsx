@@ -214,8 +214,8 @@ function OfferScreen({offers}: OfferScreenProps): JSX.Element {
             <div className="near-places__list places__list">
               <OffersList
                 offers={otherOffers}
-                handleCardMouse={handleCardMouse}
-                handleCardLeave={handleCardLeave}
+                handleCardMouseEnter={handleCardMouse}
+                handleCardLeaveEnter={handleCardLeave}
               />
             </div>
           </section>

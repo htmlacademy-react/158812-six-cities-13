@@ -3,11 +3,11 @@ import {Offer} from '../../types/offers';
 
 type OffersListProps = {
   offers: Offer[];
-  handleCardMouse: (mousedOffer: Offer | null) => void;
-  handleCardLeave: () => void;
+  handleCardMouseEnter: (mousedOffer: Offer | null) => void;
+  handleCardLeaveEnter: () => void;
 }
 
-function OffersList ({offers, handleCardMouse, handleCardLeave}: OffersListProps): JSX.Element {
+function OffersList ({offers, handleCardMouseEnter, handleCardLeaveEnter}: OffersListProps): JSX.Element {
 
   return (
     <div className="cities__places-list places__list tabs__content">
@@ -16,8 +16,8 @@ function OffersList ({offers, handleCardMouse, handleCardLeave}: OffersListProps
           key={offer.id}
           offer={offer}
           variant={'cities'}
-          handleCardMouse={handleCardMouse}
-          handleCardLeave={handleCardLeave}
+          handleCardMouseEnter={handleCardMouseEnter}
+          handleCardLeaveEnter={handleCardLeaveEnter}
         />
       ))}
     </div>
