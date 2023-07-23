@@ -1,6 +1,6 @@
 import {Offer} from '../../types/offers';
 import {Link} from 'react-router-dom';
-import { calcRating} from '../../utils/utils';
+import {calcRating} from '../../utils/utils';
 import cn from 'classnames';
 import {TypeOffer} from '../../const';
 

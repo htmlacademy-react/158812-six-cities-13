@@ -19,7 +19,7 @@ export const URL_MARKER_CURRENT =
 
 export enum TypeOffer {
   apartment = 'Apartment',
-  room = 'Private room',
+  room = 'Private Room',
   house = 'House',
   hotel = 'Hotel',
 }
