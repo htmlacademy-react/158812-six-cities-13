@@ -41,7 +41,7 @@ export const offers: Offer[] = [
   {
     id: '7af6f711-c28d-4121-82cd-e0b462a27f00',
     title: 'Beautiful & luxurious studio at great location',
-    type: 'apartment',
+    type: 'room',
     price: 120,
     city: {
       name: 'Amsterdam',
@@ -78,7 +78,7 @@ export const offers: Offer[] = [
   {
     id: '6af9f711-c28d-4121-82cd-e0b462a27f00',
     title: 'Beautiful & luxurious studio at great location',
-    type: 'apartment',
+    type: 'house',
     price: 120,
     city: {
       name: 'Amsterdam',
@@ -115,7 +115,7 @@ export const offers: Offer[] = [
   {
     id: '6af6f711-c28d-4121-89cd-e0b462a27f00',
     title: 'Beautiful & luxurious studio at great location',
-    type: 'apartment',
+    type: 'hotel',
     price: 120,
     city: {
       name: 'Amsterdam',

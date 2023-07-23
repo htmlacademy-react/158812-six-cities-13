@@ -1,7 +1,8 @@
 import {Offer} from '../../types/offers';
 import {Link} from 'react-router-dom';
-import { calcRating, getCapitalizeFirstLetter } from '../../utils/utils';
+import { calcRating} from '../../utils/utils';
 import cn from 'classnames';
+import {TypeOffer} from '../../const';
 
 type PlaceCardProps = {
   offer: Offer;
@@ -80,7 +81,7 @@ function PlaceCard({offer, variant, handleCardMouseEnter, handleCardLeaveEnter}:
         <h2 className="place-card__name">
           <Link to={`/offer/:${offer.id}`}>{offer.title}</Link>
         </h2>
-        <p className="place-card__type">{getCapitalizeFirstLetter(offer.type)}</p>
+        <p className="place-card__type">{TypeOffer[offer.type]}</p>
       </div>
     </article>
   );

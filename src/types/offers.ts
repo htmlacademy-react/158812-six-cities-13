@@ -1,3 +1,5 @@
+import {TypeOffer} from '../const';
+
 export type Point = {
   latitude: number;
   longitude: number;
@@ -18,7 +20,7 @@ type OfferHost = {
 export type Offer = {
   id: string;
   title: string;
-  type: string;
+  type: keyof typeof TypeOffer;
   price: number;
   city: City;
   location: Point;
