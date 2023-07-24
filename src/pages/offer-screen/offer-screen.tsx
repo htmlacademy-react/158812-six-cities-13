@@ -26,14 +26,14 @@ function OfferScreen({offers}: OfferScreenProps): JSX.Element {
 
   const [selectedPoint, setSelectedPoint] = useState<Point | undefined>(undefined);
 
-  const handleCardMouse = (mousedOffer: Offer | null) => {
+  const handleCardMouseEnter = (mousedOffer: Offer | null) => {
     const currentCardOffer = offers.find((offer) =>
       offer.id === mousedOffer?.id,
     );
     setSelectedPoint(currentCardOffer?.location);
   };
 
-  const handleCardLeave = () => {
+  const handleCardMouseLeave = () => {
     setSelectedPoint(undefined);
   };
 
@@ -214,8 +214,8 @@ function OfferScreen({offers}: OfferScreenProps): JSX.Element {
             <div className="near-places__list places__list">
               <OffersList
                 offers={otherOffers}
-                handleCardMouseEnter={handleCardMouse}
-                handleCardLeaveEnter={handleCardLeave}
+                handleCardMouseEnter={handleCardMouseEnter}
+                handleCardMouseLeave={handleCardMouseLeave}
               />
             </div>
           </section>

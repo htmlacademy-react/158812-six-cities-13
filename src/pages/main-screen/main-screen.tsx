@@ -22,7 +22,7 @@ function MainScreen({offers}: MainScreenProps): JSX.Element {
     setSelectedPoint(currentOffer?.location);
   };
 
-  const handleCardLeaveEnter = () => {
+  const handleCardMouseLeave = () => {
     setSelectedPoint(undefined);
   };
 
@@ -91,7 +91,7 @@ function MainScreen({offers}: MainScreenProps): JSX.Element {
               <OffersList
                 offers={offers}
                 handleCardMouseEnter={handleCardMouseEnter}
-                handleCardLeaveEnter={handleCardLeaveEnter}
+                handleCardMouseLeave={handleCardMouseLeave}
               />
             </section>
             <div className="cities__right-section">

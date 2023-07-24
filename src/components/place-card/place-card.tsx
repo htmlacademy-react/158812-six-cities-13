@@ -8,10 +8,10 @@ type PlaceCardProps = {
   offer: Offer;
   variant: 'cities' | 'favorites';
   handleCardMouseEnter: (mousedOffer: Offer | null) => void;
-  handleCardLeaveEnter: () => void;
+  handleCardMouseLeave: () => void;
 }
 
-function PlaceCard({offer, variant, handleCardMouseEnter, handleCardLeaveEnter}: PlaceCardProps): JSX.Element {
+function PlaceCard({offer, variant, handleCardMouseEnter, handleCardMouseLeave}: PlaceCardProps): JSX.Element {
 
   return (
     <article
@@ -28,7 +28,7 @@ function PlaceCard({offer, variant, handleCardMouseEnter, handleCardLeaveEnter}:
 
       onMouseLeave={() => {
         if (variant === 'cities') {
-          handleCardLeaveEnter();
+          handleCardMouseLeave();
         }
       }}
     >
