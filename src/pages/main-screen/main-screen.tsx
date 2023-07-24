@@ -1,12 +1,31 @@
+import { useState } from 'react';
 import Header from '../../components/header/header';
 import OffersList from '../../components/offers-list/offers-list';
-import {Offer} from '../../types/offers';
+import {Offer, Point} from '../../types/offers';
+import Map from '../../components/map/map';
 
 type MainScreenProps = {
   offers: Offer[];
 }
 
 function MainScreen({offers}: MainScreenProps): JSX.Element {
+
+  const city = offers[0].city;
+  const points = offers.map((offer) => offer.location);
+
+  const [selectedPoint, setSelectedPoint] = useState<Point | undefined>(undefined);
+
+  const handleCardMouseEnter = (mousedOffer: Offer | null) => {
+    const currentOffer = offers.find((offer) =>
+      offer.id === mousedOffer?.id,
+    );
+    setSelectedPoint(currentOffer?.location);
+  };
+
+  const handleCardMouseLeave = () => {
+    setSelectedPoint(undefined);
+  };
+
   return (
     <div className="page page--gray page--main">
       <Header isUserBlock />
@@ -69,10 +88,19 @@ function MainScreen({offers}: MainScreenProps): JSX.Element {
                   <li className="places__option" tabIndex={0}>Top rated first</li>
                 </ul>
               </form>
-              <OffersList offers={offers} />
+              <OffersList
+                offers={offers}
+                handleCardMouseEnter={handleCardMouseEnter}
+                handleCardMouseLeave={handleCardMouseLeave}
+              />
             </section>
             <div className="cities__right-section">
-              <section className="cities__map map"></section>
+              <Map
+                city={city}
+                points={points}
+                selectedPoint={selectedPoint}
+                variant={'cities'}
+              />
             </div>
           </div>
         </div>

@@ -2,10 +2,12 @@ import { useParams } from 'react-router-dom';
 import Header from '../../components/header/header';
 import OffersList from '../../components/offers-list/offers-list';
 import ReviewForm from '../../components/review-form/review-form';
-import {Offer} from '../../types/offers';
+import {Offer, Point} from '../../types/offers';
 import NotFoundScreen from '../not-found-screen/not-found-screen';
 import { calcRating } from '../../utils/utils';
 import cn from 'classnames';
+import Map from '../../components/map/map';
+import { useState } from 'react';
 
 type OfferScreenProps = {
   offers: Offer[];
@@ -18,6 +20,22 @@ function OfferScreen({offers}: OfferScreenProps): JSX.Element {
   const params = useParams();
   const id = `${(params.id ? params.id.slice(1) : '0')}`;
   const currentOffer = offers.find((offer) => offer.id === id);
+
+  const city = offers[0].city;
+  const points = offers.map((offer) => offer.location);
+
+  const [selectedPoint, setSelectedPoint] = useState<Point | undefined>(undefined);
+
+  const handleCardMouseEnter = (mousedOffer: Offer | null) => {
+    const currentCardOffer = offers.find((offer) =>
+      offer.id === mousedOffer?.id,
+    );
+    setSelectedPoint(currentCardOffer?.location);
+  };
+
+  const handleCardMouseLeave = () => {
+    setSelectedPoint(undefined);
+  };
 
   if (!currentOffer) {
     return <NotFoundScreen/>;
@@ -183,13 +201,22 @@ function OfferScreen({offers}: OfferScreenProps): JSX.Element {
               </section>
             </div>
           </div>
-          <section className="offer__map map"/>
+          <Map
+            city={city}
+            points={points}
+            selectedPoint={selectedPoint}
+            variant={'offer'}
+          />
         </section>
         <div className="container">
           <section className="near-places places">
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
             <div className="near-places__list places__list">
-              <OffersList offers={otherOffers} />
+              <OffersList
+                offers={otherOffers}
+                handleCardMouseEnter={handleCardMouseEnter}
+                handleCardMouseLeave={handleCardMouseLeave}
+              />
             </div>
           </section>
         </div>
