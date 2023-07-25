@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import Header from '../../components/header/header';
 import OffersList from '../../components/offers-list/offers-list';
-import {Offer, Point} from '../../types/offers';
+import {Offer} from '../../types/offers';
 import Map from '../../components/map/map';
 
 type MainScreenProps = {
@@ -11,20 +11,11 @@ type MainScreenProps = {
 function MainScreen({offers}: MainScreenProps): JSX.Element {
 
   const city = offers[0].city;
-  const points = offers.map((offer) => offer.location);
 
-  const [selectedPoint, setSelectedPoint] = useState<Point | undefined>(undefined);
+  const [selectedPoint, setSelectedPoint] = useState<string>('');
 
-  const handleCardMouseEnter = (mousedOffer: Offer | null) => {
-    const currentOffer = offers.find((offer) =>
-      offer.id === mousedOffer?.id,
-    );
-    setSelectedPoint(currentOffer?.location);
-  };
-
-  const handleCardMouseLeave = () => {
-    setSelectedPoint(undefined);
-  };
+  const handleCardMouseEnter = (id: string) => setSelectedPoint(id);
+  const handleCardMouseLeave = () => setSelectedPoint('');
 
   return (
     <div className="page page--gray page--main">
@@ -97,7 +88,7 @@ function MainScreen({offers}: MainScreenProps): JSX.Element {
             <div className="cities__right-section">
               <Map
                 city={city}
-                points={points}
+                points={offers}
                 selectedPoint={selectedPoint}
                 variant={'cities'}
               />

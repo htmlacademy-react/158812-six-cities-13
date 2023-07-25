@@ -2,7 +2,7 @@ import { useParams } from 'react-router-dom';
 import Header from '../../components/header/header';
 import OffersList from '../../components/offers-list/offers-list';
 import ReviewForm from '../../components/review-form/review-form';
-import {Offer, Point} from '../../types/offers';
+import {Offer} from '../../types/offers';
 import NotFoundScreen from '../not-found-screen/not-found-screen';
 import { calcRating } from '../../utils/utils';
 import cn from 'classnames';
@@ -22,20 +22,12 @@ function OfferScreen({offers}: OfferScreenProps): JSX.Element {
   const currentOffer = offers.find((offer) => offer.id === id);
 
   const city = offers[0].city;
-  const points = offers.map((offer) => offer.location);
 
-  const [selectedPoint, setSelectedPoint] = useState<Point | undefined>(undefined);
+  const [selectedPoint, setSelectedPoint] = useState<string>('');
 
-  const handleCardMouseEnter = (mousedOffer: Offer | null) => {
-    const currentCardOffer = offers.find((offer) =>
-      offer.id === mousedOffer?.id,
-    );
-    setSelectedPoint(currentCardOffer?.location);
-  };
-
-  const handleCardMouseLeave = () => {
-    setSelectedPoint(undefined);
-  };
+  // eslint-disable-next-line @typescript-eslint/no-shadow
+  const handleCardMouseEnter = (id: string) => setSelectedPoint(id);
+  const handleCardMouseLeave = () => setSelectedPoint('');
 
   if (!currentOffer) {
     return <NotFoundScreen/>;
@@ -203,7 +195,7 @@ function OfferScreen({offers}: OfferScreenProps): JSX.Element {
           </div>
           <Map
             city={city}
-            points={points}
+            points={offers}
             selectedPoint={selectedPoint}
             variant={'offer'}
           />

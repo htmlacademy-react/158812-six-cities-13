@@ -3,8 +3,8 @@ import {Offer} from '../../types/offers';
 
 type OffersListProps = {
   offers: Offer[];
-  handleCardMouseEnter: (mousedOffer: Offer | null) => void;
-  handleCardMouseLeave: () => void;
+  handleCardMouseEnter?: (id: string) => void;
+  handleCardMouseLeave?: () => void;
 }
 
 function OffersList ({offers, handleCardMouseEnter, handleCardMouseLeave}: OffersListProps): JSX.Element {
