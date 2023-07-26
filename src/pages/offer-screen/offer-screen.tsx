@@ -23,11 +23,10 @@ function OfferScreen({offers}: OfferScreenProps): JSX.Element {
 
   const city = offers[0].city;
 
-  const [selectedPoint, setSelectedPoint] = useState<string>('');
+  const [selectedPoint, setSelectedPoint] = useState<string | null>(null);
 
-  // eslint-disable-next-line @typescript-eslint/no-shadow
-  const handleCardMouseEnter = (id: string) => setSelectedPoint(id);
-  const handleCardMouseLeave = () => setSelectedPoint('');
+  const handleCardMouseEnter = (offerId: string) => setSelectedPoint(offerId);
+  const handleCardMouseLeave = () => setSelectedPoint(null);
 
   if (!currentOffer) {
     return <NotFoundScreen/>;
@@ -195,7 +194,7 @@ function OfferScreen({offers}: OfferScreenProps): JSX.Element {
           </div>
           <Map
             city={city}
-            points={offers}
+            offers={offers}
             selectedPoint={selectedPoint}
             variant={'offer'}
           />

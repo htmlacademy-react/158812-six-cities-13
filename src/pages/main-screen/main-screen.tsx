@@ -12,10 +12,10 @@ function MainScreen({offers}: MainScreenProps): JSX.Element {
 
   const city = offers[0].city;
 
-  const [selectedPoint, setSelectedPoint] = useState<string>('');
+  const [selectedPoint, setSelectedPoint] = useState<string | null>(null);
 
   const handleCardMouseEnter = (id: string) => setSelectedPoint(id);
-  const handleCardMouseLeave = () => setSelectedPoint('');
+  const handleCardMouseLeave = () => setSelectedPoint(null);
 
   return (
     <div className="page page--gray page--main">
@@ -88,7 +88,7 @@ function MainScreen({offers}: MainScreenProps): JSX.Element {
             <div className="cities__right-section">
               <Map
                 city={city}
-                points={offers}
+                offers={offers}
                 selectedPoint={selectedPoint}
                 variant={'cities'}
               />

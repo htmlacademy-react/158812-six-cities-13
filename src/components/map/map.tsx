@@ -8,8 +8,8 @@ import cn from 'classnames';
 
 type MapProps = {
   city: City;
-  points: Offer[];
-  selectedPoint?: string;
+  offers: Offer[];
+  selectedPoint: string | null;
   variant: 'cities' | 'offer';
 };
 
@@ -26,29 +26,28 @@ const currentCustomIcon = new Icon({
 });
 
 function Map(props: MapProps): JSX.Element {
-  const {city, selectedPoint, variant, points} = props;
+  const {city, selectedPoint, variant, offers} = props;
   const mapRef = useRef(null);
   const map = useMap(mapRef, city);
 
   useEffect(() => {
     if (map) {
-      points.forEach((point) => {
-
+      offers.forEach((offer) => {
         const marker = new Marker({
-          lat: point.location.latitude,
-          lng: point.location.longitude
+          lat: offer.location.latitude,
+          lng: offer.location.longitude
         });
 
         marker
           .setIcon(
-            selectedPoint === point.id
+            selectedPoint && selectedPoint === offer.id
               ? currentCustomIcon
               : defaultCustomIcon
           )
           .addTo(map);
       });
     }
-  }, [map, points, selectedPoint]);
+  }, [map, offers, selectedPoint]);
 
   return (
     <section
