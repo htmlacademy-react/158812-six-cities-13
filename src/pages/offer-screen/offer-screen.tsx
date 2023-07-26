@@ -127,11 +127,8 @@ function OfferScreen({offers, reviews}: OfferScreenProps): JSX.Element {
                 </div>
               </div>
               <section className="offer__reviews reviews">
-                {reviews &&
-                  <>
-                    <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{reviews.length}</span></h2>
-                    <ReviewsList reviews={reviews} />
-                  </>}
+                <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{reviews.length}</span></h2>
+                {reviews && <ReviewsList reviews={reviews} />}
                 <ReviewForm />
               </section>
             </div>
