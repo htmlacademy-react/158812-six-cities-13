@@ -21,20 +21,34 @@ export const offers: Offer[] = [
     },
     isFavorite: true,
     isPremium: false,
-    rating: 4,
+    rating: 4.8,
     previewImage: 'img/apartment-01.jpg',
-    description: 'A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam.',
+    description: 'A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam. An independent House, strategically located between Rembrand Square and National Opera, but where the bustle of the city comes to rest in this alley flowery and colorful.',
     bedrooms: 3,
     goods: [
+      'Wi-Fi',
+      'Washing machine',
+      'Towels',
       'Heating',
+      'Coffee machine',
+      'Baby seat',
+      'Kitchen',
+      'Dishwasher',
+      'Cabel TV',
+      'Fridge',
     ],
     host: {
       name: 'Oliver Conner',
-      avatarUrl: 'img/apartment-01.jpg',
-      isPro: false
+      avatarUrl: 'img/avatar-angelina.jpg',
+      isPro: true
     },
     images: [
-      'img/apartment-01.jpg'
+      'img/room.jpg',
+      'img/apartment-01.jpg',
+      'img/apartment-02.jpg',
+      'img/apartment-03.jpg',
+      'img/studio-01.jpg',
+      'img/studio-photos.jpg',
     ],
     maxAdults: 4
   },
@@ -60,18 +74,32 @@ export const offers: Offer[] = [
     isPremium: true,
     rating: 4,
     previewImage: 'img/apartment-02.jpg',
-    description: 'A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam.',
+    description: 'A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam. An independent House, strategically located between Rembrand Square and National Opera, but where the bustle of the city comes to rest in this alley flowery and colorful',
     bedrooms: 3,
     goods: [
+      'Wi-Fi',
+      'Washing machine',
+      'Towels',
       'Heating',
+      'Coffee machine',
+      'Baby seat',
+      'Kitchen',
+      'Dishwasher',
+      'Cabel TV',
+      'Fridge',
     ],
     host: {
       name: 'Oliver Conner',
-      avatarUrl: 'img/apartment-02.jpg',
-      isPro: false
+      avatarUrl: 'img/avatar-angelina.jpg',
+      isPro: true
     },
     images: [
-      'img/apartment-02.jpg'
+      'img/room.jpg',
+      'img/apartment-01.jpg',
+      'img/apartment-02.jpg',
+      'img/apartment-03.jpg',
+      'img/studio-01.jpg',
+      'img/studio-photos.jpg',
     ],
     maxAdults: 4
   },
@@ -97,18 +125,32 @@ export const offers: Offer[] = [
     isPremium: true,
     rating: 4,
     previewImage: 'img/apartment-03.jpg',
-    description: 'A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam.',
+    description: 'A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam. An independent House, strategically located between Rembrand Square and National Opera, but where the bustle of the city comes to rest in this alley flowery and colorful',
     bedrooms: 3,
     goods: [
+      'Wi-Fi',
+      'Washing machine',
+      'Towels',
       'Heating',
+      'Coffee machine',
+      'Baby seat',
+      'Kitchen',
+      'Dishwasher',
+      'Cabel TV',
+      'Fridge',
     ],
     host: {
       name: 'Oliver Conner',
-      avatarUrl: 'img/apartment-03.jpg',
-      isPro: false
+      avatarUrl: 'img/avatar-angelina.jpg',
+      isPro: true
     },
     images: [
-      'img/apartment-03.jpg'
+      'img/room.jpg',
+      'img/apartment-01.jpg',
+      'img/apartment-02.jpg',
+      'img/apartment-03.jpg',
+      'img/studio-01.jpg',
+      'img/studio-photos.jpg',
     ],
     maxAdults: 4
   },
@@ -134,18 +176,32 @@ export const offers: Offer[] = [
     isPremium: false,
     rating: 4,
     previewImage: 'img/apartment-01.jpg',
-    description: 'A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam.',
+    description: 'A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam. An independent House, strategically located between Rembrand Square and National Opera, but where the bustle of the city comes to rest in this alley flowery and colorful.',
     bedrooms: 3,
     goods: [
+      'Wi-Fi',
+      'Washing machine',
+      'Towels',
       'Heating',
+      'Coffee machine',
+      'Baby seat',
+      'Kitchen',
+      'Dishwasher',
+      'Cabel TV',
+      'Fridge',
     ],
     host: {
       name: 'Oliver Conner',
-      avatarUrl: 'img/apartment-01.jpg',
-      isPro: false
+      avatarUrl: 'img/avatar-angelina.jpg',
+      isPro: true
     },
     images: [
-      'img/apartment-01.jpg'
+      'img/room.jpg',
+      'img/apartment-01.jpg',
+      'img/apartment-02.jpg',
+      'img/apartment-03.jpg',
+      'img/studio-01.jpg',
+      'img/studio-photos.jpg',
     ],
     maxAdults: 4
   },

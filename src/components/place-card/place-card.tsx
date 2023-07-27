@@ -7,8 +7,8 @@ import {TypeOffer} from '../../const';
 type PlaceCardProps = {
   offer: Offer;
   variant: 'cities' | 'favorites';
-  handleCardMouseEnter: (mousedOffer: Offer | null) => void;
-  handleCardMouseLeave: () => void;
+  handleCardMouseEnter?: (id: string) => void;
+  handleCardMouseLeave?: () => void;
 }
 
 function PlaceCard({offer, variant, handleCardMouseEnter, handleCardMouseLeave}: PlaceCardProps): JSX.Element {
@@ -21,15 +21,11 @@ function PlaceCard({offer, variant, handleCardMouseEnter, handleCardMouseLeave}:
       )}
 
       onMouseEnter={() => {
-        if (variant === 'cities') {
-          handleCardMouseEnter(offer);
-        }
+        handleCardMouseEnter?.(offer.id);
       }}
 
       onMouseLeave={() => {
-        if (variant === 'cities') {
-          handleCardMouseLeave();
-        }
+        handleCardMouseLeave?.();
       }}
     >
       {offer.isPremium &&
