@@ -1,17 +1,18 @@
 import PlaceCard from '../place-card/place-card';
-import {Offer} from '../../types/offers';
+import {useAppSelector} from '../../hooks';
 
 type OffersListProps = {
-  offers: Offer[];
   handleCardMouseEnter?: (id: string) => void;
   handleCardMouseLeave?: () => void;
 }
 
-function OffersList ({offers, handleCardMouseEnter, handleCardMouseLeave}: OffersListProps): JSX.Element {
+function OffersList ({handleCardMouseEnter, handleCardMouseLeave}: OffersListProps): JSX.Element {
+
+  const currentOffers = useAppSelector((state) => state.offers);
 
   return (
     <div className="cities__places-list places__list tabs__content">
-      {offers.map((offer) => (
+      {currentOffers.map((offer) => (
         <PlaceCard
           key={offer.id}
           offer={offer}
