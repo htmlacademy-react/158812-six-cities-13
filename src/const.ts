@@ -23,3 +23,7 @@ export enum TypeOffer {
   house = 'House',
   hotel = 'Hotel',
 }
+
+export const cities = ['Paris', 'Cologne', 'Brussels', 'Amsterdam', 'Hamburg', 'Dusseldorf'];
+
+export const DEFAULT_ACTIVE_CITY = cities[0];
