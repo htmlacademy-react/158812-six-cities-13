@@ -1,6 +1,5 @@
 import { useEffect, useRef } from 'react';
 import 'leaflet/dist/leaflet.css';
-//import {City} from '../../types/offers';
 import {URL_MARKER_DEFAULT, URL_MARKER_CURRENT} from '../../const';
 import {Icon, Marker} from 'leaflet';
 import useMap from '../../hooks/use-map';
@@ -8,7 +7,6 @@ import cn from 'classnames';
 import {useAppSelector} from '../../hooks';
 
 type MapProps = {
-  //city: City;
   selectedPoint: string | null;
   variant: 'cities' | 'offer';
 };
@@ -53,7 +51,7 @@ function Map(props: MapProps): JSX.Element {
           .addTo(map);
       });
     }
-  }, [map, currentOffers, selectedPoint, city.location.latitude, city.location.longitude, city.location.zoom]);
+  }, [map, currentOffers, selectedPoint, city]);
 
   return (
     <section
