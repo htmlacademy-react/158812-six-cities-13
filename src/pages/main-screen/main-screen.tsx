@@ -1,18 +1,11 @@
 import { useState } from 'react';
 import Header from '../../components/header/header';
 import OffersList from '../../components/offers-list/offers-list';
-import {Offer} from '../../types/offers';
 import Map from '../../components/map/map';
 import Tabs from '../../components/tabs/tabs';
 import { useAppSelector } from '../../hooks';
 
-type MainScreenProps = {
-  offers: Offer[];
-}
-
-function MainScreen({offers}: MainScreenProps): JSX.Element {
-
-  const city = offers[0].city;
+function MainScreen(): JSX.Element {
 
   const [selectedPoint, setSelectedPoint] = useState<string | null>(null);
 
@@ -20,6 +13,7 @@ function MainScreen({offers}: MainScreenProps): JSX.Element {
   const handleCardMouseLeave = () => setSelectedPoint(null);
 
   const currentOffers = useAppSelector((state) => state.offers);
+  const currentCity = useAppSelector((state) => state.city);
 
   return (
     <div className="page page--gray page--main">
@@ -28,13 +22,13 @@ function MainScreen({offers}: MainScreenProps): JSX.Element {
       <main className="page__main page__main--index">
         <h1 className="visually-hidden">Cities</h1>
 
-        <Tabs />
+        <Tabs currentCity={currentCity} />
 
         <div className="cities">
           <div className="cities__places-container container">
             <section className="cities__places places">
               <h2 className="visually-hidden">Places</h2>
-              <b className="places__found">{currentOffers.length} places to stay in Amsterdam</b>
+              <b className="places__found">{currentOffers.length} places to stay in {currentCity}</b>
               <form className="places__sorting" action="#" method="get">
                 <span className="places__sorting-caption">Sort by</span>
                 <span className="places__sorting-type" tabIndex={0}>
@@ -57,7 +51,6 @@ function MainScreen({offers}: MainScreenProps): JSX.Element {
             </section>
             <div className="cities__right-section">
               <Map
-                city={city}
                 selectedPoint={selectedPoint}
                 variant={'cities'}
               />
