@@ -28,28 +28,30 @@ function Map(props: MapProps): JSX.Element {
   const mapRef = useRef(null);
 
   const currentOffers = useAppSelector((state) => state.offers);
-  const city = currentOffers[0].city;
+  const city = currentOffers[0]?.city;
 
   const map = useMap(mapRef, city);
 
   useEffect(() => {
     if (map) {
-      map.setView([city.location.latitude, city.location.longitude], city.location.zoom);
+      if (city) {
+        map.setView([city.location.latitude, city.location.longitude], city.location.zoom);
 
-      currentOffers.forEach((offer) => {
-        const marker = new Marker({
-          lat: offer.location.latitude,
-          lng: offer.location.longitude
+        currentOffers.forEach((offer) => {
+          const marker = new Marker({
+            lat: offer.location.latitude,
+            lng: offer.location.longitude
+          });
+
+          marker
+            .setIcon(
+              selectedPoint && selectedPoint === offer.id
+                ? currentCustomIcon
+                : defaultCustomIcon
+            )
+            .addTo(map);
         });
-
-        marker
-          .setIcon(
-            selectedPoint && selectedPoint === offer.id
-              ? currentCustomIcon
-              : defaultCustomIcon
-          )
-          .addTo(map);
-      });
+      }
     }
   }, [map, currentOffers, selectedPoint, city]);
 
