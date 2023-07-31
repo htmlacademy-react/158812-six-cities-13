@@ -27,3 +27,12 @@ export enum TypeOffer {
 export const cities = ['Paris', 'Cologne', 'Brussels', 'Amsterdam', 'Hamburg', 'Dusseldorf'];
 
 export const DEFAULT_ACTIVE_CITY = cities[0];
+
+export enum SortingType {
+  Popular = 'Popular',
+  LowToHigh = 'Price: low to high',
+  HighToLow = 'Price: high to low',
+  TopRated = 'Top rated first',
+}
+
+export const DEFAULT_SORTING_OPTION = 'Popular';
