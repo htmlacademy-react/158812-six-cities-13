@@ -1,14 +1,18 @@
 import {useState} from 'react';
 import cn from 'classnames';
 import {SortingType} from '../../const';
-import {useAppSelector, useAppDispatch} from '../../hooks';
+import {useAppDispatch} from '../../hooks';
 import {changeSort} from '../../store/action';
 
-function PlacesSorting (): JSX.Element {
+type PlacesSortingProps = {
+  sorting: string;
+}
+
+function PlacesSorting (props: PlacesSortingProps): JSX.Element {
+  const {sorting} = props;
 
   const dispatch = useAppDispatch();
   const sortingTypes = Object.keys(SortingType) as Array<keyof typeof SortingType>;
-  const sorting = useAppSelector((state) => state.sorting);
   const [isSelectedSort, setIsSelectedSort] = useState(false);
 
   return (
