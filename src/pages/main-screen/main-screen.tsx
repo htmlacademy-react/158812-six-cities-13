@@ -20,7 +20,6 @@ function MainScreen(): JSX.Element {
   const currentCity = useAppSelector((state) => state.activeCity);
   const sortOffers = useAppSelector((state) => state.sorting);
   const offersByCity = filterOffersByCity(currentOffers, currentCity, sortOffers);
-  const sorting = useAppSelector((state) => state.sorting);
   const city = offersByCity[0]?.city;
 
   useEffect(() => {
@@ -41,7 +40,7 @@ function MainScreen(): JSX.Element {
             <section className="cities__places places">
               <h2 className="visually-hidden">Places</h2>
               <b className="places__found">{offersByCity.length} places to stay in {currentCity}</b>
-              <PlacesSorting sorting={sorting} />
+              <PlacesSorting sorting={sortOffers} />
               <OffersList
                 handleCardMouseEnter={handleCardMouseEnter}
                 handleCardMouseLeave={handleCardMouseLeave}
