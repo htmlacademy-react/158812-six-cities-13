@@ -1,10 +1,12 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Header from '../../components/header/header';
 import OffersList from '../../components/offers-list/offers-list';
 import Map from '../../components/map/map';
 import Tabs from '../../components/tabs/tabs';
-import { useAppSelector } from '../../hooks';
+import { useAppDispatch, useAppSelector } from '../../hooks';
 import PlacesSorting from '../../components/places-sorting/places-sorting';
+import { fetchOffers } from '../../store/action';
+import { filterOffersByCity } from '../../utils/utils';
 
 function MainScreen(): JSX.Element {
 
@@ -13,8 +15,16 @@ function MainScreen(): JSX.Element {
   const handleCardMouseEnter = (id: string) => setSelectedPoint(id);
   const handleCardMouseLeave = () => setSelectedPoint(null);
 
+  const dispatch = useAppDispatch();
   const currentOffers = useAppSelector((state) => state.offers);
-  const currentCity = useAppSelector((state) => state.city);
+  const currentCity = useAppSelector((state) => state.activeCity);
+  const offersByCity = filterOffersByCity(currentOffers, currentCity);
+
+  const city = offersByCity[0]?.city;
+
+  useEffect(() => {
+    dispatch(fetchOffers());
+  }, [dispatch]);
 
   return (
     <div className="page page--gray page--main">
@@ -29,15 +39,18 @@ function MainScreen(): JSX.Element {
           <div className="cities__places-container container">
             <section className="cities__places places">
               <h2 className="visually-hidden">Places</h2>
-              <b className="places__found">{currentOffers.length} places to stay in {currentCity}</b>
+              <b className="places__found">{offersByCity.length} places to stay in {currentCity}</b>
               <PlacesSorting />
               <OffersList
                 handleCardMouseEnter={handleCardMouseEnter}
                 handleCardMouseLeave={handleCardMouseLeave}
+                offers={offersByCity}
               />
             </section>
             <div className="cities__right-section">
               <Map
+                offers={offersByCity}
+                city={city}
                 selectedPoint={selectedPoint}
                 variant={'cities'}
               />

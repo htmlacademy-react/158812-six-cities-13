@@ -9,7 +9,7 @@ function PlacesSorting (): JSX.Element {
   const dispatch = useAppDispatch();
   const sortingTypes = Object.keys(SortingType) as Array<keyof typeof SortingType>;
   const sorting = useAppSelector((state) => state.sorting);
-  const [activeClass, setActiveClass] = useState(false);
+  const [isSelectedSort, setIsSelectedSort] = useState(false);
 
   return (
     <form className="places__sorting" action="#" method="get">
@@ -17,7 +17,7 @@ function PlacesSorting (): JSX.Element {
         Sort by{' '}
       </span>
       <span
-        onClick={() => setActiveClass((prevState) => !prevState)}
+        onClick={() => setIsSelectedSort((prevState) => !prevState)}
         className="places__sorting-type"
         tabIndex={0}
       >
@@ -28,14 +28,14 @@ function PlacesSorting (): JSX.Element {
       </span>
       <ul className={cn(
         'places__options places__options--custom',
-        {'places__options--opened': activeClass}
+        {'places__options--opened': isSelectedSort}
       )}
       >
         {sortingTypes.map((type) => (
           <li
             onClick={() => {
               dispatch(changeSort(type));
-              setActiveClass((prevState) => !prevState);
+              setIsSelectedSort((prevState) => !prevState);
             }}
             key={type}
             className={cn(
