@@ -5,7 +5,7 @@ export const offers: Offer[] = [
     id: '6af6f711-c28d-4121-82cd-e0b462a27f00',
     title: 'Beautiful & luxurious studio at great location',
     type: 'apartment',
-    price: 120,
+    price: 20,
     city: {
       name: 'Amsterdam',
       location: {
@@ -107,7 +107,7 @@ export const offers: Offer[] = [
     id: '6af9f711-c28d-4121-82cd-e0b462a27f00',
     title: 'Beautiful & luxurious studio at great location',
     type: 'house',
-    price: 120,
+    price: 100,
     city: {
       name: 'Amsterdam',
       location: {
@@ -158,7 +158,7 @@ export const offers: Offer[] = [
     id: '6af6f711-c28d-4121-89cd-e0b462a27f00',
     title: 'Beautiful & luxurious studio at great location',
     type: 'hotel',
-    price: 120,
+    price: 520,
     city: {
       name: 'Amsterdam',
       location: {
@@ -174,7 +174,7 @@ export const offers: Offer[] = [
     },
     isFavorite: true,
     isPremium: false,
-    rating: 4,
+    rating: 1,
     previewImage: 'img/apartment-01.jpg',
     description: 'A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam. An independent House, strategically located between Rembrand Square and National Opera, but where the bustle of the city comes to rest in this alley flowery and colorful.',
     bedrooms: 3,
