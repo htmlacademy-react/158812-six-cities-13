@@ -3,18 +3,27 @@ import {AppRoute, AuthorizationStatus} from '../../const';
 import MainScreen from '../../pages/main-screen/main-screen';
 import LoginScreen from '../../pages/login-screen/login-screen';
 import FavoritesScreen from '../../pages/favorites-screen/favorites-screen';
-import OfferScreen from '../../pages/offer-screen/offer-screen';
+//import OfferScreen from '../../pages/offer-screen/offer-screen';
 import NotFoundScreen from '../../pages/not-found-screen/not-found-screen';
 import PrivateRoute from '../private-route/private-route';
-import {Offer} from '../../types/offers';
-import {Review} from '../../types/reviews';
+//import {Offer} from '../../types/offers';
+//import {Review} from '../../types/reviews';
+import {useAppSelector} from '../../hooks';
+import LoadingScreen from '../../pages/loading-screen/loading-screen';
 
-type AppProps = {
-  offers: Offer[];
-  reviews: Review[];
-}
 
-function App({offers, reviews}: AppProps): JSX.Element {
+function App(): JSX.Element {
+
+  const currentOffers = useAppSelector((state) => state.offers);
+
+  const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
+  const isOffersDataLoading = useAppSelector((state) => state.isOffersDataLoading);
+
+  if (authorizationStatus === AuthorizationStatus.Unknown || isOffersDataLoading) {
+    return (
+      <LoadingScreen />
+    );
+  }
 
   return (
     <BrowserRouter>
@@ -33,16 +42,16 @@ function App({offers, reviews}: AppProps): JSX.Element {
           path={AppRoute.Favorites}
           element={
             <PrivateRoute
-              authorizationStatus={AuthorizationStatus.Auth}
+              authorizationStatus={authorizationStatus}
             >
-              <FavoritesScreen offers={offers} />
+              <FavoritesScreen offers={currentOffers} />
             </PrivateRoute>
           }
         />
-        <Route
+        {/*<Route
           path={AppRoute.Offer}
-          element={<OfferScreen offers={offers} reviews={reviews} />}
-        />
+          element={<OfferScreen offers={currentOffers} reviews={reviews} />}
+        />*/}
         <Route
           path="*"
           element={<NotFoundScreen />}

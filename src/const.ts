@@ -36,3 +36,12 @@ export enum SortingType {
 }
 
 export const DEFAULT_SORTING_OPTION = 'Popular';
+
+export enum APIRoute {
+  Offers = '/offers',
+  Comments = '/comments/',
+  Login = '/login',
+  Logout = '/logout',
+}
+
+export const TIMEOUT_SHOW_ERROR = 2000;

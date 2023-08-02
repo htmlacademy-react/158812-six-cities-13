@@ -1,11 +1,10 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import Header from '../../components/header/header';
 import OffersList from '../../components/offers-list/offers-list';
 import Map from '../../components/map/map';
 import Tabs from '../../components/tabs/tabs';
-import { useAppDispatch, useAppSelector } from '../../hooks';
+import { useAppSelector } from '../../hooks';
 import PlacesSorting from '../../components/places-sorting/places-sorting';
-import { fetchOffers } from '../../store/action';
 import { filterOffersByCity } from '../../utils/utils';
 
 function MainScreen(): JSX.Element {
@@ -15,16 +14,11 @@ function MainScreen(): JSX.Element {
   const handleCardMouseEnter = (id: string) => setSelectedPoint(id);
   const handleCardMouseLeave = () => setSelectedPoint(null);
 
-  const dispatch = useAppDispatch();
   const currentOffers = useAppSelector((state) => state.offers);
   const currentCity = useAppSelector((state) => state.activeCity);
   const sortOffers = useAppSelector((state) => state.sorting);
   const offersByCity = filterOffersByCity(currentOffers, currentCity, sortOffers);
   const city = offersByCity[0]?.city;
-
-  useEffect(() => {
-    dispatch(fetchOffers());
-  }, [dispatch]);
 
   return (
     <div className="page page--gray page--main">
