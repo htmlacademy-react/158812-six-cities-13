@@ -6,7 +6,6 @@ import FavoritesScreen from '../../pages/favorites-screen/favorites-screen';
 //import OfferScreen from '../../pages/offer-screen/offer-screen';
 import NotFoundScreen from '../../pages/not-found-screen/not-found-screen';
 import PrivateRoute from '../private-route/private-route';
-//import {Offer} from '../../types/offers';
 //import {Review} from '../../types/reviews';
 import {useAppSelector} from '../../hooks';
 import LoadingScreen from '../../pages/loading-screen/loading-screen';
@@ -50,7 +49,10 @@ function App(): JSX.Element {
         />
         {/*<Route
           path={AppRoute.Offer}
-          element={<OfferScreen offers={currentOffers} reviews={reviews} />}
+          element={<OfferScreen
+            offers={currentOffers}
+            reviews={reviews}
+          />}
         />*/}
         <Route
           path="*"

@@ -10,7 +10,7 @@ import {UserData} from '../types/user-data';
 import { store } from './index.js';
 
 export const clearErrorAction = createAsyncThunk(
-  'game/clearError',
+  'app/clearError',
   () => {
     setTimeout(
       () => store.dispatch(setError(null)),
@@ -24,10 +24,10 @@ export const fetchOffersAction = createAsyncThunk<void, undefined, {
   state: State;
   extra: AxiosInstance;
 }>(
-  'data/fetchOffer',
+  'data/getOffers',
   async (_arg, {dispatch, extra: api}) => {
     dispatch(setOffersDataLoadingStatus(true));
-    const {data} = await api.get<Array<Offer>>(APIRoute.Offers);
+    const {data} = await api.get<Offer[]>(APIRoute.Offers);
     dispatch(setOffersDataLoadingStatus(false));
     dispatch(loadOffers(data));
   },
