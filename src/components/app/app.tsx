@@ -1,4 +1,4 @@
-import {Route, BrowserRouter, Routes} from 'react-router-dom';
+import {Route, Routes} from 'react-router-dom';
 import {AppRoute, AuthorizationStatus} from '../../const';
 import MainScreen from '../../pages/main-screen/main-screen';
 import LoginScreen from '../../pages/login-screen/login-screen';
@@ -9,7 +9,8 @@ import PrivateRoute from '../private-route/private-route';
 //import {Review} from '../../types/reviews';
 import {useAppSelector} from '../../hooks';
 import LoadingScreen from '../../pages/loading-screen/loading-screen';
-
+import HistoryRouter from '../history-route/history-route';
+import browserHistory from '../../browser-history';
 
 function App(): JSX.Element {
 
@@ -25,41 +26,44 @@ function App(): JSX.Element {
   }
 
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route
-          path={AppRoute.Main}
-          element={
-            <MainScreen />
-          }
-        />
-        <Route
-          path={AppRoute.Login}
-          element={<LoginScreen />}
-        />
-        <Route
-          path={AppRoute.Favorites}
-          element={
-            <PrivateRoute
-              authorizationStatus={authorizationStatus}
-            >
-              <FavoritesScreen offers={currentOffers} />
-            </PrivateRoute>
-          }
-        />
-        {/*<Route
-          path={AppRoute.Offer}
-          element={<OfferScreen
-            offers={currentOffers}
-            reviews={reviews}
-          />}
-        />*/}
-        <Route
-          path="*"
-          element={<NotFoundScreen />}
-        />
-      </Routes>
-    </BrowserRouter>
+    <>
+      {/*{isOffersDataLoading && <LoadingScreen />}*/}
+      <HistoryRouter history={browserHistory}>
+        <Routes>
+          <Route
+            path={AppRoute.Main}
+            element={
+              <MainScreen />
+            }
+          />
+          <Route
+            path={AppRoute.Login}
+            element={<LoginScreen />}
+          />
+          <Route
+            path={AppRoute.Favorites}
+            element={
+              <PrivateRoute
+                authorizationStatus={authorizationStatus}
+              >
+                <FavoritesScreen offers={currentOffers} />
+              </PrivateRoute>
+            }
+          />
+          {/*<Route
+            path={AppRoute.Offer}
+            element={<OfferScreen
+              offers={currentOffers}
+              reviews={reviews}
+            />}
+          />*/}
+          <Route
+            path="*"
+            element={<NotFoundScreen />}
+          />
+        </Routes>
+      </HistoryRouter>
+    </>
   );
 }
 
