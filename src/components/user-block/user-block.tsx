@@ -19,6 +19,7 @@ function UserBlock(): JSX.Element {
           <li className="header__nav-item user">
             <Link className="header__nav-link header__nav-link--profile" to={AppRoute.Favorites}>
               <div className="header__avatar-wrapper user__avatar-wrapper">
+                {userInfo?.avatarUrl && <img src={userInfo?.avatarUrl} width={20} height={20} style={{borderRadius:'50%'}}/>}
               </div>
               <span className="header__user-name user__name">{userInfo?.email}</span>
               <span className="header__favorite-count">3</span>

@@ -22,7 +22,7 @@ const initialState: InitialState = {
   sorting: DEFAULT_SORTING_OPTION,
   authorizationStatus: AuthorizationStatus.Unknown,
   isOffersDataLoading: false,
-  userInfo: null
+  userInfo: null,
 };
 
 const reducer = createReducer(initialState, (builder) => {
