@@ -26,44 +26,41 @@ function App(): JSX.Element {
   }
 
   return (
-    <>
-      {/*{isOffersDataLoading && <LoadingScreen />}*/}
-      <HistoryRouter history={browserHistory}>
-        <Routes>
-          <Route
-            path={AppRoute.Main}
-            element={
-              <MainScreen />
-            }
-          />
-          <Route
-            path={AppRoute.Login}
-            element={<LoginScreen />}
-          />
-          <Route
-            path={AppRoute.Favorites}
-            element={
-              <PrivateRoute
-                authorizationStatus={authorizationStatus}
-              >
-                <FavoritesScreen offers={currentOffers} />
-              </PrivateRoute>
-            }
-          />
-          {/*<Route
-            path={AppRoute.Offer}
-            element={<OfferScreen
-              offers={currentOffers}
-              reviews={reviews}
-            />}
-          />*/}
-          <Route
-            path="*"
-            element={<NotFoundScreen />}
-          />
-        </Routes>
-      </HistoryRouter>
-    </>
+    <HistoryRouter history={browserHistory}>
+      <Routes>
+        <Route
+          path={AppRoute.Main}
+          element={
+            <MainScreen />
+          }
+        />
+        <Route
+          path={AppRoute.Login}
+          element={<LoginScreen />}
+        />
+        <Route
+          path={AppRoute.Favorites}
+          element={
+            <PrivateRoute
+              authorizationStatus={authorizationStatus}
+            >
+              <FavoritesScreen offers={currentOffers} />
+            </PrivateRoute>
+          }
+        />
+        {/*<Route
+          path={AppRoute.Offer}
+          element={<OfferScreen
+            offers={currentOffers}
+            reviews={reviews}
+          />}
+        />*/}
+        <Route
+          path="*"
+          element={<NotFoundScreen />}
+        />
+      </Routes>
+    </HistoryRouter>
   );
 }
 

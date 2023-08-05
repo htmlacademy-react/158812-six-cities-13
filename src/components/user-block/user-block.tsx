@@ -8,8 +8,9 @@ function UserBlock(): JSX.Element {
   const dispatch = useAppDispatch();
 
   const userStatus = useAppSelector((state) => state.authorizationStatus);
-
   const isLoggedIn = userStatus === AuthorizationStatus.Auth;
+
+  const userInfo = useAppSelector((state) => state.userInfo);
 
   return (
     <nav className="header__nav">
@@ -19,7 +20,7 @@ function UserBlock(): JSX.Element {
             <Link className="header__nav-link header__nav-link--profile" to={AppRoute.Favorites}>
               <div className="header__avatar-wrapper user__avatar-wrapper">
               </div>
-              <span className="header__user-name user__name">Oliver.conner@gmail.com</span>
+              <span className="header__user-name user__name">{userInfo?.email}</span>
               <span className="header__favorite-count">3</span>
             </Link>
           </li>

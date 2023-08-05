@@ -35,7 +35,6 @@ export const checkAuthAction = createAsyncThunk<void, undefined, {
       dispatch(redirectToRoute(AppRoute.Main));
     } catch {
       dispatch(requireAuthorization(AuthorizationStatus.NoAuth));
-      dispatch(redirectToRoute(AppRoute.Main));
     }
   },
 );
