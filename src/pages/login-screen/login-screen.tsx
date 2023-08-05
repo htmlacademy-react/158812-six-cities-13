@@ -5,11 +5,13 @@ import {useAppDispatch, useAppSelector} from '../../hooks';
 import {loginAction} from '../../store/api-actions';
 import { AuthData } from '../../types/auth-data';
 import {AppRoute, AuthorizationStatus} from '../../const';
+import { toast } from 'react-toastify';
 
 function LoginScreen(): JSX.Element {
 
   const loginRef = useRef<HTMLInputElement | null>(null);
   const passwordRef = useRef<HTMLInputElement | null>(null);
+  const regex = /^(?=.*\d)(?=.*[a-z])\S*$/i;
 
   const dispatch = useAppDispatch();
 
@@ -26,6 +28,11 @@ function LoginScreen(): JSX.Element {
     evt.preventDefault();
 
     if (loginRef.current !== null && passwordRef.current !== null) {
+      if (!regex.test(passwordRef.current.value)) {
+        toast.warn('The password must have at least one letter and one symbol and no spaces');
+        return;
+      }
+
       onSubmit({
         login: loginRef.current.value,
         password: passwordRef.current.value,
@@ -86,3 +93,4 @@ function LoginScreen(): JSX.Element {
 }
 
 export default LoginScreen;
+
