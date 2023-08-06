@@ -1,51 +1,45 @@
 import { useParams } from 'react-router-dom';
 import Header from '../../components/header/header';
-//import OffersList from '../../components/offers-list/offers-list';
-//import ReviewForm from '../../components/review-form/review-form';
-//import {Offer} from '../../types/offers';
-//import NotFoundScreen from '../not-found-screen/not-found-screen';
 import { calcRating } from '../../utils/utils';
 import cn from 'classnames';
-//import Map from '../../components/map/map';
-import { useEffect } from 'react';
+import Map from '../../components/map/map';
+import { useEffect, useState } from 'react';
 import { TypeOffer } from '../../const';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { fetchOfferAction } from '../../store/api-actions';
+import { fetchOfferAction, fetchNearbyOffersAction } from '../../store/api-actions';
 import LoadingScreen from '../loading-screen/loading-screen';
 import NotFoundScreen from '../not-found-screen/not-found-screen';
+import NearbyPlacesList from '../../components/nearby-places-list/nearby-places-list';
 //import {Review} from '../../types/reviews';
 //import ReviewsList from '../../components/reviews-list/reviews-list';
-
+//import ReviewForm from '../../components/review-form/review-form';
 
 function OfferScreen(): JSX.Element {
   const dispatch = useAppDispatch();
 
-  /*const otherOffers = offers.slice(0, 3);
-
-  const params = useParams();
-  const id = `${(params.id ? params.id.slice(1) : '0')}`;
-  const currentOffer = offers.find((offer) => offer.id === id);
-
-  const city = offers[0].city;*/
-
-
   const currentId = String(useParams().id);
   const isDetailsOfferLoaded = useAppSelector((state) => state.isDetailsOfferDataLoading);
+  const isOfferNearbyError = useAppSelector((store) => store.isOfferNearbyError);
   const currentOffer = useAppSelector((store) => store.offer);
+  const nearby = useAppSelector((state) => state.nearby);
 
-  //const [selectedPoint, setSelectedPoint] = useState<string | null>(null);
+  const nearbyOffersList = nearby?.slice(0, 3);
 
-  //const handleCardMouseEnter = (id: string) => setSelectedPoint(id);
-  //const handleCardMouseLeave = () => setSelectedPoint(null);
+  const [selectedPoint, setSelectedPoint] = useState<string | null>(null);
+
+  const handleCardMouseEnter = (id: string) => setSelectedPoint(id);
+  const handleCardMouseLeave = () => setSelectedPoint(null);
 
   useEffect(() => {
     if (currentId) {
       dispatch(fetchOfferAction(currentId));
+      dispatch(fetchNearbyOffersAction(currentId));
     }
+
   }, [dispatch, currentId]);
 
 
-  if (isDetailsOfferLoaded) {
+  if (isDetailsOfferLoaded || isOfferNearbyError) {
     return (
       <LoadingScreen />
     );
@@ -151,22 +145,24 @@ function OfferScreen(): JSX.Element {
                     </section>*/}
             </div>
           </div>
-          {/*<Map
-            city={city}
-            offers={offers}
+          {nearby &&
+          <Map
+            city={nearby[0].city}
+            offers={nearby}
             selectedPoint={selectedPoint}
             variant={'offer'}
-                  />*/}
+          />}
         </section>
         <div className="container">
           <section className="near-places places">
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
             <div className="near-places__list places__list">
-              {/*<OffersList
-                offers={otherOffers}
+              {nearbyOffersList &&
+              <NearbyPlacesList
+                offers={nearbyOffersList}
                 handleCardMouseEnter={handleCardMouseEnter}
                 handleCardMouseLeave={handleCardMouseLeave}
-          />*/}
+              />}
             </div>
           </section>
         </div>

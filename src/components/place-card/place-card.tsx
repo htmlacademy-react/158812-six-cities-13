@@ -6,7 +6,7 @@ import {TypeOffer} from '../../const';
 
 type PlaceCardProps = {
   offer: Offer;
-  variant: 'cities' | 'favorites';
+  variant: 'cities' | 'favorites' | 'near-places';
   handleCardMouseEnter?: (id: string) => void;
   handleCardMouseLeave?: () => void;
 }
@@ -42,8 +42,8 @@ function PlaceCard({offer, variant, handleCardMouseEnter, handleCardMouseLeave}:
           <img
             className="place-card__image"
             src={offer.previewImage}
-            width={variant === 'cities' ? '260' : '150'}
-            height={variant === 'cities' ? '200' : '110'}
+            width={variant === 'favorites' ? '150' : '260'}
+            height={variant === 'favorites' ? '110' : '200'}
             alt={offer.title}
           />
         </Link>
