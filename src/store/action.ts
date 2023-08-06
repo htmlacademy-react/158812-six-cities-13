@@ -16,7 +16,8 @@ export const setDetailsOfferDataLoadingStatus = createAction<boolean>('data/setD
 export const loadNearbyOffers = createAction('data/loadNearbyOffers', (nearby: Offer[] | null) => ({payload: nearby}));
 export const setOfferNearbyError = createAction<boolean>('data/setOfferNearbyError');
 
-export const getComments = createAction('data/getComments', (comments: Review[] | null) => ({payload: comments}));
+export const loadComments = createAction('data/loadComments', (comments: Review[] | null) => ({payload: comments}));
+export const setReviewsDataLoadingStatus = createAction<boolean>('data/setReviewsDataLoadingStatus');
 
 export const requireAuthorization = createAction<AuthorizationStatus>('user/requireAuthorization');
 export const setUserInfo = createAction('user/setUserInfo', (userInfo: UserData | null) => ({payload: userInfo}));

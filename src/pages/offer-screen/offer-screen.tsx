@@ -6,13 +6,12 @@ import Map from '../../components/map/map';
 import { useEffect, useState } from 'react';
 import { TypeOffer } from '../../const';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { fetchOfferAction, fetchNearbyOffersAction } from '../../store/api-actions';
+import { fetchOfferAction, fetchNearbyOffersAction, fetchReviewsOfferAction } from '../../store/api-actions';
 import LoadingScreen from '../loading-screen/loading-screen';
 import NotFoundScreen from '../not-found-screen/not-found-screen';
 import NearbyPlacesList from '../../components/nearby-places-list/nearby-places-list';
-//import {Review} from '../../types/reviews';
-//import ReviewsList from '../../components/reviews-list/reviews-list';
-//import ReviewForm from '../../components/review-form/review-form';
+import ReviewsList from '../../components/reviews-list/reviews-list';
+import ReviewForm from '../../components/review-form/review-form';
 
 function OfferScreen(): JSX.Element {
   const dispatch = useAppDispatch();
@@ -22,6 +21,8 @@ function OfferScreen(): JSX.Element {
   const isOfferNearbyError = useAppSelector((store) => store.isOfferNearbyError);
   const currentOffer = useAppSelector((store) => store.offer);
   const nearby = useAppSelector((state) => state.nearby);
+  const isReviewsDataLoading = useAppSelector((store) => store.isReviewsDataLoading);
+  const currentComments = useAppSelector((state) => state.comments);
 
   const nearbyOffersList = nearby?.slice(0, 3);
 
@@ -34,12 +35,13 @@ function OfferScreen(): JSX.Element {
     if (currentId) {
       dispatch(fetchOfferAction(currentId));
       dispatch(fetchNearbyOffersAction(currentId));
+      dispatch(fetchReviewsOfferAction(currentId));
     }
 
   }, [dispatch, currentId]);
 
 
-  if (isDetailsOfferLoaded || isOfferNearbyError) {
+  if (isDetailsOfferLoaded || isOfferNearbyError || isReviewsDataLoading) {
     return (
       <LoadingScreen />
     );
@@ -106,7 +108,7 @@ function OfferScreen(): JSX.Element {
                 </li>
               </ul>
               <div className="offer__price">
-                <b className="offer__price-value">&euro;{currentOffer?.price}</b>
+                <b className="offer__price-value">&euro;{currentOffer.price}</b>
                 <span className="offer__price-text">&nbsp;night</span>
               </div>
               <div className="offer__inside">
@@ -138,11 +140,11 @@ function OfferScreen(): JSX.Element {
                     ))}
                 </div>
               </div>
-              {/*<section className="offer__reviews reviews">
-                <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{reviews.length}</span></h2>
-                {reviews && <ReviewsList reviews={reviews} />}
+              <section className="offer__reviews reviews">
+                <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{currentComments?.length}</span></h2>
+                {currentComments && <ReviewsList reviews={currentComments} />}
                 <ReviewForm />
-                    </section>*/}
+              </section>
             </div>
           </div>
           {nearby &&
