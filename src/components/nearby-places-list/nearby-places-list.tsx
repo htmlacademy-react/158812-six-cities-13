@@ -1,13 +1,13 @@
 import PlaceCard from '../place-card/place-card';
 import {Offer} from '../../types/offers';
 
-type OffersListProps = {
+type NearbyPlacesListProps = {
   offers: Offer[] | null;
   handleCardMouseEnter?: (id: string) => void;
   handleCardMouseLeave?: () => void;
 }
 
-function NearbyPlacesList ({handleCardMouseEnter, handleCardMouseLeave, offers}: OffersListProps): JSX.Element {
+function NearbyPlacesList ({handleCardMouseEnter, handleCardMouseLeave, offers}: NearbyPlacesListProps): JSX.Element {
 
   return (
     <div className="near-places__list places__list">
