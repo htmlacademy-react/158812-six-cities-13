@@ -61,7 +61,6 @@ function OfferScreen(): JSX.Element {
 
       <main className="page__main page__main--offer">
         <section className="offer">
-          {currentOffer.images &&
           <div className="offer__gallery-container container">
             <div className="offer__gallery">
               {currentOffer.images.slice(0, 6).map((image) => (
@@ -70,7 +69,7 @@ function OfferScreen(): JSX.Element {
                 </div>
               ))}
             </div>
-          </div>}
+          </div>
           <div className="offer__container container">
             <div className="offer__wrapper">
               {currentOffer.isPremium &&
@@ -96,16 +95,15 @@ function OfferScreen(): JSX.Element {
               </div>
               <div className="offer__rating rating">
                 <div className="offer__stars rating__stars">
-                  {currentOffer.rating && <span style={{ width: calcRating(currentOffer.rating) }} />}
+                  <span style={{ width: calcRating(currentOffer.rating) }} />
                   <span className="visually-hidden">Rating</span>
                 </div>
                 <span className="offer__rating-value rating__value">{currentOffer.rating}</span>
               </div>
               <ul className="offer__features">
-                {currentOffer.type &&
-                  <li className="offer__feature offer__feature--entire">
-                    {TypeOffer[currentOffer.type]}
-                  </li>}
+                <li className="offer__feature offer__feature--entire">
+                  {TypeOffer[currentOffer.type]}
+                </li>
                 <li className="offer__feature offer__feature--bedrooms">
                   {currentOffer.bedrooms} Bedrooms
                 </li>

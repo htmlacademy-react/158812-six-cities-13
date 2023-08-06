@@ -29,10 +29,16 @@ export const fetchOfferAction = createAsyncThunk<void, string, {
 }>(
   'data/loadOffer',
   async (id, {dispatch, extra: api}) => {
-    dispatch(setDetailsOfferDataLoadingStatus(true));
-    const {data} = await api.get<Offer>(`${APIRoute.Offers}/${id}`);
-    dispatch(setDetailsOfferDataLoadingStatus(false));
-    dispatch(loadOffer(data));
+    try {
+      dispatch(setDetailsOfferDataLoadingStatus(true));
+      const {data} = await api.get<Offer>(`${APIRoute.Offers}/${id}`);
+      dispatch(setDetailsOfferDataLoadingStatus(false));
+      dispatch(loadOffer(data));
+    } catch {
+      dispatch(setDetailsOfferDataLoadingStatus(true));
+      dispatch(redirectToRoute(AppRoute.NotFound));
+      dispatch(setDetailsOfferDataLoadingStatus(false));
+    }
   },
 );
 
@@ -53,7 +59,6 @@ export const checkAuthAction = createAsyncThunk<void, undefined, {
     }
   },
 );
-
 
 export const loginAction = createAsyncThunk<void, AuthData, {
   dispatch: AppDispatch;
