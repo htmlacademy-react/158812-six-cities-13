@@ -32,12 +32,9 @@ function OfferScreen(): JSX.Element {
   const handleCardMouseLeave = () => setSelectedPoint(null);
 
   useEffect(() => {
-    if (currentId) {
-      dispatch(fetchOfferAction(currentId));
-      dispatch(fetchNearbyOffersAction(currentId));
-      dispatch(fetchReviewsOfferAction(currentId));
-    }
-
+    dispatch(fetchOfferAction(currentId));
+    dispatch(fetchNearbyOffersAction(currentId));
+    dispatch(fetchReviewsOfferAction(currentId));
   }, [dispatch, currentId]);
 
 

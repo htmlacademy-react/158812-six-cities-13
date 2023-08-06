@@ -50,10 +50,16 @@ export const fetchNearbyOffersAction = createAsyncThunk<void, string, {
 }>(
   'data/loadNearbyOffers',
   async (id, {dispatch, extra: api}) => {
-    dispatch(setOfferNearbyError(true));
-    const {data} = await api.get<Offer[]>(`${APIRoute.Offers}/${id}/nearby`);
-    dispatch(setOfferNearbyError(false));
-    dispatch(loadNearbyOffers(data));
+    try {
+      dispatch(setOfferNearbyError(true));
+      const {data} = await api.get<Offer[]>(`${APIRoute.Offers}/${id}/nearby`);
+      dispatch(setOfferNearbyError(false));
+      dispatch(loadNearbyOffers(data));
+    } catch {
+      dispatch(setOfferNearbyError(true));
+      dispatch(redirectToRoute(AppRoute.NotFound));
+      dispatch(setOfferNearbyError(false));
+    }
   },
 );
 
@@ -64,10 +70,16 @@ export const fetchReviewsOfferAction = createAsyncThunk<void, string, {
 }>(
   'data/loadComments',
   async (id, { dispatch, extra: api }) => {
-    dispatch(setReviewsDataLoadingStatus(true));
-    const { data } = await api.get<Review[]>(`${APIRoute.Comments}${id}`);
-    dispatch(setReviewsDataLoadingStatus(false));
-    dispatch(loadComments(data));
+    try {
+      dispatch(setReviewsDataLoadingStatus(true));
+      const { data } = await api.get<Review[]>(`${APIRoute.Comments}${id}`);
+      dispatch(setReviewsDataLoadingStatus(false));
+      dispatch(loadComments(data));
+    } catch {
+      dispatch(setReviewsDataLoadingStatus(true));
+      dispatch(redirectToRoute(AppRoute.NotFound));
+      dispatch(setReviewsDataLoadingStatus(false));
+    }
   }
 );
 
