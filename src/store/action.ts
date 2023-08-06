@@ -25,4 +25,4 @@ export const setUserInfo = createAction('user/setUserInfo', (userInfo: UserData 
 
 export const redirectToRoute = createAction<AppRoute>('app/redirectToRoute');
 
-export const postComment = createAction('data/postComment', (value: CommentData) => ({payload: value}));
+export const postComment = createAction('data/postComment', (newComment: CommentData) => ({payload: newComment}));

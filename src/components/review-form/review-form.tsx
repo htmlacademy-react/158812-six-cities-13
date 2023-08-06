@@ -10,15 +10,18 @@ type ReviewFormProps = {
 
 function ReviewForm({offerId}: ReviewFormProps): JSX.Element {
 
-  const navigate = useNavigate();
-
   const ratingValues: number[] = [5, 4, 3, 2, 1];
   const MIN_COMMENT_LENGTH = 50;
   const MAX_COMMENT_LENGTH = 300;
+  const EMPTY_RATING = 0;
+  const MAX_RATING = 5;
+
+  const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
-    rating: '',
+    rating: 0,
     comment: '',
+    offerId: offerId
   });
 
   const dispatch = useAppDispatch();
@@ -26,7 +29,7 @@ function ReviewForm({offerId}: ReviewFormProps): JSX.Element {
   const [isSubmitDisabled, setIsSubmitDisabled] = useState(true);
   const [isSending, setIsSending] = useState(false);
 
-  const isValid = useMemo(() => formData.rating !== '' && formData.comment.length >= MIN_COMMENT_LENGTH && formData.comment.length <= MAX_COMMENT_LENGTH, [formData.comment.length, formData.rating]);
+  const isValid = useMemo(() => formData.rating !== EMPTY_RATING && formData.rating <= MAX_RATING && formData.comment.length >= MIN_COMMENT_LENGTH && formData.comment.length <= MAX_COMMENT_LENGTH, [formData.comment.length, formData.rating]);
 
   useEffect(() => {
     if (isValid) {
@@ -37,16 +40,14 @@ function ReviewForm({offerId}: ReviewFormProps): JSX.Element {
   }, [isValid]);
 
   const handleInputChange = (evt: React.ChangeEvent<HTMLInputElement>) => {
-    const {value} = evt.target;
-    setFormData({...formData, rating: value});
+    setFormData({...formData, rating: Number(evt.target.value)});
   };
 
   const handleTextareaChange = (evt: React.ChangeEvent<HTMLTextAreaElement>) => {
-    const {value} = evt.target;
-    setFormData({...formData, comment: value});
+    setFormData({...formData, comment: evt.target.value});
   };
 
-  const onSubmit = async (comment: CommentData) => await dispatch(postCommentAction(comment));
+  const onSubmit = async (newComment: CommentData) => await dispatch(postCommentAction(newComment));
 
   const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
@@ -66,7 +67,7 @@ function ReviewForm({offerId}: ReviewFormProps): JSX.Element {
   };
 
   return (
-    <form className="reviews__form form" action="#" method="post" onSubmit={handleSubmit}>
+    <form className="reviews__form form" action="" method="post" onSubmit={handleSubmit}>
       <label className="reviews__label form__label" htmlFor="review">Your review</label>
       <div className="reviews__rating-form form__rating">
         {
@@ -105,7 +106,7 @@ function ReviewForm({offerId}: ReviewFormProps): JSX.Element {
       />
       <div className="reviews__button-wrapper">
         <p className="reviews__help">
-          To submit review please make sure to set <span className="reviews__star">rating</span> and describe your stay with at least <b className="reviews__text-amount">50 characters</b>.
+          To submit review please make sure to set <span className="reviews__star">rating</span> and describe your stay with at least <b className="reviews__text-amount">{MIN_COMMENT_LENGTH} characters</b>.
         </p>
         <button className="reviews__submit form__submit button" type="submit" disabled={isSubmitDisabled || isSending}>Submit</button>
       </div>
