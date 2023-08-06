@@ -1,36 +1,55 @@
 import { useParams } from 'react-router-dom';
 import Header from '../../components/header/header';
-import OffersList from '../../components/offers-list/offers-list';
-import ReviewForm from '../../components/review-form/review-form';
-import {Offer} from '../../types/offers';
-import NotFoundScreen from '../not-found-screen/not-found-screen';
+//import OffersList from '../../components/offers-list/offers-list';
+//import ReviewForm from '../../components/review-form/review-form';
+//import {Offer} from '../../types/offers';
+//import NotFoundScreen from '../not-found-screen/not-found-screen';
 import { calcRating } from '../../utils/utils';
 import cn from 'classnames';
-import Map from '../../components/map/map';
-import { useState } from 'react';
+//import Map from '../../components/map/map';
+import { useEffect } from 'react';
 import { TypeOffer } from '../../const';
-import {Review} from '../../types/reviews';
-import ReviewsList from '../../components/reviews-list/reviews-list';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { fetchOfferAction } from '../../store/api-actions';
+import LoadingScreen from '../loading-screen/loading-screen';
+import NotFoundScreen from '../not-found-screen/not-found-screen';
+//import {Review} from '../../types/reviews';
+//import ReviewsList from '../../components/reviews-list/reviews-list';
 
-type OfferScreenProps = {
-  offers: Offer[];
-  reviews: Review[];
-}
 
-function OfferScreen({offers, reviews}: OfferScreenProps): JSX.Element {
+function OfferScreen(): JSX.Element {
+  const dispatch = useAppDispatch();
 
-  const otherOffers = offers.slice(0, 3);
+  /*const otherOffers = offers.slice(0, 3);
 
   const params = useParams();
   const id = `${(params.id ? params.id.slice(1) : '0')}`;
   const currentOffer = offers.find((offer) => offer.id === id);
 
-  const city = offers[0].city;
+  const city = offers[0].city;*/
 
-  const [selectedPoint, setSelectedPoint] = useState<string | null>(null);
 
-  const handleCardMouseEnter = (offerId: string) => setSelectedPoint(offerId);
-  const handleCardMouseLeave = () => setSelectedPoint(null);
+  const currentId = String(useParams().id);
+  const isDetailsOfferLoaded = useAppSelector((state) => state.isDetailsOfferDataLoading);
+  const currentOffer = useAppSelector((store) => store.offer);
+
+  //const [selectedPoint, setSelectedPoint] = useState<string | null>(null);
+
+  //const handleCardMouseEnter = (id: string) => setSelectedPoint(id);
+  //const handleCardMouseLeave = () => setSelectedPoint(null);
+
+  useEffect(() => {
+    if (currentId) {
+      dispatch(fetchOfferAction(currentId));
+    }
+  }, [dispatch, currentId]);
+
+
+  if (isDetailsOfferLoaded) {
+    return (
+      <LoadingScreen />
+    );
+  }
 
   if (!currentOffer) {
     return <NotFoundScreen/>;
@@ -77,15 +96,16 @@ function OfferScreen({offers, reviews}: OfferScreenProps): JSX.Element {
               </div>
               <div className="offer__rating rating">
                 <div className="offer__stars rating__stars">
-                  <span style={{ width: calcRating(currentOffer.rating) }} />
+                  {currentOffer.rating && <span style={{ width: calcRating(currentOffer.rating) }} />}
                   <span className="visually-hidden">Rating</span>
                 </div>
                 <span className="offer__rating-value rating__value">{currentOffer.rating}</span>
               </div>
               <ul className="offer__features">
-                <li className="offer__feature offer__feature--entire">
-                  {TypeOffer[currentOffer.type]}
-                </li>
+                {currentOffer.type &&
+                  <li className="offer__feature offer__feature--entire">
+                    {TypeOffer[currentOffer.type]}
+                  </li>}
                 <li className="offer__feature offer__feature--bedrooms">
                   {currentOffer.bedrooms} Bedrooms
                 </li>
@@ -94,7 +114,7 @@ function OfferScreen({offers, reviews}: OfferScreenProps): JSX.Element {
                 </li>
               </ul>
               <div className="offer__price">
-                <b className="offer__price-value">&euro;{currentOffer.price}</b>
+                <b className="offer__price-value">&euro;{currentOffer?.price}</b>
                 <span className="offer__price-text">&nbsp;night</span>
               </div>
               <div className="offer__inside">
@@ -126,29 +146,29 @@ function OfferScreen({offers, reviews}: OfferScreenProps): JSX.Element {
                     ))}
                 </div>
               </div>
-              <section className="offer__reviews reviews">
+              {/*<section className="offer__reviews reviews">
                 <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{reviews.length}</span></h2>
                 {reviews && <ReviewsList reviews={reviews} />}
                 <ReviewForm />
-              </section>
+                    </section>*/}
             </div>
           </div>
-          <Map
+          {/*<Map
             city={city}
             offers={offers}
             selectedPoint={selectedPoint}
             variant={'offer'}
-          />
+                  />*/}
         </section>
         <div className="container">
           <section className="near-places places">
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
             <div className="near-places__list places__list">
-              <OffersList
+              {/*<OffersList
                 offers={otherOffers}
                 handleCardMouseEnter={handleCardMouseEnter}
                 handleCardMouseLeave={handleCardMouseLeave}
-              />
+          />*/}
             </div>
           </section>
         </div>

@@ -3,10 +3,9 @@ import {AppRoute, AuthorizationStatus} from '../../const';
 import MainScreen from '../../pages/main-screen/main-screen';
 import LoginScreen from '../../pages/login-screen/login-screen';
 import FavoritesScreen from '../../pages/favorites-screen/favorites-screen';
-//import OfferScreen from '../../pages/offer-screen/offer-screen';
+import OfferScreen from '../../pages/offer-screen/offer-screen';
 import NotFoundScreen from '../../pages/not-found-screen/not-found-screen';
 import PrivateRoute from '../private-route/private-route';
-//import {Review} from '../../types/reviews';
 import {useAppSelector} from '../../hooks';
 import LoadingScreen from '../../pages/loading-screen/loading-screen';
 import HistoryRouter from '../history-route/history-route';
@@ -48,15 +47,12 @@ function App(): JSX.Element {
             </PrivateRoute>
           }
         />
-        {/*<Route
-          path={AppRoute.Offer}
-          element={<OfferScreen
-            offers={currentOffers}
-            reviews={reviews}
-          />}
-        />*/}
         <Route
-          path="*"
+          path={AppRoute.Offer}
+          element={<OfferScreen />}
+        />
+        <Route
+          path={AppRoute.NotFound}
           element={<NotFoundScreen />}
         />
       </Routes>

@@ -38,7 +38,7 @@ function PlaceCard({offer, variant, handleCardMouseEnter, handleCardMouseLeave}:
           'place-card__image-wrapper'
         )}
       >
-        <Link to={`/offer/:${offer.id}`}>
+        <Link to={`/offer/${offer.id}`}>
           <img
             className="place-card__image"
             src={offer.previewImage}
@@ -75,7 +75,7 @@ function PlaceCard({offer, variant, handleCardMouseEnter, handleCardMouseLeave}:
           </div>
         </div>
         <h2 className="place-card__name">
-          <Link to={`/offer/:${offer.id}`}>{offer.title}</Link>
+          <Link to={`/offer/${offer.id}`}>{offer.title}</Link>
         </h2>
         <p className="place-card__type">{TypeOffer[offer.type]}</p>
       </div>
