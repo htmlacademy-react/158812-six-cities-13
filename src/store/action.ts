@@ -3,6 +3,7 @@ import { Offer } from '../types/offers';
 import { Review } from '../types/reviews';
 import { AuthorizationStatus, AppRoute } from '../const';
 import { UserData } from '../types/user-data';
+import { CommentData } from '../types/comment-data';
 
 export const setActiveCity = createAction('setActiveCity', (city: string) => ({payload: city}));
 export const changeSort = createAction('offers/changeSort', (sorting: string) => ({payload: sorting}));
@@ -23,3 +24,5 @@ export const requireAuthorization = createAction<AuthorizationStatus>('user/requ
 export const setUserInfo = createAction('user/setUserInfo', (userInfo: UserData | null) => ({payload: userInfo}));
 
 export const redirectToRoute = createAction<AppRoute>('app/redirectToRoute');
+
+export const postComment = createAction('data/postComment', (value: CommentData) => ({payload: value}));

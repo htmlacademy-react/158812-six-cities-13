@@ -4,7 +4,7 @@ import { calcRating } from '../../utils/utils';
 import cn from 'classnames';
 import Map from '../../components/map/map';
 import { useEffect, useState } from 'react';
-import { TypeOffer } from '../../const';
+import { AuthorizationStatus, TypeOffer } from '../../const';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { fetchOfferAction, fetchNearbyOffersAction, fetchReviewsOfferAction } from '../../store/api-actions';
 import LoadingScreen from '../loading-screen/loading-screen';
@@ -23,6 +23,7 @@ function OfferScreen(): JSX.Element {
   const nearby = useAppSelector((state) => state.nearby);
   const isReviewsDataLoading = useAppSelector((store) => store.isReviewsDataLoading);
   const currentComments = useAppSelector((state) => state.comments);
+  const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
 
   const nearbyOffersList = nearby?.slice(0, 3);
 
@@ -140,7 +141,7 @@ function OfferScreen(): JSX.Element {
               <section className="offer__reviews reviews">
                 <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{currentComments?.length}</span></h2>
                 {currentComments && <ReviewsList reviews={currentComments} />}
-                <ReviewForm />
+                {authorizationStatus === AuthorizationStatus.Auth && <ReviewForm offerId={currentId} />}
               </section>
             </div>
           </div>
