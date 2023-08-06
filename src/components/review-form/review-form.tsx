@@ -19,7 +19,7 @@ function ReviewForm({offerId}: ReviewFormProps): JSX.Element {
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
-    rating: 0,
+    rating: EMPTY_RATING,
     comment: '',
     offerId: offerId
   });
