@@ -33,28 +33,26 @@ function Map(props: MapProps): JSX.Element {
 
   useEffect(() => {
     if (map) {
-      if(city) {
-        const markerLayer = layerGroup().addTo(map);
-        map.setView([city.location.latitude, city.location.longitude], city.location.zoom);
-        offers.forEach((offer) => {
-          const marker = new Marker({
-            lat: offer.location.latitude,
-            lng: offer.location.longitude
-          });
-
-          marker
-            .setIcon(
-              selectedPoint && selectedPoint === offer.id
-                ? currentCustomIcon
-                : defaultCustomIcon
-            )
-            .addTo(map);
+      const markerLayer = layerGroup().addTo(map);
+      map.setView([city.location.latitude, city.location.longitude], city.location.zoom);
+      offers.forEach((offer) => {
+        const marker = new Marker({
+          lat: offer.location.latitude,
+          lng: offer.location.longitude
         });
 
-        return () => {
-          map.removeLayer(markerLayer);
-        };
-      }
+        marker
+          .setIcon(
+            selectedPoint && selectedPoint === offer.id
+              ? currentCustomIcon
+              : defaultCustomIcon
+          )
+          .addTo(map);
+      });
+
+      return () => {
+        map.removeLayer(markerLayer);
+      };
     }
 
   }, [map, offers, selectedPoint, city]);

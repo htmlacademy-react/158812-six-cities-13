@@ -1,36 +1,49 @@
 import { useParams } from 'react-router-dom';
 import Header from '../../components/header/header';
-import OffersList from '../../components/offers-list/offers-list';
-import ReviewForm from '../../components/review-form/review-form';
-import {Offer} from '../../types/offers';
-import NotFoundScreen from '../not-found-screen/not-found-screen';
 import { calcRating } from '../../utils/utils';
 import cn from 'classnames';
 import Map from '../../components/map/map';
-import { useState } from 'react';
-import { TypeOffer } from '../../const';
-import {Review} from '../../types/reviews';
+import { useEffect, useState } from 'react';
+import { AuthorizationStatus, TypeOffer } from '../../const';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { fetchOfferAction, fetchNearbyOffersAction, fetchReviewsOfferAction } from '../../store/api-actions';
+import LoadingScreen from '../loading-screen/loading-screen';
+import NotFoundScreen from '../not-found-screen/not-found-screen';
+import NearbyPlacesList from '../../components/nearby-places-list/nearby-places-list';
 import ReviewsList from '../../components/reviews-list/reviews-list';
+import ReviewForm from '../../components/review-form/review-form';
 
-type OfferScreenProps = {
-  offers: Offer[];
-  reviews: Review[];
-}
+function OfferScreen(): JSX.Element {
+  const dispatch = useAppDispatch();
 
-function OfferScreen({offers, reviews}: OfferScreenProps): JSX.Element {
+  const currentId = String(useParams().id);
+  const isDetailsOfferLoaded = useAppSelector((state) => state.isDetailsOfferDataLoading);
+  const isOfferNearbyError = useAppSelector((store) => store.isOfferNearbyError);
+  const currentOffer = useAppSelector((store) => store.offer);
+  const nearby = useAppSelector((state) => state.nearby);
+  const isReviewsDataLoading = useAppSelector((store) => store.isReviewsDataLoading);
+  const currentComments = useAppSelector((state) => state.comments);
+  const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
 
-  const otherOffers = offers.slice(0, 3);
-
-  const params = useParams();
-  const id = `${(params.id ? params.id.slice(1) : '0')}`;
-  const currentOffer = offers.find((offer) => offer.id === id);
-
-  const city = offers[0].city;
+  const nearbyOffersList = nearby?.slice(0, 3);
 
   const [selectedPoint, setSelectedPoint] = useState<string | null>(null);
 
-  const handleCardMouseEnter = (offerId: string) => setSelectedPoint(offerId);
+  const handleCardMouseEnter = (id: string) => setSelectedPoint(id);
   const handleCardMouseLeave = () => setSelectedPoint(null);
+
+  useEffect(() => {
+    dispatch(fetchOfferAction(currentId));
+    dispatch(fetchNearbyOffersAction(currentId));
+    dispatch(fetchReviewsOfferAction(currentId));
+  }, [dispatch, currentId]);
+
+
+  if (isDetailsOfferLoaded || isOfferNearbyError || isReviewsDataLoading) {
+    return (
+      <LoadingScreen />
+    );
+  }
 
   if (!currentOffer) {
     return <NotFoundScreen/>;
@@ -42,7 +55,6 @@ function OfferScreen({offers, reviews}: OfferScreenProps): JSX.Element {
 
       <main className="page__main page__main--offer">
         <section className="offer">
-          {currentOffer.images &&
           <div className="offer__gallery-container container">
             <div className="offer__gallery">
               {currentOffer.images.slice(0, 6).map((image) => (
@@ -51,7 +63,7 @@ function OfferScreen({offers, reviews}: OfferScreenProps): JSX.Element {
                 </div>
               ))}
             </div>
-          </div>}
+          </div>
           <div className="offer__container container">
             <div className="offer__wrapper">
               {currentOffer.isPremium &&
@@ -127,28 +139,30 @@ function OfferScreen({offers, reviews}: OfferScreenProps): JSX.Element {
                 </div>
               </div>
               <section className="offer__reviews reviews">
-                <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{reviews.length}</span></h2>
-                {reviews && <ReviewsList reviews={reviews} />}
-                <ReviewForm />
+                <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{currentComments?.length}</span></h2>
+                {currentComments && <ReviewsList reviews={currentComments} />}
+                {authorizationStatus === AuthorizationStatus.Auth && <ReviewForm offerId={currentId} />}
               </section>
             </div>
           </div>
+          {nearby &&
           <Map
-            city={city}
-            offers={offers}
+            city={nearby[0].city}
+            offers={nearby}
             selectedPoint={selectedPoint}
             variant={'offer'}
-          />
+          />}
         </section>
         <div className="container">
           <section className="near-places places">
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
             <div className="near-places__list places__list">
-              <OffersList
-                offers={otherOffers}
+              {nearbyOffersList &&
+              <NearbyPlacesList
+                offers={nearbyOffersList}
                 handleCardMouseEnter={handleCardMouseEnter}
                 handleCardMouseLeave={handleCardMouseLeave}
-              />
+              />}
             </div>
           </section>
         </div>
