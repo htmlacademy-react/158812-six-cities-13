@@ -2,7 +2,7 @@ import {createReducer} from '@reduxjs/toolkit';
 import {Offer} from '../types/offers';
 import {Review} from '../types/reviews';
 import { UserData } from '../types/user-data';
-import {setActiveCity, changeSort, loadOffers, requireAuthorization, setOffersDataLoadingStatus, setUserInfo, loadOffer, setDetailsOfferDataLoadingStatus, loadNearbyOffers, setOfferNearbyError, setReviewsDataLoadingStatus, loadComments} from './action';
+import {setActiveCity, changeSort, loadOffers, requireAuthorization, setOffersDataLoadingStatus, setUserInfo, loadOffer, setDetailsOfferDataLoadingStatus, loadNearbyOffers, setOfferNearbyLoadingStatus, setReviewsDataLoadingStatus, loadComments} from './action';
 import {DEFAULT_ACTIVE_CITY, DEFAULT_SORTING_OPTION, AuthorizationStatus} from '../const';
 
 type InitialState = {
@@ -16,7 +16,7 @@ type InitialState = {
   isOffersDataLoading: boolean;
   isDetailsOfferDataLoading: boolean;
   nearby: Offer[] | null;
-  isOfferNearbyError: boolean;
+  isOfferNearbyDataLoading: boolean;
   isReviewsDataLoading: boolean;
 }
 
@@ -31,7 +31,7 @@ const initialState: InitialState = {
   isOffersDataLoading: false,
   isDetailsOfferDataLoading: false,
   nearby: [],
-  isOfferNearbyError: false,
+  isOfferNearbyDataLoading: false,
   isReviewsDataLoading: false,
 };
 
@@ -61,8 +61,8 @@ const reducer = createReducer(initialState, (builder) => {
     .addCase(loadNearbyOffers, (state, action) => {
       state.nearby = action.payload;
     })
-    .addCase(setOfferNearbyError, (state, action) => {
-      state.isOfferNearbyError = action.payload;
+    .addCase(setOfferNearbyLoadingStatus, (state, action) => {
+      state.isOfferNearbyDataLoading = action.payload;
     })
 
     .addCase(loadComments, (state, action) => {

@@ -12,13 +12,13 @@ function PlacesSorting (props: PlacesSortingProps): JSX.Element {
   const {sorting} = props;
 
   const dispatch = useAppDispatch();
-  const sortingTypes = Object.keys(SortingType) as Array<keyof typeof SortingType>;
+  const sortingTypes = Object.entries(SortingType);
   const [isSelectedSort, setIsSelectedSort] = useState(false);
 
   return (
     <form className="places__sorting" action="#" method="get">
       <span className="places__sorting-caption">
-        Sort by{' '}
+        Sort by {' '}
       </span>
       <span
         onClick={() => setIsSelectedSort((prevState) => !prevState)}
@@ -35,20 +35,20 @@ function PlacesSorting (props: PlacesSortingProps): JSX.Element {
         {'places__options--opened': isSelectedSort}
       )}
       >
-        {sortingTypes.map((type) => (
+        {sortingTypes.map(([type, title]) => (
           <li
             onClick={() => {
               dispatch(changeSort(type));
               setIsSelectedSort((prevState) => !prevState);
             }}
-            key={type}
+            key={title}
             className={cn(
               'places__option',
               {'places__option--active': type === sorting}
             )}
             tabIndex={0}
           >
-            {SortingType[type]}
+            {title}
           </li>
         ))}
       </ul>

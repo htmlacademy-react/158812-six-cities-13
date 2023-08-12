@@ -2,7 +2,7 @@ import {AxiosInstance} from 'axios';
 import {createAsyncThunk} from '@reduxjs/toolkit';
 import {AppDispatch, State} from '../types/state.js';
 import {Offer} from '../types/offers';
-import {loadOffers, requireAuthorization, setOffersDataLoadingStatus, redirectToRoute, setUserInfo, loadOffer, setDetailsOfferDataLoadingStatus, loadNearbyOffers, setOfferNearbyError, loadComments, setReviewsDataLoadingStatus, postComment} from './action';
+import {loadOffers, requireAuthorization, setOffersDataLoadingStatus, redirectToRoute, setUserInfo, loadOffer, setDetailsOfferDataLoadingStatus, loadNearbyOffers, setOfferNearbyLoadingStatus, loadComments, setReviewsDataLoadingStatus} from './action';
 import {saveToken, dropToken} from '../services/token';
 import {APIRoute, AuthorizationStatus, AppRoute} from '../const';
 import {AuthData} from '../types/auth-data';
@@ -52,14 +52,14 @@ export const fetchNearbyOffersAction = createAsyncThunk<void, string, {
   'data/loadNearbyOffers',
   async (id, {dispatch, extra: api}) => {
     try {
-      dispatch(setOfferNearbyError(true));
+      dispatch(setOfferNearbyLoadingStatus(true));
       const {data} = await api.get<Offer[]>(`${APIRoute.Offers}/${id}/nearby`);
-      dispatch(setOfferNearbyError(false));
+      dispatch(setOfferNearbyLoadingStatus(false));
       dispatch(loadNearbyOffers(data));
     } catch {
-      dispatch(setOfferNearbyError(true));
+      dispatch(setOfferNearbyLoadingStatus(true));
       dispatch(redirectToRoute(AppRoute.NotFound));
-      dispatch(setOfferNearbyError(false));
+      dispatch(setOfferNearbyLoadingStatus(false));
     }
   },
 );
@@ -91,8 +91,8 @@ export const postCommentAction = createAsyncThunk<void, CommentData, {
 }>(
   'data/postComment',
   async ({comment, rating, offerId}, {dispatch, extra: api}) => {
-    const {data} = await api.post<CommentData>(`${APIRoute.Comments}${offerId}`, {comment, rating});
-    dispatch(postComment(data));
+    await api.post<CommentData>(`${APIRoute.Comments}${offerId}`, {comment, rating});
+    dispatch(fetchReviewsOfferAction(offerId));
   },
 );
 

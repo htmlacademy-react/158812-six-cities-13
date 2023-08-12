@@ -18,13 +18,14 @@ function OfferScreen(): JSX.Element {
 
   const currentId = String(useParams().id);
   const isDetailsOfferLoaded = useAppSelector((state) => state.isDetailsOfferDataLoading);
-  const isOfferNearbyError = useAppSelector((store) => store.isOfferNearbyError);
-  const currentOffer = useAppSelector((store) => store.offer);
+  const isOfferNearbyDataLoading = useAppSelector((state) => state.isOfferNearbyDataLoading);
+  const currentOffer = useAppSelector((state) => state.offer);
   const nearby = useAppSelector((state) => state.nearby);
-  const isReviewsDataLoading = useAppSelector((store) => store.isReviewsDataLoading);
-  const currentComments = useAppSelector((state) => state.comments);
+  const isReviewsDataLoading = useAppSelector((state) => state.isReviewsDataLoading);
+  const comments = useAppSelector((state) => state.comments);
   const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
 
+  const currentComments = comments?.slice(-10);
   const nearbyOffersList = nearby?.slice(0, 3);
 
   const [selectedPoint, setSelectedPoint] = useState<string | null>(null);
@@ -33,13 +34,15 @@ function OfferScreen(): JSX.Element {
   const handleCardMouseLeave = () => setSelectedPoint(null);
 
   useEffect(() => {
-    dispatch(fetchOfferAction(currentId));
-    dispatch(fetchNearbyOffersAction(currentId));
-    dispatch(fetchReviewsOfferAction(currentId));
+    if(currentId) {
+      dispatch(fetchOfferAction(currentId));
+      dispatch(fetchNearbyOffersAction(currentId));
+      dispatch(fetchReviewsOfferAction(currentId));
+    }
   }, [dispatch, currentId]);
 
 
-  if (isDetailsOfferLoaded || isOfferNearbyError || isReviewsDataLoading) {
+  if (isDetailsOfferLoaded || isOfferNearbyDataLoading || isReviewsDataLoading) {
     return (
       <LoadingScreen />
     );
@@ -145,10 +148,10 @@ function OfferScreen(): JSX.Element {
               </section>
             </div>
           </div>
-          {nearby &&
+          {nearbyOffersList &&
           <Map
-            city={nearby[0].city}
-            offers={nearby}
+            city={nearbyOffersList[0].city}
+            offers={nearbyOffersList}
             selectedPoint={selectedPoint}
             variant={'offer'}
           />}
