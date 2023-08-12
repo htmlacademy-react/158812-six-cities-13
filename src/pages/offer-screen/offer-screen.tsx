@@ -3,7 +3,7 @@ import Header from '../../components/header/header';
 import { calcRating } from '../../utils/utils';
 import cn from 'classnames';
 import Map from '../../components/map/map';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { AuthorizationStatus, TypeOffer } from '../../const';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { fetchOfferAction, fetchNearbyOffersAction, fetchReviewsOfferAction } from '../../store/api-actions';
@@ -27,11 +27,6 @@ function OfferScreen(): JSX.Element {
 
   const currentComments = comments?.slice(-10);
   const nearbyOffersList = nearby?.slice(0, 3);
-
-  const [selectedPoint, setSelectedPoint] = useState<string | null>(null);
-
-  const handleCardMouseEnter = (id: string) => setSelectedPoint(id);
-  const handleCardMouseLeave = () => setSelectedPoint(null);
 
   useEffect(() => {
     if(currentId) {
@@ -152,8 +147,8 @@ function OfferScreen(): JSX.Element {
           <Map
             city={nearbyOffersList[0].city}
             offers={nearbyOffersList}
-            selectedPoint={selectedPoint}
             variant={'offer'}
+            currentOffer={currentOffer}
           />}
         </section>
         <div className="container">
@@ -163,8 +158,6 @@ function OfferScreen(): JSX.Element {
               {nearbyOffersList &&
               <NearbyPlacesList
                 offers={nearbyOffersList}
-                handleCardMouseEnter={handleCardMouseEnter}
-                handleCardMouseLeave={handleCardMouseLeave}
               />}
             </div>
           </section>
