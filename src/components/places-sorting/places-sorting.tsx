@@ -38,7 +38,7 @@ function PlacesSorting (props: PlacesSortingProps): JSX.Element {
         {sortingTypes.map(([type, title]) => (
           <li
             onClick={() => {
-              dispatch(changeSort(type));
+              dispatch(changeSort(title));
               setIsSelectedSort((prevState) => !prevState);
             }}
             key={title}
