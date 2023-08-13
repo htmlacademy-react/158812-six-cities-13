@@ -2,15 +2,16 @@ import {Link} from 'react-router-dom';
 import { logoutAction } from '../../store/api-actions';
 import {useAppSelector, useAppDispatch} from '../../hooks';
 import {AppRoute, AuthorizationStatus} from '../../const';
+import { getAuthorizationStatus, getUserInfo } from '../../store/user-process/selectors';
 
 function UserBlock(): JSX.Element {
 
   const dispatch = useAppDispatch();
 
-  const userStatus = useAppSelector((state) => state.authorizationStatus);
+  const userStatus = useAppSelector(getAuthorizationStatus);
   const isLoggedIn = userStatus === AuthorizationStatus.Auth;
 
-  const userInfo = useAppSelector((state) => state.userInfo);
+  const userInfo = useAppSelector(getUserInfo);
 
   return (
     <nav className="header__nav">

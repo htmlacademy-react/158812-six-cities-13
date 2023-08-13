@@ -72,7 +72,6 @@ export const postCommentAction = createAsyncThunk<void, CommentData, {
 );
 
 export const checkAuthAction = createAsyncThunk<UserData, undefined, {
-  dispatch: AppDispatch;
   state: State;
   extra: AxiosInstance;
 }>(
@@ -83,7 +82,6 @@ export const checkAuthAction = createAsyncThunk<UserData, undefined, {
   },
 );
 
-
 export const loginAction = createAsyncThunk<UserData, AuthData, {
   dispatch: AppDispatch;
   state: State;
@@ -93,14 +91,12 @@ export const loginAction = createAsyncThunk<UserData, AuthData, {
   async ({login: email, password}, {dispatch, extra: api}) => {
     const { data } = await api.post<UserData>(APIRoute.Login, {email, password});
     saveToken(data.token);
-    //dispatch(setUserInfo(data));
     dispatch(redirectToRoute(AppRoute.Main));
     return data;
   },
 );
 
 export const logoutAction = createAsyncThunk<void, undefined, {
-  dispatch: AppDispatch;
   state: State;
   extra: AxiosInstance;
 }>(
@@ -108,6 +104,5 @@ export const logoutAction = createAsyncThunk<void, undefined, {
   async (_arg, {extra: api}) => {
     await api.delete(APIRoute.Logout);
     dropToken();
-    //dispatch(setUserInfo(null));
   },
 );
