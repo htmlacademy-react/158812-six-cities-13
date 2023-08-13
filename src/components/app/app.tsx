@@ -1,5 +1,5 @@
 import {Route, Routes} from 'react-router-dom';
-import {AppRoute, AuthorizationStatus} from '../../const';
+import {AppRoute} from '../../const';
 import MainScreen from '../../pages/main-screen/main-screen';
 import LoginScreen from '../../pages/login-screen/login-screen';
 import FavoritesScreen from '../../pages/favorites-screen/favorites-screen';
@@ -10,15 +10,16 @@ import {useAppSelector} from '../../hooks';
 import LoadingScreen from '../../pages/loading-screen/loading-screen';
 import HistoryRouter from '../history-route/history-route';
 import browserHistory from '../../browser-history';
+import {getAuthorizationStatus, getAuthCheckedStatus} from '../../store/user-process/selectors';
+import {getOffersDataLoadingStatus} from '../../store/app-data/selectors';
 
 function App(): JSX.Element {
 
-  const currentOffers = useAppSelector((state) => state.offers);
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
+  const isAuthChecked = useAppSelector(getAuthCheckedStatus);
+  const isOffersDataLoading = useAppSelector(getOffersDataLoadingStatus);
 
-  const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
-  const isOffersDataLoading = useAppSelector((state) => state.isOffersDataLoading);
-
-  if (authorizationStatus === AuthorizationStatus.Unknown || isOffersDataLoading) {
+  if (!isAuthChecked || isOffersDataLoading) {
     return (
       <LoadingScreen />
     );
@@ -43,7 +44,7 @@ function App(): JSX.Element {
             <PrivateRoute
               authorizationStatus={authorizationStatus}
             >
-              <FavoritesScreen offers={currentOffers} />
+              <FavoritesScreen />
             </PrivateRoute>
           }
         />

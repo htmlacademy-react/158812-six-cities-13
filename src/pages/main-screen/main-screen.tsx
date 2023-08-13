@@ -6,6 +6,8 @@ import Tabs from '../../components/tabs/tabs';
 import { useAppSelector } from '../../hooks';
 import PlacesSorting from '../../components/places-sorting/places-sorting';
 import { filterOffersByCity } from '../../utils/utils';
+import { getOffers } from '../../store/app-data/selectors';
+import { getCityName, getSortingType } from '../../store/app-process/selectors';
 
 function MainScreen(): JSX.Element {
 
@@ -14,9 +16,9 @@ function MainScreen(): JSX.Element {
   const handleCardMouseEnter = (id: string) => setSelectedPoint(id);
   const handleCardMouseLeave = () => setSelectedPoint(null);
 
-  const currentOffers = useAppSelector((state) => state.offers);
-  const currentCity = useAppSelector((state) => state.activeCity);
-  const sortOffers = useAppSelector((state) => state.sorting);
+  const currentOffers = useAppSelector(getOffers);
+  const currentCity = useAppSelector(getCityName);
+  const sortOffers = useAppSelector(getSortingType);
   const offersByCity = filterOffersByCity(currentOffers, currentCity, sortOffers);
   const city = offersByCity[0]?.city;
 

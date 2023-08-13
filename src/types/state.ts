@@ -20,7 +20,7 @@ export type AppProcess = {
 
 export type AppData = {
   offers: Offer[];
-  offer: Offer;
+  offer: Offer | null;
   comments: Review[];
   nearby: Offer[];
   isOffersDataLoading: boolean;

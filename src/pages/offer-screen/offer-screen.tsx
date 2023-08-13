@@ -12,18 +12,22 @@ import NotFoundScreen from '../not-found-screen/not-found-screen';
 import NearbyPlacesList from '../../components/nearby-places-list/nearby-places-list';
 import ReviewsList from '../../components/reviews-list/reviews-list';
 import ReviewForm from '../../components/review-form/review-form';
+import { getComments, getCommentsDataLoadingStatus, getNearbyOffers, getNearbyOffersDataLoadingStatus, getOffer, getOfferDataLoadingStatus } from '../../store/app-data/selectors';
+import { getAuthorizationStatus } from '../../store/user-process/selectors';
 
 function OfferScreen(): JSX.Element {
   const dispatch = useAppDispatch();
 
   const currentId = String(useParams().id);
-  const isDetailsOfferLoaded = useAppSelector((state) => state.isDetailsOfferDataLoading);
-  const isOfferNearbyDataLoading = useAppSelector((state) => state.isOfferNearbyDataLoading);
-  const currentOffer = useAppSelector((state) => state.offer);
-  const nearby = useAppSelector((state) => state.nearby);
-  const isReviewsDataLoading = useAppSelector((state) => state.isReviewsDataLoading);
-  const comments = useAppSelector((state) => state.comments);
-  const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
+
+  const currentOffer = useAppSelector(getOffer);
+  const nearby = useAppSelector(getNearbyOffers);
+  const comments = useAppSelector(getComments);
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
+
+  const isDetailsOfferLoaded = useAppSelector(getOfferDataLoadingStatus);
+  const isOfferNearbyDataLoading = useAppSelector(getNearbyOffersDataLoadingStatus);
+  const isReviewsDataLoading = useAppSelector(getCommentsDataLoadingStatus);
 
   const currentComments = comments?.slice(-10);
   const nearbyOffersList = nearby?.slice(0, 3);
@@ -35,7 +39,6 @@ function OfferScreen(): JSX.Element {
       dispatch(fetchReviewsOfferAction(currentId));
     }
   }, [dispatch, currentId]);
-
 
   if (isDetailsOfferLoaded || isOfferNearbyDataLoading || isReviewsDataLoading) {
     return (

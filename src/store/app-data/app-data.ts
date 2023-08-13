@@ -2,11 +2,10 @@ import { createSlice } from '@reduxjs/toolkit';
 import { AppData } from '../../types/state';
 import {NameSpace} from '../../const';
 import { fetchOfferAction, fetchOffersAction, fetchNearbyOffersAction, fetchReviewsOfferAction } from '../api-actions';
-import { Offer } from '../../types/offers';
 
 const initialState: AppData = {
   offers: [],
-  offer: {} as Offer,
+  offer: null,
   nearby: [],
   comments: [],
   isOffersDataLoading: false,
