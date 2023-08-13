@@ -14,3 +14,4 @@ export const getNearbyOffersDataLoadingStatus = (state: State): boolean => state
 
 export const getComments = (state: State): Review[] => state[NameSpace.Data].comments;
 export const getCommentsDataLoadingStatus = (state: State): boolean => state[NameSpace.Data].isReviewsDataLoading;
+export const getErrorStatus = (state: State): boolean => state[NameSpace.Data].hasError;

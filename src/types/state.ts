@@ -27,4 +27,5 @@ export type AppData = {
   isDetailsOfferDataLoading: boolean;
   isOfferNearbyDataLoading: boolean;
   isReviewsDataLoading: boolean;
+  hasError: boolean;
 };
