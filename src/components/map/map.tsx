@@ -47,7 +47,7 @@ function Map(props: MapProps): JSX.Element {
         }).addTo(map);
       }
 
-      offers.forEach((offer) => {
+      offers?.forEach((offer) => {
         const marker = new Marker({
           lat: offer.location.latitude,
           lng: offer.location.longitude

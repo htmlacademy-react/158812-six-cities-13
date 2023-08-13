@@ -3,6 +3,7 @@ import { Offer } from '../types/offers';
 import { Review } from '../types/reviews';
 import { AuthorizationStatus, AppRoute } from '../const';
 import { UserData } from '../types/user-data';
+import { CommentData } from '../types/comment-data';
 
 export const setActiveCity = createAction('setActiveCity', (city: string) => ({payload: city}));
 export const changeSort = createAction('offers/changeSort', (sorting: string) => ({payload: sorting}));
@@ -16,7 +17,7 @@ export const setDetailsOfferDataLoadingStatus = createAction<boolean>('data/setD
 export const loadNearbyOffers = createAction('data/loadNearbyOffers', (nearby: Offer[] | null) => ({payload: nearby}));
 export const setOfferNearbyLoadingStatus = createAction<boolean>('data/setOfferNearbyLoadingStatus');
 
-export const loadComments = createAction('data/loadComments', (comments: Review[] | null) => ({payload: comments}));
+export const loadComments = createAction('data/loadComments', (comments: Review[]) => ({payload: comments}));
 export const setReviewsDataLoadingStatus = createAction<boolean>('data/setReviewsDataLoadingStatus');
 
 export const requireAuthorization = createAction<AuthorizationStatus>('user/requireAuthorization');
@@ -24,4 +25,4 @@ export const setUserInfo = createAction('user/setUserInfo', (userInfo: UserData 
 
 export const redirectToRoute = createAction<AppRoute>('app/redirectToRoute');
 
-export const postComment = createAction<Review>('data/postComment');
+export const postComment = createAction('data/postComment', (newComment: CommentData) => ({payload: newComment}));

@@ -50,6 +50,11 @@ function ReviewForm({offerId}: ReviewFormProps): JSX.Element {
     setFormData({...formData, comment: evt.target.value});
   };
 
+  const resetData = (evt: FormEvent<HTMLFormElement>) => {
+    setFormData({...formData, comment: '', rating: EMPTY_RATING});
+    evt.currentTarget.reset();
+  };
+
   const onSubmit = async (newComment: CommentData) => await dispatch(postCommentAction(newComment));
 
   const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
@@ -64,10 +69,10 @@ function ReviewForm({offerId}: ReviewFormProps): JSX.Element {
         offerId: offerId,
       }).then(() => {
         setIsSending(false);
-
-        setFormData({...formData, comment: '', rating: 0});
       });
     }
+
+    resetData(evt);
   };
 
   return (

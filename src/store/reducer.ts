@@ -9,7 +9,7 @@ type InitialState = {
   activeCity: string;
   offers: Offer[];
   offer: Offer | null;
-  comments: Review[] | null;
+  comments: Review[];
   sorting: string;
   authorizationStatus: AuthorizationStatus;
   userInfo: UserData | null;
