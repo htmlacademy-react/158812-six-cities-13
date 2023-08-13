@@ -3,6 +3,7 @@ import cn from 'classnames';
 import {Link} from 'react-router-dom';
 import {useAppDispatch} from '../../hooks';
 import { changeCity } from '../../store/app-process/app-process';
+import { memo } from 'react';
 
 type TabsProps = {
   currentCity: string;
@@ -39,5 +40,6 @@ function Tabs(props: TabsProps): JSX.Element {
   );
 }
 
-export default Tabs;
+const TabsMemo = memo(Tabs);
 
+export default TabsMemo;

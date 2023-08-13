@@ -1,5 +1,6 @@
 import Logo from '../logo/logo';
 import UserBlock from '../user-block/user-block';
+import { memo } from 'react';
 
 type HeaderProps = {
   isUserBlock?: boolean;
@@ -20,4 +21,6 @@ function Header({isUserBlock}: HeaderProps): JSX.Element {
   );
 }
 
-export default Header;
+const HeaderMemo = memo(Header);
+
+export default HeaderMemo;

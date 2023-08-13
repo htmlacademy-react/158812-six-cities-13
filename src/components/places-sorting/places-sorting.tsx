@@ -1,4 +1,4 @@
-import {useState} from 'react';
+import {useState, memo} from 'react';
 import cn from 'classnames';
 import {SortingType} from '../../const';
 import {useAppDispatch} from '../../hooks';
@@ -56,4 +56,6 @@ function PlacesSorting (props: PlacesSortingProps): JSX.Element {
   );
 }
 
-export default PlacesSorting;
+const PlacesSortingMemo = memo(PlacesSorting);
+
+export default PlacesSortingMemo;
