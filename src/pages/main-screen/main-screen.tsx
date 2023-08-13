@@ -7,7 +7,7 @@ import { useAppSelector } from '../../hooks';
 import PlacesSorting from '../../components/places-sorting/places-sorting';
 import { filterOffersByCity } from '../../utils/utils';
 import { getOffers } from '../../store/app-data/selectors';
-import { getCityName, getSortingType } from '../../store/app-process/selectors';
+import { changeSort, changeCity } from '../../store/app-process/selectors';
 
 function MainScreen(): JSX.Element {
 
@@ -17,8 +17,8 @@ function MainScreen(): JSX.Element {
   const handleCardMouseLeave = () => setSelectedPoint(null);
 
   const currentOffers = useAppSelector(getOffers);
-  const currentCity = useAppSelector(getCityName);
-  const sortOffers = useAppSelector(getSortingType);
+  const currentCity = useAppSelector(changeCity);
+  const sortOffers = useAppSelector(changeSort);
   const offersByCity = filterOffersByCity(currentOffers, currentCity, sortOffers);
   const city = offersByCity[0]?.city;
 

@@ -14,7 +14,7 @@ export type UserProcess = {
 };
 
 export type AppProcess = {
-  activeCity: string;
+  city: string;
   sorting: string;
 }
 
