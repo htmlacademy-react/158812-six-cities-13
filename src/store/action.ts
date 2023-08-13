@@ -1,7 +1,7 @@
 import { createAction } from '@reduxjs/toolkit';
 import { Offer } from '../types/offers';
 import { Review } from '../types/reviews';
-import { AuthorizationStatus, AppRoute } from '../const';
+import { AppRoute } from '../const';
 import { UserData } from '../types/user-data';
 import { CommentData } from '../types/comment-data';
 
@@ -20,7 +20,6 @@ export const setOfferNearbyLoadingStatus = createAction<boolean>('data/setOfferN
 export const loadComments = createAction('data/loadComments', (comments: Review[]) => ({payload: comments}));
 export const setReviewsDataLoadingStatus = createAction<boolean>('data/setReviewsDataLoadingStatus');
 
-export const requireAuthorization = createAction<AuthorizationStatus>('user/requireAuthorization');
 export const setUserInfo = createAction('user/setUserInfo', (userInfo: UserData | null) => ({payload: userInfo}));
 
 export const redirectToRoute = createAction<AppRoute>('app/redirectToRoute');

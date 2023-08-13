@@ -2,9 +2,9 @@ import {AxiosInstance} from 'axios';
 import {createAsyncThunk} from '@reduxjs/toolkit';
 import {AppDispatch, State} from '../types/state.js';
 import {Offer} from '../types/offers';
-import {loadOffers, requireAuthorization, setOffersDataLoadingStatus, redirectToRoute, setUserInfo, loadOffer, setDetailsOfferDataLoadingStatus, loadNearbyOffers, setOfferNearbyLoadingStatus, loadComments, setReviewsDataLoadingStatus, postComment} from './action';
+import {loadOffers, setOffersDataLoadingStatus, redirectToRoute, setUserInfo, loadOffer, setDetailsOfferDataLoadingStatus, loadNearbyOffers, setOfferNearbyLoadingStatus, loadComments, setReviewsDataLoadingStatus, postComment} from './action';
 import {saveToken, dropToken} from '../services/token';
-import {APIRoute, AuthorizationStatus, AppRoute} from '../const';
+import {APIRoute, AppRoute} from '../const';
 import {AuthData} from '../types/auth-data';
 import {UserData} from '../types/user-data';
 import { Review } from '../types/reviews.js';
@@ -103,15 +103,8 @@ export const checkAuthAction = createAsyncThunk<void, undefined, {
   extra: AxiosInstance;
 }>(
   'user/checkAuth',
-  async (_arg, {dispatch, extra: api}) => {
-    try {
-      const { data } = await api.get<UserData>(APIRoute.Login);
-      dispatch(requireAuthorization(AuthorizationStatus.Auth));
-      dispatch(redirectToRoute(AppRoute.Main));
-      dispatch(setUserInfo(data));
-    } catch {
-      dispatch(requireAuthorization(AuthorizationStatus.NoAuth));
-    }
+  async (_arg, {extra: api}) => {
+    await api.get(APIRoute.Login);
   },
 );
 
@@ -125,7 +118,6 @@ export const loginAction = createAsyncThunk<void, AuthData, {
     const { data } = await api.post<UserData>(APIRoute.Login, {email, password});
     saveToken(data.token);
     dispatch(setUserInfo(data));
-    dispatch(requireAuthorization(AuthorizationStatus.Auth));
   },
 );
 
@@ -139,6 +131,5 @@ export const logoutAction = createAsyncThunk<void, undefined, {
     await api.delete(APIRoute.Logout);
     dropToken();
     dispatch(setUserInfo(null));
-    dispatch(requireAuthorization(AuthorizationStatus.NoAuth));
   },
 );
