@@ -66,12 +66,13 @@ export const postCommentAction = createAsyncThunk<void, CommentData, {
   'data/postComment',
   async ({comment, rating, offerId}, {dispatch, extra: api}) => {
     const { data } = await api.post<CommentData>(`${APIRoute.Comments}${offerId}`, {comment, rating});
-    //dispatch(fetchReviewsOfferAction(offerId));
+    dispatch(fetchReviewsOfferAction(offerId));
     dispatch(postComment(data));
   },
 );
 
 export const checkAuthAction = createAsyncThunk<UserData, undefined, {
+  dispatch: AppDispatch;
   state: State;
   extra: AxiosInstance;
 }>(
@@ -81,6 +82,7 @@ export const checkAuthAction = createAsyncThunk<UserData, undefined, {
     return data;
   },
 );
+
 
 export const loginAction = createAsyncThunk<UserData, AuthData, {
   dispatch: AppDispatch;
