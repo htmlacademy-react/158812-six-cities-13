@@ -5,12 +5,14 @@ import {Icon, Marker, layerGroup} from 'leaflet';
 import useMap from '../../hooks/use-map';
 import cn from 'classnames';
 import {City, Offer} from '../../types/offers';
+import leaflet from 'leaflet';
 
 type MapProps = {
   city: City;
   offers: Offer[];
-  selectedPoint: string | null;
+  selectedPoint?: string | null;
   variant: 'cities' | 'offer';
+  currentOffer?: Offer;
 };
 
 const defaultCustomIcon = new Icon({
@@ -26,7 +28,7 @@ const currentCustomIcon = new Icon({
 });
 
 function Map(props: MapProps): JSX.Element {
-  const {selectedPoint, variant, city, offers} = props;
+  const {selectedPoint, variant, city, offers, currentOffer} = props;
   const mapRef = useRef(null);
 
   const map = useMap(mapRef, city);
@@ -35,7 +37,17 @@ function Map(props: MapProps): JSX.Element {
     if (map) {
       const markerLayer = layerGroup().addTo(map);
       map.setView([city.location.latitude, city.location.longitude], city.location.zoom);
-      offers.forEach((offer) => {
+
+      if (currentOffer) {
+        leaflet.marker({
+          lat: currentOffer.location.latitude,
+          lng: currentOffer.location.longitude,
+        }, {
+          icon:  currentCustomIcon,
+        }).addTo(map);
+      }
+
+      offers?.forEach((offer) => {
         const marker = new Marker({
           lat: offer.location.latitude,
           lng: offer.location.longitude
@@ -55,7 +67,7 @@ function Map(props: MapProps): JSX.Element {
       };
     }
 
-  }, [map, offers, selectedPoint, city]);
+  }, [map, offers, selectedPoint, city, currentOffer]);
 
   return (
     <section

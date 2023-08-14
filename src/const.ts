@@ -25,9 +25,9 @@ export enum TypeOffer {
   hotel = 'Hotel',
 }
 
-export const cities = ['Paris', 'Cologne', 'Brussels', 'Amsterdam', 'Hamburg', 'Dusseldorf'];
+export const CITIES: string[] = ['Paris', 'Cologne', 'Brussels', 'Amsterdam', 'Hamburg', 'Dusseldorf'];
 
-export const DEFAULT_ACTIVE_CITY = cities[0];
+export const DEFAULT_ACTIVE_CITY = CITIES[0];
 
 export enum SortingType {
   Popular = 'Popular',
@@ -45,3 +45,8 @@ export enum APIRoute {
   Logout = '/logout',
 }
 
+export enum NameSpace {
+  Data = 'DATA',
+  App = 'APP',
+  User = 'USER',
+}

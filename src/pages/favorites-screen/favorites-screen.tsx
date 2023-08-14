@@ -1,13 +1,12 @@
 import Footer from '../../components/footer/footer';
 import Header from '../../components/header/header';
 import PlaceCard from '../../components/place-card/place-card';
-import {Offer} from '../../types/offers';
+import { useAppSelector } from '../../hooks';
+import { getOffers } from '../../store/app-data/selectors';
 
-type FavoritesScreenProps = {
-  offers: Offer[];
-}
+function FavoritesScreen(): JSX.Element {
 
-function FavoritesScreen({offers}: FavoritesScreenProps): JSX.Element {
+  const offers = useAppSelector(getOffers);
 
   const cities = Array.from(new Set(offers.map((offer) => offer.city.name)));
 

@@ -3,7 +3,7 @@ import Header from '../../components/header/header';
 import { calcRating } from '../../utils/utils';
 import cn from 'classnames';
 import Map from '../../components/map/map';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { AuthorizationStatus, TypeOffer } from '../../const';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { fetchOfferAction, fetchNearbyOffersAction, fetchReviewsOfferAction } from '../../store/api-actions';
@@ -12,34 +12,35 @@ import NotFoundScreen from '../not-found-screen/not-found-screen';
 import NearbyPlacesList from '../../components/nearby-places-list/nearby-places-list';
 import ReviewsList from '../../components/reviews-list/reviews-list';
 import ReviewForm from '../../components/review-form/review-form';
+import { getComments, getCommentsDataLoadingStatus, getNearbyOffers, getNearbyOffersDataLoadingStatus, getOffer, getOfferDataLoadingStatus } from '../../store/app-data/selectors';
+import { getAuthorizationStatus } from '../../store/user-process/selectors';
 
 function OfferScreen(): JSX.Element {
   const dispatch = useAppDispatch();
 
   const currentId = String(useParams().id);
-  const isDetailsOfferLoaded = useAppSelector((state) => state.isDetailsOfferDataLoading);
-  const isOfferNearbyError = useAppSelector((store) => store.isOfferNearbyError);
-  const currentOffer = useAppSelector((store) => store.offer);
-  const nearby = useAppSelector((state) => state.nearby);
-  const isReviewsDataLoading = useAppSelector((store) => store.isReviewsDataLoading);
-  const currentComments = useAppSelector((state) => state.comments);
-  const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
 
+  const currentOffer = useAppSelector(getOffer);
+  const nearby = useAppSelector(getNearbyOffers);
+  const comments = useAppSelector(getComments);
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
+
+  const isDetailsOfferLoaded = useAppSelector(getOfferDataLoadingStatus);
+  const isOfferNearbyDataLoading = useAppSelector(getNearbyOffersDataLoadingStatus);
+  const isReviewsDataLoading = useAppSelector(getCommentsDataLoadingStatus);
+
+  const currentComments = comments?.slice(-10);
   const nearbyOffersList = nearby?.slice(0, 3);
 
-  const [selectedPoint, setSelectedPoint] = useState<string | null>(null);
-
-  const handleCardMouseEnter = (id: string) => setSelectedPoint(id);
-  const handleCardMouseLeave = () => setSelectedPoint(null);
-
   useEffect(() => {
-    dispatch(fetchOfferAction(currentId));
-    dispatch(fetchNearbyOffersAction(currentId));
-    dispatch(fetchReviewsOfferAction(currentId));
+    if(currentId) {
+      dispatch(fetchOfferAction(currentId));
+      dispatch(fetchNearbyOffersAction(currentId));
+      dispatch(fetchReviewsOfferAction(currentId));
+    }
   }, [dispatch, currentId]);
 
-
-  if (isDetailsOfferLoaded || isOfferNearbyError || isReviewsDataLoading) {
+  if (isDetailsOfferLoaded || isOfferNearbyDataLoading || isReviewsDataLoading) {
     return (
       <LoadingScreen />
     );
@@ -145,12 +146,12 @@ function OfferScreen(): JSX.Element {
               </section>
             </div>
           </div>
-          {nearby &&
+          {nearbyOffersList &&
           <Map
-            city={nearby[0].city}
-            offers={nearby}
-            selectedPoint={selectedPoint}
+            city={nearbyOffersList[0].city}
+            offers={nearbyOffersList}
             variant={'offer'}
+            currentOffer={currentOffer}
           />}
         </section>
         <div className="container">
@@ -160,8 +161,6 @@ function OfferScreen(): JSX.Element {
               {nearbyOffersList &&
               <NearbyPlacesList
                 offers={nearbyOffersList}
-                handleCardMouseEnter={handleCardMouseEnter}
-                handleCardMouseLeave={handleCardMouseLeave}
               />}
             </div>
           </section>

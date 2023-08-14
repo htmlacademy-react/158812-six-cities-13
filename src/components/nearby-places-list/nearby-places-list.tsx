@@ -3,11 +3,9 @@ import {Offer} from '../../types/offers';
 
 type NearbyPlacesListProps = {
   offers: Offer[] | null;
-  handleCardMouseEnter?: (id: string) => void;
-  handleCardMouseLeave?: () => void;
 }
 
-function NearbyPlacesList ({handleCardMouseEnter, handleCardMouseLeave, offers}: NearbyPlacesListProps): JSX.Element {
+function NearbyPlacesList ({offers}: NearbyPlacesListProps): JSX.Element {
 
   return (
     <div className="near-places__list places__list">
@@ -16,8 +14,6 @@ function NearbyPlacesList ({handleCardMouseEnter, handleCardMouseLeave, offers}:
           key={offer.id}
           offer={offer}
           variant={'near-places'}
-          handleCardMouseEnter={handleCardMouseEnter}
-          handleCardMouseLeave={handleCardMouseLeave}
         />
       ))}
     </div>

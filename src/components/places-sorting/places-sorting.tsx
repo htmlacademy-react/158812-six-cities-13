@@ -1,8 +1,8 @@
-import {useState} from 'react';
+import {useState, memo} from 'react';
 import cn from 'classnames';
 import {SortingType} from '../../const';
 import {useAppDispatch} from '../../hooks';
-import {changeSort} from '../../store/action';
+import { changeSort } from '../../store/app-process/app-process';
 
 type PlacesSortingProps = {
   sorting: string;
@@ -12,13 +12,13 @@ function PlacesSorting (props: PlacesSortingProps): JSX.Element {
   const {sorting} = props;
 
   const dispatch = useAppDispatch();
-  const sortingTypes = Object.keys(SortingType) as Array<keyof typeof SortingType>;
+  const sortingTypes = Object.entries(SortingType);
   const [isSelectedSort, setIsSelectedSort] = useState(false);
 
   return (
     <form className="places__sorting" action="#" method="get">
       <span className="places__sorting-caption">
-        Sort by{' '}
+        Sort by {' '}
       </span>
       <span
         onClick={() => setIsSelectedSort((prevState) => !prevState)}
@@ -35,20 +35,20 @@ function PlacesSorting (props: PlacesSortingProps): JSX.Element {
         {'places__options--opened': isSelectedSort}
       )}
       >
-        {sortingTypes.map((type) => (
+        {sortingTypes.map(([type, title]) => (
           <li
             onClick={() => {
-              dispatch(changeSort(type));
+              dispatch(changeSort(title));
               setIsSelectedSort((prevState) => !prevState);
             }}
-            key={type}
+            key={title}
             className={cn(
               'places__option',
               {'places__option--active': type === sorting}
             )}
             tabIndex={0}
           >
-            {SortingType[type]}
+            {title}
           </li>
         ))}
       </ul>
@@ -56,4 +56,6 @@ function PlacesSorting (props: PlacesSortingProps): JSX.Element {
   );
 }
 
-export default PlacesSorting;
+const PlacesSortingMemo = memo(PlacesSorting);
+
+export default PlacesSortingMemo;
