@@ -1,9 +1,12 @@
 import Header from '../../components/header/header';
 import {useRef, FormEvent} from 'react';
-import {useAppDispatch} from '../../hooks';
+import {useAppDispatch, useAppSelector} from '../../hooks';
 import {loginAction} from '../../store/api-actions';
 import { AuthData } from '../../types/auth-data';
 import { toast } from 'react-toastify';
+import { Navigate } from 'react-router-dom';
+import { AppRoute, AuthorizationStatus } from '../../const';
+import { getAuthorizationStatus } from '../../store/user-process/selectors';
 
 function LoginScreen(): JSX.Element {
 
@@ -12,6 +15,11 @@ function LoginScreen(): JSX.Element {
   const regex = /^(?=.*\d)(?=.*[a-z])\S*$/i;
 
   const dispatch = useAppDispatch();
+
+  const userAuthorizationStatus = useAppSelector(getAuthorizationStatus);
+  if (userAuthorizationStatus === AuthorizationStatus.Auth) {
+    return <Navigate to={AppRoute.Main}/>;
+  }
 
   const onSubmit = (authData: AuthData) => {
     dispatch(loginAction(authData));
