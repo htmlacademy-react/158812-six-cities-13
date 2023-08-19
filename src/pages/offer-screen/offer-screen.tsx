@@ -1,5 +1,4 @@
 import { useParams } from 'react-router-dom';
-import Header from '../../components/header/header';
 import { calcRating, getReviews } from '../../utils/utils';
 import cn from 'classnames';
 import Map from '../../components/map/map';
@@ -14,6 +13,7 @@ import ReviewsList from '../../components/reviews-list/reviews-list';
 import ReviewForm from '../../components/review-form/review-form';
 import { getComments, getCommentsDataLoadingStatus, getNearbyOffers, getNearbyOffersDataLoadingStatus, getOffer, getOfferDataLoadingStatus } from '../../store/app-data/selectors';
 import { getAuthorizationStatus } from '../../store/user-process/selectors';
+import HeaderMemo from '../../components/header/header';
 
 function OfferScreen(): JSX.Element {
   const dispatch = useAppDispatch();
@@ -51,7 +51,7 @@ function OfferScreen(): JSX.Element {
 
   return (
     <div className="page">
-      <Header isUserBlock />
+      <HeaderMemo isUserBlock />
 
       <main className="page__main page__main--offer">
         <section className="offer">

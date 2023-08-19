@@ -1,4 +1,4 @@
-import Header from '../../components/header/header';
+import HeaderMemo from '../../components/header/header';
 import {useRef, FormEvent} from 'react';
 import {useAppDispatch, useAppSelector} from '../../hooks';
 import {loginAction} from '../../store/api-actions';
@@ -43,7 +43,7 @@ function LoginScreen(): JSX.Element {
 
   return (
     <div className="page page--gray page--login">
-      <Header />
+      <HeaderMemo />
 
       <main className="page__main page__main--login">
         <div className="page__login-container container">

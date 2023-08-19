@@ -1,5 +1,5 @@
 import Footer from '../../components/footer/footer';
-import Header from '../../components/header/header';
+import HeaderMemo from '../../components/header/header';
 import PlaceCard from '../../components/place-card/place-card';
 import { useAppSelector } from '../../hooks';
 import { getOffers } from '../../store/app-data/selectors';
@@ -12,7 +12,7 @@ function FavoritesScreen(): JSX.Element {
 
   return (
     <div className="page">
-      <Header isUserBlock />
+      <HeaderMemo isUserBlock />
 
       <main className="page__main page__main--favorites">
         <div className="page__favorites-container container">
