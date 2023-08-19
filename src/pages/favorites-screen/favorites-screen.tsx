@@ -1,49 +1,82 @@
+import { useEffect } from 'react';
+import FavoritesListEmpty from '../../components/favorites-list-empty/favorites-list-empty';
 import Footer from '../../components/footer/footer';
 import HeaderMemo from '../../components/header/header';
 import PlaceCard from '../../components/place-card/place-card';
-import { useAppSelector } from '../../hooks';
-import { getOffers } from '../../store/app-data/selectors';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { getFavoriteOffers, getFavoriteOffersCount} from '../../store/app-data/selectors';
+import cn from 'classnames';
+import { fetchFavoriteOffersAction } from '../../store/api-actions';
 
 function FavoritesScreen(): JSX.Element {
 
-  const offers = useAppSelector(getOffers);
+  const favoriteOffers = useAppSelector(getFavoriteOffers);
+  const favoriteOffersCount = useAppSelector(getFavoriteOffersCount);
 
-  const cities = Array.from(new Set(offers.map((offer) => offer.city.name)));
+  const cities = Array.from(new Set(favoriteOffers.map((offer) => offer.city.name)));
+
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(fetchFavoriteOffersAction());
+  }, [dispatch]);
 
   return (
-    <div className="page">
+    <div
+      className={cn(
+        'page',
+        favoriteOffersCount === 0 ? 'page--favorites-empty' : ''
+      )}
+    >
       <HeaderMemo isUserBlock />
 
-      <main className="page__main page__main--favorites">
+      <main
+        className={cn(
+          'page__main',
+          'page__main--favorites',
+          favoriteOffersCount === 0 ? 'page__main--favorites-empty' : ''
+        )}
+      >
         <div className="page__favorites-container container">
-          <section className="favorites">
-            <h1 className="favorites__title">Saved listing</h1>
+          <section
+            className={cn(
+              'favorites',
+              favoriteOffersCount === 0 ? 'favorites--empty' : ''
+            )}
+          >
 
-            <ul className="favorites__list">
-              {cities.map((city) => (
-                <li className="favorites__locations-items" key={city}>
-                  <div className="favorites__locations locations locations--current">
-                    <div className="locations__item">
-                      <a className="locations__item-link" href="#">
-                        <span>{city}</span>
-                      </a>
-                    </div>
-                  </div>
-                  <div className="favorites__places">
-                    {offers.filter((offer) => offer.city.name === city).map((offer) => (
-                      <PlaceCard
-                        key={offer.id}
-                        offer={offer}
-                        variant={'favorites'}
-                      />
-                    ))}
-                  </div>
-                </li>
-              ))}
-            </ul>
+            {favoriteOffersCount ?
+              <>
+                <h1 className="favorites__title">Saved listing</h1>
+                <ul className="favorites__list">
+                  {cities.map((city) => (
+                    <li className="favorites__locations-items" key={city}>
+                      <div className="favorites__locations locations locations--current">
+                        <div className="locations__item">
+                          <a className="locations__item-link" href="#">
+                            <span>{city}</span>
+                          </a>
+                        </div>
+                      </div>
+                      <div className="favorites__places">
+                        {favoriteOffers.filter((offer) => offer.city.name === city).map((offer) => (
+                          <PlaceCard
+                            key={offer.id}
+                            offer={offer}
+                            variant={'favorites'}
+                          />
+                        ))}
+                      </div>
+                    </li>
+                  ))}
+                </ul>
+              </> :
+              <FavoritesListEmpty/>}
+
           </section>
         </div>
       </main>
+
       <Footer />
     </div>
   );

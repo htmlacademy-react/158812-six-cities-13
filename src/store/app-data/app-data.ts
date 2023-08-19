@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { AppData } from '../../types/state';
 import {NameSpace} from '../../const';
-import { fetchOfferAction, fetchOffersAction, fetchNearbyOffersAction, fetchReviewsOfferAction, postCommentAction } from '../api-actions';
+import { fetchOfferAction, fetchOffersAction, fetchNearbyOffersAction, fetchReviewsOfferAction, postCommentAction, fetchFavoriteOffersAction, changeFavoriteOfferStatusAction } from '../api-actions';
 import { toast } from 'react-toastify';
 
 const initialState: AppData = {
@@ -14,12 +14,19 @@ const initialState: AppData = {
   isOfferNearbyDataLoading: false,
   isReviewsDataLoading: false,
   hasError: false,
+  favoriteOffers: [],
+  isFavoriteStatusChanged: false,
 };
 
 export const appData = createSlice({
   name: NameSpace.Data,
   initialState,
-  reducers: {},
+  reducers: {
+    /*resetFavoriteStatus: (state, action) => {
+      //state.isFavoriteStatusChanged = action.payload;
+      state.isFavoriteStatusChanged = false;
+    }*/
+  },
   extraReducers(builder) {
     builder
       .addCase(fetchOffersAction.pending, (state) => {
@@ -60,6 +67,22 @@ export const appData = createSlice({
       })
       .addCase(postCommentAction.rejected, () => {
         toast.warn('Error sending comment! Try again later');
+      })
+      .addCase(fetchFavoriteOffersAction.pending, (state) => {
+        state.isFavoriteStatusChanged = true;
+      })
+      .addCase(fetchFavoriteOffersAction.fulfilled, (state, action) => {
+        state.favoriteOffers = action.payload;
+        state.isFavoriteStatusChanged = false;
+      })
+      .addCase(fetchFavoriteOffersAction.rejected, (state) => {
+        state.isFavoriteStatusChanged = true;
+      })
+      .addCase(changeFavoriteOfferStatusAction.pending, (state) => {
+        state.isFavoriteStatusChanged = false;
+      })
+      .addCase(changeFavoriteOfferStatusAction.fulfilled, (state) => {
+        state.isFavoriteStatusChanged = true;
       });
   }
 });

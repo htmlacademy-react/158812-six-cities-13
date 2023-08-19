@@ -9,6 +9,7 @@ import {AuthData} from '../types/auth-data';
 import {UserData} from '../types/user-data';
 import { Review } from '../types/reviews.js';
 import { CommentData } from '../types/comment-data.js';
+import { FavoriteStatus } from '../types/favorite-status.js';
 
 export const fetchOffersAction = createAsyncThunk<Offer[], undefined, {
   dispatch: AppDispatch;
@@ -70,6 +71,29 @@ export const postCommentAction = createAsyncThunk<Review, CommentData, {
   },
 );
 
+export const fetchFavoriteOffersAction = createAsyncThunk<Offer[], undefined, {
+  dispatch: AppDispatch;
+  state: State;
+  extra: AxiosInstance;
+}>(
+  'DATA/loadFavoriteOffers',
+  async (_arg, { extra: api }) => {
+    const { data } = await api.get<Offer[]>(APIRoute.Favorite);
+    return data;
+  }
+);
+
+export const changeFavoriteOfferStatusAction = createAsyncThunk<Offer, FavoriteStatus, {
+  dispatch: AppDispatch;
+  state: State;
+  extra: AxiosInstance;
+}>(
+  'DATA/changeFavoriteStatus',
+  async ({status, offerId}, {extra: api}) => {
+    const { data } = await api.post<Offer>(`${APIRoute.Favorite}/${offerId}/${status}`);
+    return data;
+  },
+);
 
 export const checkAuthAction = createAsyncThunk<UserData, undefined, {
   dispatch: AppDispatch;
@@ -82,7 +106,6 @@ export const checkAuthAction = createAsyncThunk<UserData, undefined, {
     return data;
   },
 );
-
 
 export const loginAction = createAsyncThunk<UserData, AuthData, {
   dispatch: AppDispatch;

@@ -28,4 +28,6 @@ export type AppData = {
   isOfferNearbyDataLoading: boolean;
   isReviewsDataLoading: boolean;
   hasError: boolean;
+  favoriteOffers: Offer[];
+  isFavoriteStatusChanged: boolean;
 };

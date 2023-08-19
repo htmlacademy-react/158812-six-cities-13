@@ -1,9 +1,12 @@
 import {Offer} from '../../types/offers';
-import {Link} from 'react-router-dom';
+import {Link, useNavigate} from 'react-router-dom';
 import {calcRating} from '../../utils/utils';
 import cn from 'classnames';
-import {TypeOffer} from '../../const';
+import {AppRoute, AuthorizationStatus, TypeOffer} from '../../const';
 import { useMemo } from 'react';
+import { changeFavoriteOfferStatusAction } from '../../store/api-actions';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { getAuthorizationStatus } from '../../store/user-process/selectors';
 
 type PlaceCardProps = {
   offer: Offer;
@@ -14,9 +17,18 @@ type PlaceCardProps = {
 
 function PlaceCard({offer, variant, handleCardMouseEnter, handleCardMouseLeave}: PlaceCardProps): JSX.Element {
 
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
+
   const classList = useMemo(() => cn(
     `${variant}__card`,
     'place-card',
+  ), [ variant ]);
+
+  const imageClassList = useMemo(() => cn(
+    `${variant}__image-wrapper`,
+    'place-card__image-wrapper'
   ), [ variant ]);
 
   return (
@@ -36,10 +48,7 @@ function PlaceCard({offer, variant, handleCardMouseEnter, handleCardMouseLeave}:
           <span>Premium</span>
         </div>}
       <div
-        className={cn(
-          [`${variant}__image-wrapper`],
-          'place-card__image-wrapper'
-        )}
+        className={imageClassList}
       >
         <Link to={`/offer/${offer.id}`}>
           <img
@@ -64,6 +73,16 @@ function PlaceCard({offer, variant, handleCardMouseEnter, handleCardMouseLeave}:
               {'place-card__bookmark-button--active': offer.isFavorite},
             )}
             type="button"
+
+            onClick={() => {
+              if (authorizationStatus !== AuthorizationStatus.Auth) {
+                navigate(AppRoute.Login);
+              }
+              dispatch(changeFavoriteOfferStatusAction({
+                offerId: offer.id,
+                status: Number(!offer.isFavorite ? 1 : 0),
+              }));
+            }}
           >
             <svg className="place-card__bookmark-icon" width="18" height="19">
               <use xlinkHref="#icon-bookmark"></use>

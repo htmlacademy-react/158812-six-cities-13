@@ -1,11 +1,11 @@
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { calcRating, getReviews } from '../../utils/utils';
 import cn from 'classnames';
 import Map from '../../components/map/map';
 import { useEffect } from 'react';
-import { AuthorizationStatus, TypeOffer } from '../../const';
+import { AppRoute, AuthorizationStatus, TypeOffer } from '../../const';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { fetchOfferAction, fetchNearbyOffersAction, fetchReviewsOfferAction } from '../../store/api-actions';
+import { fetchOfferAction, fetchNearbyOffersAction, fetchReviewsOfferAction, changeFavoriteOfferStatusAction } from '../../store/api-actions';
 import LoadingScreen from '../loading-screen/loading-screen';
 import NotFoundScreen from '../not-found-screen/not-found-screen';
 import NearbyPlacesList from '../../components/nearby-places-list/nearby-places-list';
@@ -31,12 +31,12 @@ function OfferScreen(): JSX.Element {
 
   const nearbyOffersList = nearby?.slice(0, 3);
 
+  const navigate = useNavigate();
+
   useEffect(() => {
-    if(currentId) {
-      dispatch(fetchOfferAction(currentId));
-      dispatch(fetchNearbyOffersAction(currentId));
-      dispatch(fetchReviewsOfferAction(currentId));
-    }
+    dispatch(fetchOfferAction(currentId));
+    dispatch(fetchNearbyOffersAction(currentId));
+    dispatch(fetchReviewsOfferAction(currentId));
   }, [dispatch, currentId]);
 
   if (isDetailsOfferLoaded || isOfferNearbyDataLoading || isReviewsDataLoading) {
@@ -80,6 +80,16 @@ function OfferScreen(): JSX.Element {
                     'button',
                     {'offer__bookmark-button--active': currentOffer.isFavorite},
                   )}
+
+                  onClick={() => {
+                    if (authorizationStatus !== AuthorizationStatus.Auth) {
+                      navigate(AppRoute.Login);
+                    }
+                    dispatch(changeFavoriteOfferStatusAction({
+                      offerId: currentOffer.id,
+                      status: Number(!currentOffer.isFavorite ? 1 : 0),
+                    }));
+                  }}
                 >
                   <svg className="offer__bookmark-icon" width={31} height={33}>
                     <use xlinkHref="#icon-bookmark"/>
