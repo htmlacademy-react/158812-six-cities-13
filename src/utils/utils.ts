@@ -1,5 +1,6 @@
 import { SortingType } from '../const';
 import {Offer} from '../types/offers';
+import { Review } from '../types/reviews';
 
 const COUNT_STARS = 5;
 
@@ -17,3 +18,11 @@ export const SortingCallback: {
 export function filterOffersByCity(offersList: Offer[], city: string | undefined, sorting: string) {
   return offersList.filter((offer) => offer.city.name === city).sort(SortingCallback[sorting]);
 }
+
+const MAX_COUNT_LAST_REVIEWS = 10;
+
+export const getReviews = (reviews: readonly Review[]): Review[] => (
+  [...reviews]
+    .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+    .slice(0, MAX_COUNT_LAST_REVIEWS)
+);

@@ -1,7 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { AppData } from '../../types/state';
 import {NameSpace} from '../../const';
-import { fetchOfferAction, fetchOffersAction, fetchNearbyOffersAction, fetchReviewsOfferAction } from '../api-actions';
+import { fetchOfferAction, fetchOffersAction, fetchNearbyOffersAction, fetchReviewsOfferAction, postCommentAction } from '../api-actions';
+import { toast } from 'react-toastify';
 
 const initialState: AppData = {
   offers: [],
@@ -53,6 +54,12 @@ export const appData = createSlice({
       .addCase(fetchReviewsOfferAction.fulfilled, (state, action) => {
         state.comments = action.payload;
         state.isReviewsDataLoading = false;
+      })
+      .addCase(postCommentAction.fulfilled, (state, action) => {
+        state.comments.push(action.payload);
+      })
+      .addCase(postCommentAction.rejected, () => {
+        toast.warn('Error sending comment! Try again later');
       });
   }
 });

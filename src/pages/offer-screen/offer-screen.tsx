@@ -1,6 +1,6 @@
 import { useParams } from 'react-router-dom';
 import Header from '../../components/header/header';
-import { calcRating } from '../../utils/utils';
+import { calcRating, getReviews } from '../../utils/utils';
 import cn from 'classnames';
 import Map from '../../components/map/map';
 import { useEffect } from 'react';
@@ -22,14 +22,13 @@ function OfferScreen(): JSX.Element {
 
   const currentOffer = useAppSelector(getOffer);
   const nearby = useAppSelector(getNearbyOffers);
-  const comments = useAppSelector(getComments);
+  const currentComments = useAppSelector(getComments);
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
 
   const isDetailsOfferLoaded = useAppSelector(getOfferDataLoadingStatus);
   const isOfferNearbyDataLoading = useAppSelector(getNearbyOffersDataLoadingStatus);
   const isReviewsDataLoading = useAppSelector(getCommentsDataLoadingStatus);
 
-  const currentComments = comments?.slice(-10);
   const nearbyOffersList = nearby?.slice(0, 3);
 
   useEffect(() => {
@@ -140,8 +139,9 @@ function OfferScreen(): JSX.Element {
                 </div>
               </div>
               <section className="offer__reviews reviews">
-                <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{currentComments?.length}</span></h2>
-                {currentComments && <ReviewsList reviews={currentComments} />}
+                <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{getReviews(currentComments).length}</span></h2>
+                {currentComments && <ReviewsList reviews={getReviews(currentComments)} />}
+
                 {authorizationStatus === AuthorizationStatus.Auth && <ReviewForm offerId={currentId} />}
               </section>
             </div>

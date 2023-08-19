@@ -3,6 +3,7 @@ import {Link} from 'react-router-dom';
 import {calcRating} from '../../utils/utils';
 import cn from 'classnames';
 import {TypeOffer} from '../../const';
+import { useMemo } from 'react';
 
 type PlaceCardProps = {
   offer: Offer;
@@ -13,12 +14,14 @@ type PlaceCardProps = {
 
 function PlaceCard({offer, variant, handleCardMouseEnter, handleCardMouseLeave}: PlaceCardProps): JSX.Element {
 
+  const classList = useMemo(() => cn(
+    `${variant}__card`,
+    'place-card',
+  ), [ variant ]);
+
   return (
     <article
-      className={cn(
-        [`${variant}__card`],
-        'place-card',
-      )}
+      className={classList}
 
       onMouseEnter={() => {
         handleCardMouseEnter?.(offer.id);
