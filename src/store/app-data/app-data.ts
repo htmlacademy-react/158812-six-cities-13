@@ -21,7 +21,11 @@ const initialState: AppData = {
 export const appData = createSlice({
   name: NameSpace.Data,
   initialState,
-  reducers: {},
+  reducers: {
+    resetFavoriteStatus: (state) => {
+      state.favoriteOffers = [];
+    }
+  },
   extraReducers(builder) {
     builder
       .addCase(fetchOffersAction.pending, (state) => {
@@ -43,6 +47,9 @@ export const appData = createSlice({
         state.offer = action.payload;
         state.isDetailsOfferDataLoading = false;
       })
+      .addCase(fetchOfferAction.rejected, (state) => {
+        state.isDetailsOfferDataLoading = false;
+      })
       .addCase(fetchNearbyOffersAction.pending, (state) => {
         state.isOfferNearbyDataLoading = true;
       })
@@ -50,11 +57,17 @@ export const appData = createSlice({
         state.nearby = action.payload;
         state.isOfferNearbyDataLoading = false;
       })
+      .addCase(fetchNearbyOffersAction.rejected, (state) => {
+        state.isOfferNearbyDataLoading = false;
+      })
       .addCase(fetchReviewsOfferAction.pending, (state) => {
         state.isReviewsDataLoading = true;
       })
       .addCase(fetchReviewsOfferAction.fulfilled, (state, action) => {
         state.comments = action.payload;
+        state.isReviewsDataLoading = false;
+      })
+      .addCase(fetchReviewsOfferAction.rejected, (state) => {
         state.isReviewsDataLoading = false;
       })
       .addCase(postCommentAction.fulfilled, (state, action) => {
@@ -71,14 +84,10 @@ export const appData = createSlice({
         state.isFavoriteStatusChanged = false;
       })
       .addCase(fetchFavoriteOffersAction.rejected, (state) => {
-        state.isFavoriteStatusChanged = true;
-      })
-      .addCase(changeFavoriteOfferStatusAction.pending, (state) => {
         state.isFavoriteStatusChanged = false;
       })
       .addCase(changeFavoriteOfferStatusAction.fulfilled, (state, action) => {
-        state.isFavoriteStatusChanged = true;
-
+        state.isFavoriteStatusChanged = false;
         const index = state.offers.findIndex((offer) => offer.id === action.payload.id);
         state.offers = [
           ...state.offers.slice(0, index),
@@ -108,3 +117,5 @@ export const appData = createSlice({
       });
   }
 });
+
+export const {resetFavoriteStatus} = appData.actions;

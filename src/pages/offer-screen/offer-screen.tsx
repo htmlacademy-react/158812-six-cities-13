@@ -37,7 +37,7 @@ function OfferScreen(): JSX.Element {
     dispatch(fetchReviewsOfferAction(currentId));
   }, [dispatch, currentId]);
 
-  if (isDetailsOfferLoaded || isOfferNearbyDataLoading || isReviewsDataLoading) {
+  if (authorizationStatus === AuthorizationStatus.Unknown || isDetailsOfferLoaded || isOfferNearbyDataLoading || isReviewsDataLoading) {
     return (
       <LoadingScreen />
     );
