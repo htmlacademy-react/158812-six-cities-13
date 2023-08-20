@@ -7,6 +7,9 @@ import { useAppDispatch, useAppSelector } from '../../hooks';
 import { getFavoriteOffers, getFavoriteOffersCount} from '../../store/app-data/selectors';
 import cn from 'classnames';
 import { fetchFavoriteOffersAction } from '../../store/api-actions';
+import { Link } from 'react-router-dom';
+import { changeCity } from '../../store/app-process/app-process';
+import { AppRoute } from '../../const';
 
 function FavoritesScreen(): JSX.Element {
 
@@ -53,9 +56,15 @@ function FavoritesScreen(): JSX.Element {
                     <li className="favorites__locations-items" key={city}>
                       <div className="favorites__locations locations locations--current">
                         <div className="locations__item">
-                          <a className="locations__item-link" href="#">
+                          <Link
+                            className="locations__item-link"
+                            to={AppRoute.Main}
+                            onClick={() => {
+                              dispatch(changeCity(city));
+                            }}
+                          >
                             <span>{city}</span>
-                          </a>
+                          </Link>
                         </div>
                       </div>
                       <div className="favorites__places">

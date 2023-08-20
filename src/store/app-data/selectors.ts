@@ -19,3 +19,5 @@ export const getErrorStatus = (state: State): boolean => state[NameSpace.Data].h
 
 export const getFavoriteOffers = (state: State): Offer[] => state[NameSpace.Data].favoriteOffers;
 export const getFavoriteOffersCount = (state: State): number => state[NameSpace.Data].favoriteOffers.length;
+export const getFavoriteStatusChange = (state: State) => state[NameSpace.Data].isFavoriteStatusChanged;
+

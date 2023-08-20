@@ -1,11 +1,10 @@
-import { useNavigate, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { calcRating, getReviews } from '../../utils/utils';
-import cn from 'classnames';
 import Map from '../../components/map/map';
 import { useEffect } from 'react';
-import { AppRoute, AuthorizationStatus, TypeOffer } from '../../const';
+import { AuthorizationStatus, TypeOffer } from '../../const';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { fetchOfferAction, fetchNearbyOffersAction, fetchReviewsOfferAction, changeFavoriteOfferStatusAction } from '../../store/api-actions';
+import { fetchOfferAction, fetchNearbyOffersAction, fetchReviewsOfferAction, fetchFavoriteOffersAction } from '../../store/api-actions';
 import LoadingScreen from '../loading-screen/loading-screen';
 import NotFoundScreen from '../not-found-screen/not-found-screen';
 import NearbyPlacesList from '../../components/nearby-places-list/nearby-places-list';
@@ -14,6 +13,7 @@ import ReviewForm from '../../components/review-form/review-form';
 import { getComments, getCommentsDataLoadingStatus, getNearbyOffers, getNearbyOffersDataLoadingStatus, getOffer, getOfferDataLoadingStatus } from '../../store/app-data/selectors';
 import { getAuthorizationStatus } from '../../store/user-process/selectors';
 import HeaderMemo from '../../components/header/header';
+import BookmarkButton from '../../components/bookmark-button/bookmark-button';
 
 function OfferScreen(): JSX.Element {
   const dispatch = useAppDispatch();
@@ -31,12 +31,12 @@ function OfferScreen(): JSX.Element {
 
   const nearbyOffersList = nearby?.slice(0, 3);
 
-  const navigate = useNavigate();
-
   useEffect(() => {
     dispatch(fetchOfferAction(currentId));
     dispatch(fetchNearbyOffersAction(currentId));
     dispatch(fetchReviewsOfferAction(currentId));
+    dispatch(fetchFavoriteOffersAction());
+    dispatch(fetchFavoriteOffersAction());
   }, [dispatch, currentId]);
 
   if (isDetailsOfferLoaded || isOfferNearbyDataLoading || isReviewsDataLoading) {
@@ -74,28 +74,13 @@ function OfferScreen(): JSX.Element {
                 <h1 className="offer__name">
                   {currentOffer.title}
                 </h1>
-                <button
-                  className={cn(
-                    'offer__bookmark-button',
-                    'button',
-                    {'offer__bookmark-button--active': currentOffer.isFavorite},
-                  )}
-
-                  onClick={() => {
-                    if (authorizationStatus !== AuthorizationStatus.Auth) {
-                      navigate(AppRoute.Login);
-                    }
-                    dispatch(changeFavoriteOfferStatusAction({
-                      offerId: currentOffer.id,
-                      status: Number(!currentOffer.isFavorite ? 1 : 0),
-                    }));
-                  }}
-                >
-                  <svg className="offer__bookmark-icon" width={31} height={33}>
-                    <use xlinkHref="#icon-bookmark"/>
-                  </svg>
-                  <span className="visually-hidden">To bookmarks</span>
-                </button>
+                <BookmarkButton
+                  variant='offer'
+                  width={31}
+                  height={33}
+                  offerId={currentId}
+                  isFavorite={currentOffer.isFavorite}
+                />
               </div>
               <div className="offer__rating rating">
                 <div className="offer__stars rating__stars">

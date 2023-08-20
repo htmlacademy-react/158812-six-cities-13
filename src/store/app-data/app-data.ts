@@ -21,12 +21,7 @@ const initialState: AppData = {
 export const appData = createSlice({
   name: NameSpace.Data,
   initialState,
-  reducers: {
-    /*resetFavoriteStatus: (state, action) => {
-      //state.isFavoriteStatusChanged = action.payload;
-      state.isFavoriteStatusChanged = false;
-    }*/
-  },
+  reducers: {},
   extraReducers(builder) {
     builder
       .addCase(fetchOffersAction.pending, (state) => {
@@ -81,8 +76,35 @@ export const appData = createSlice({
       .addCase(changeFavoriteOfferStatusAction.pending, (state) => {
         state.isFavoriteStatusChanged = false;
       })
-      .addCase(changeFavoriteOfferStatusAction.fulfilled, (state) => {
+      .addCase(changeFavoriteOfferStatusAction.fulfilled, (state, action) => {
         state.isFavoriteStatusChanged = true;
+
+        const index = state.offers.findIndex((offer) => offer.id === action.payload.id);
+        state.offers = [
+          ...state.offers.slice(0, index),
+          action.payload,
+          ...state.offers.slice(index + 1)
+        ];
+
+        if (action.payload.isFavorite &&
+            !state.favoriteOffers.find((favoriteOffer) => favoriteOffer.id === action.payload.id)) {
+          state.favoriteOffers = [...state.favoriteOffers, action.payload];
+        } else {
+          state.favoriteOffers = state.favoriteOffers.filter((favoriteOffer) => favoriteOffer.id !== action.payload.id);
+        }
+
+        if (state.offer?.id === action.payload.id) {
+          state.offer = {...state.offer, isFavorite: !state.offer.isFavorite};
+        }
+
+        if (state.nearby.find((nearbyOffer) => nearbyOffer.id === action.payload.id)) {
+          const nearbyIndex = state.nearby.findIndex((nearbyOffer) => nearbyOffer.id === action.payload.id);
+          state.nearby = [
+            ...state.nearby.slice(0, nearbyIndex),
+            action.payload,
+            ...state.nearby.slice(nearbyIndex + 1)
+          ];
+        }
       });
   }
 });
