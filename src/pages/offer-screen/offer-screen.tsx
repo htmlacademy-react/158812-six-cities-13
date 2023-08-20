@@ -36,7 +36,6 @@ function OfferScreen(): JSX.Element {
     dispatch(fetchNearbyOffersAction(currentId));
     dispatch(fetchReviewsOfferAction(currentId));
     dispatch(fetchFavoriteOffersAction());
-    dispatch(fetchFavoriteOffersAction());
   }, [dispatch, currentId]);
 
   if (isDetailsOfferLoaded || isOfferNearbyDataLoading || isReviewsDataLoading) {

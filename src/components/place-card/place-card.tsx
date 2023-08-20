@@ -4,9 +4,6 @@ import {calcRating} from '../../utils/utils';
 import cn from 'classnames';
 import {TypeOffer} from '../../const';
 import { useMemo } from 'react';
-//import { changeFavoriteOfferStatusAction } from '../../store/api-actions';
-//import { useAppDispatch, useAppSelector } from '../../hooks';
-//import { getAuthorizationStatus } from '../../store/user-process/selectors';
 import BookmarkButton from '../bookmark-button/bookmark-button';
 
 type PlaceCardProps = {
