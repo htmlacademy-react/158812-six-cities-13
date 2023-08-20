@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import FavoritesListEmpty from '../../components/favorites-list-empty/favorites-list-empty';
 import Footer from '../../components/footer/footer';
 import HeaderMemo from '../../components/header/header';
@@ -6,7 +5,6 @@ import PlaceCard from '../../components/place-card/place-card';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { getFavoriteOffers, getFavoriteOffersCount} from '../../store/app-data/selectors';
 import cn from 'classnames';
-import { fetchFavoriteOffersAction } from '../../store/api-actions';
 import { Link } from 'react-router-dom';
 import { changeCity } from '../../store/app-process/app-process';
 import { AppRoute } from '../../const';
@@ -20,9 +18,6 @@ function FavoritesScreen(): JSX.Element {
 
   const dispatch = useAppDispatch();
 
-  useEffect(() => {
-    dispatch(fetchFavoriteOffersAction());
-  }, [dispatch]);
 
   return (
     <div

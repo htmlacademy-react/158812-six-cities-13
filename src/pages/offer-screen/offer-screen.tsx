@@ -4,7 +4,7 @@ import Map from '../../components/map/map';
 import { useEffect } from 'react';
 import { AuthorizationStatus, TypeOffer } from '../../const';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { fetchOfferAction, fetchNearbyOffersAction, fetchReviewsOfferAction, fetchFavoriteOffersAction } from '../../store/api-actions';
+import { fetchOfferAction, fetchNearbyOffersAction, fetchReviewsOfferAction} from '../../store/api-actions';
 import LoadingScreen from '../loading-screen/loading-screen';
 import NotFoundScreen from '../not-found-screen/not-found-screen';
 import NearbyPlacesList from '../../components/nearby-places-list/nearby-places-list';
@@ -35,7 +35,6 @@ function OfferScreen(): JSX.Element {
     dispatch(fetchOfferAction(currentId));
     dispatch(fetchNearbyOffersAction(currentId));
     dispatch(fetchReviewsOfferAction(currentId));
-    dispatch(fetchFavoriteOffersAction());
   }, [dispatch, currentId]);
 
   if (isDetailsOfferLoaded || isOfferNearbyDataLoading || isReviewsDataLoading) {

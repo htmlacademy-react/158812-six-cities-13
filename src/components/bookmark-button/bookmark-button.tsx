@@ -26,15 +26,14 @@ function BookmarkButton({offerId, isFavorite, variant, width, height}: BookmarkB
   ), [ variant, isFavorite ]);
 
   const handleFavoriteStatusClick = () => {
-
-    if (authorizationStatus !== AuthorizationStatus.Auth) {
+    if (authorizationStatus === AuthorizationStatus.Auth) {
+      dispatch(changeFavoriteOfferStatusAction({
+        offerId: offerId,
+        status: Number(!isFavorite ? 1 : 0),
+      }));
+    } else {
       navigate(AppRoute.Login);
     }
-
-    dispatch(changeFavoriteOfferStatusAction({
-      offerId: offerId,
-      status: Number(!isFavorite ? 1 : 0),
-    }));
   };
 
   return (
