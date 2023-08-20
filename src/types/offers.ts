@@ -27,11 +27,14 @@ export type Offer = {
   isFavorite: boolean;
   isPremium: boolean;
   rating: number;
-  description: string;
-  bedrooms: number;
-  goods: string[];
-  images: string[];
-  maxAdults: number;
   previewImage: string;
+};
+
+export type DetailsOffer = Omit<Offer, 'previewImage'> & {
+  description: string;
+  images: string[];
+  goods: string[];
   host: OfferHost;
+  bedrooms: number;
+  maxAdults: number;
 };

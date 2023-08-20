@@ -1,6 +1,6 @@
 import {store} from '../store/index';
 import {AuthorizationStatus} from '../const';
-import { Offer } from './offers';
+import { Offer, DetailsOffer } from './offers';
 import { Review } from './reviews';
 import { UserData } from './user-data';
 
@@ -20,7 +20,7 @@ export type AppProcess = {
 
 export type AppData = {
   offers: Offer[];
-  offer: Offer | null;
+  offer: DetailsOffer | null;
   comments: Review[];
   nearby: Offer[];
   isOffersDataLoading: boolean;
