@@ -66,6 +66,7 @@ function PlaceCard({offer, variant, handleCardMouseEnter, handleCardMouseLeave}:
             height={19}
             offerId={offer.id}
             isFavorite={offer.isFavorite}
+            textIcon={'In bookmarks'}
           />
         </div>
         <div className="place-card__rating rating">

@@ -12,9 +12,10 @@ type BookmarkButtonProps = {
   variant: 'place-card' | 'offer';
   width: number;
   height: number;
+  textIcon: string;
 }
 
-function BookmarkButton({offerId, isFavorite, variant, width, height}: BookmarkButtonProps): JSX.Element {
+function BookmarkButton({offerId, isFavorite, variant, width, height, textIcon}: BookmarkButtonProps): JSX.Element {
   const dispatch = useAppDispatch();
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
   const navigate = useNavigate();
@@ -45,7 +46,7 @@ function BookmarkButton({offerId, isFavorite, variant, width, height}: BookmarkB
       <svg className="place-card__bookmark-icon" width={width} height={height}>
         <use xlinkHref="#icon-bookmark"/>
       </svg>
-      <span className="visually-hidden">In bookmarks</span>
+      <span className="visually-hidden">{textIcon}</span>
     </button>
   );
 }

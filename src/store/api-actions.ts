@@ -104,7 +104,9 @@ export const checkAuthAction = createAsyncThunk<UserData, undefined, {
   'user/checkAuth',
   async (_arg, {dispatch, extra: api}) => {
     const { data } = await api.get<UserData>(APIRoute.Login);
-    dispatch(fetchFavoriteOffersAction());
+    if (data) {
+      dispatch(fetchFavoriteOffersAction());
+    }
     return data;
   },
 );
@@ -118,7 +120,7 @@ export const loginAction = createAsyncThunk<UserData, AuthData, {
   async ({login: email, password}, {dispatch, extra: api}) => {
     const { data } = await api.post<UserData>(APIRoute.Login, {email, password});
     saveToken(data.token);
-    dispatch(fetchFavoriteOffersAction());
+    dispatch(fetchOffersAction());
     dispatch(redirectToRoute(AppRoute.Main));
     return data;
   },
@@ -131,6 +133,7 @@ export const logoutAction = createAsyncThunk<void, undefined, {
   'user/logout',
   async (_arg, {dispatch, extra: api}) => {
     await api.delete(APIRoute.Logout);
+    dispatch(fetchOffersAction());
     dispatch(resetFavoriteStatus());
     dropToken();
   },

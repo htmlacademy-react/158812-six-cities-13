@@ -78,6 +78,7 @@ function OfferScreen(): JSX.Element {
                   height={33}
                   offerId={currentId}
                   isFavorite={currentOffer.isFavorite}
+                  textIcon={'To bookmarks'}
                 />
               </div>
               <div className="offer__rating rating">

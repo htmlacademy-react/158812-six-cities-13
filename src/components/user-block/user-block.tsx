@@ -1,10 +1,9 @@
 import {Link} from 'react-router-dom';
-import { fetchFavoriteOffersAction, logoutAction } from '../../store/api-actions';
+import { logoutAction } from '../../store/api-actions';
 import {useAppSelector, useAppDispatch} from '../../hooks';
 import {AppRoute, AuthorizationStatus} from '../../const';
 import { getAuthorizationStatus, getUserInfo } from '../../store/user-process/selectors';
 import { getFavoriteOffersCount } from '../../store/app-data/selectors';
-import { useEffect } from 'react';
 
 function UserBlock(): JSX.Element {
 
@@ -14,12 +13,7 @@ function UserBlock(): JSX.Element {
   const isLoggedIn = userStatus === AuthorizationStatus.Auth;
 
   const userInfo = useAppSelector(getUserInfo);
-
   const favoriteOffersCount = useAppSelector(getFavoriteOffersCount);
-
-  useEffect(() => {
-    dispatch(fetchFavoriteOffersAction());
-  }, [dispatch]);
 
   return (
     <nav className="header__nav">

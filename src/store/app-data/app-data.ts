@@ -95,8 +95,7 @@ export const appData = createSlice({
           ...state.offers.slice(index + 1)
         ];
 
-        if (action.payload.isFavorite &&
-            !state.favoriteOffers.find((favoriteOffer) => favoriteOffer.id === action.payload.id)) {
+        if (action.payload.isFavorite && !state.favoriteOffers.find((favoriteOffer) => favoriteOffer.id === action.payload.id)) {
           state.favoriteOffers = [...state.favoriteOffers, action.payload];
         } else {
           state.favoriteOffers = state.favoriteOffers.filter((favoriteOffer) => favoriteOffer.id !== action.payload.id);
