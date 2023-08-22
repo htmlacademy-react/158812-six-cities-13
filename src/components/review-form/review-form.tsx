@@ -61,7 +61,6 @@ function ReviewForm({offerId}: ReviewFormProps): JSX.Element {
     evt.preventDefault();
 
     setIsSending(true);
-    resetData(evt);
 
     if(isValid) {
       onSubmit({
@@ -72,6 +71,8 @@ function ReviewForm({offerId}: ReviewFormProps): JSX.Element {
         setIsSending(false);
       });
     }
+
+    resetData(evt);
   };
 
   return (

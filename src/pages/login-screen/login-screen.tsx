@@ -4,9 +4,10 @@ import {useAppDispatch, useAppSelector} from '../../hooks';
 import {loginAction} from '../../store/api-actions';
 import { AuthData } from '../../types/auth-data';
 import { toast } from 'react-toastify';
-import { Navigate } from 'react-router-dom';
-import { AppRoute, AuthorizationStatus } from '../../const';
+import { Link, Navigate } from 'react-router-dom';
+import { AppRoute, AuthorizationStatus, CITIES } from '../../const';
 import { getAuthorizationStatus } from '../../store/user-process/selectors';
+import { changeCity } from '../../store/app-process/app-process';
 
 function LoginScreen(): JSX.Element {
 
@@ -40,6 +41,9 @@ function LoginScreen(): JSX.Element {
       });
     }
   };
+
+  const city = Object.values(CITIES);
+  const randomCity = city[Math.floor(Math.random() * city.length)];
 
   return (
     <div className="page page--gray page--login">
@@ -82,9 +86,15 @@ function LoginScreen(): JSX.Element {
           </section>
           <section className="locations locations--login locations--current">
             <div className="locations__item">
-              <a className="locations__item-link" href="#">
-                <span>Amsterdam</span>
-              </a>
+              <Link
+                className="locations__item-link"
+                to={AppRoute.Main}
+                onClick={() => {
+                  dispatch(changeCity(randomCity));
+                }}
+              >
+                <span>{randomCity}</span>
+              </Link>
             </div>
           </section>
         </div>
