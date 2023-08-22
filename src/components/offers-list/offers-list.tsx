@@ -18,6 +18,7 @@ function OffersList ({handleCardMouseEnter, handleCardMouseLeave, offers}: Offer
           variant={'cities'}
           handleCardMouseEnter={handleCardMouseEnter}
           handleCardMouseLeave={handleCardMouseLeave}
+          checkAuth='is'
         />
       ))}
     </div>

@@ -14,6 +14,7 @@ function NearbyPlacesList ({offers}: NearbyPlacesListProps): JSX.Element {
           key={offer.id}
           offer={offer}
           variant={'near-places'}
+          checkAuth='is'
         />
       ))}
     </div>

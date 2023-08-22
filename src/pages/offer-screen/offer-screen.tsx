@@ -80,6 +80,7 @@ function OfferScreen(): JSX.Element {
                   offerId={currentId}
                   isFavorite={currentOffer.isFavorite}
                   textIcon={'To bookmarks'}
+                  checkAuth='is'
                 />
               </div>
               <div className="offer__rating rating">

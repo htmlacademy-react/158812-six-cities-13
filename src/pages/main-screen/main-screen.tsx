@@ -48,7 +48,7 @@ function MainScreen(): JSX.Element {
             <div className="cities__places-container container">
               <section className="cities__places places">
                 <h2 className="visually-hidden">Places</h2>
-                <b className="places__found">{offersByCity.length} places to stay in {currentCity}</b>
+                <b className="places__found">{offersByCity.length} {offersByCity.length > 1 ? 'places' : 'place'} to stay in {currentCity}</b>
                 <PlacesSortingMemo sorting={sortOffers} />
                 <OffersList
                   handleCardMouseEnter={handleCardMouseEnter}

@@ -13,17 +13,18 @@ type BookmarkButtonProps = {
   width: number;
   height: number;
   textIcon: string;
+  checkAuth: 'is' | 'set';
 }
 
-function BookmarkButton({offerId, isFavorite, variant, width, height, textIcon}: BookmarkButtonProps): JSX.Element {
+function BookmarkButton({offerId, isFavorite, variant, width, height, textIcon, checkAuth}: BookmarkButtonProps): JSX.Element {
   const dispatch = useAppDispatch();
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
   const navigate = useNavigate();
 
   const classList = useMemo(() => cn(
     `${variant}__bookmark-button`,
+    isFavorite ? `${variant}__bookmark-button--active` : null,
     'button',
-    {'place-card__bookmark-button--active': isFavorite},
   ), [ variant, isFavorite ]);
 
   const handleFavoriteStatusClick = () => {
@@ -37,13 +38,29 @@ function BookmarkButton({offerId, isFavorite, variant, width, height, textIcon}:
     }
   };
 
+  const handleFavoriteStatusAuthorizationClick = () => {
+    dispatch(changeFavoriteOfferStatusAction({
+      offerId: offerId,
+      status: Number(!isFavorite ? 1 : 0),
+    }));
+  };
+
   return (
     <button
       className={classList}
       type="button"
-      onClick={handleFavoriteStatusClick}
+
+      onClick={() => {
+        if (checkAuth === 'is') {
+          handleFavoriteStatusClick();
+        }
+
+        if (checkAuth === 'set') {
+          handleFavoriteStatusAuthorizationClick();
+        }
+      }}
     >
-      <svg className="place-card__bookmark-icon" width={width} height={height}>
+      <svg className={`${variant}__bookmark-icon`} width={width} height={height}>
         <use xlinkHref="#icon-bookmark"/>
       </svg>
       <span className="visually-hidden">{textIcon}</span>
