@@ -68,7 +68,6 @@ function FavoritesScreen(): JSX.Element {
                             key={offer.id}
                             offer={offer}
                             variant={'favorites'}
-                            checkAuth='set'
                           />
                         ))}
                       </div>

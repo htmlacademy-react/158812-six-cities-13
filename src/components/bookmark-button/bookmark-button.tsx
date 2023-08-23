@@ -13,10 +13,10 @@ type BookmarkButtonProps = {
   width: number;
   height: number;
   textIcon: string;
-  checkAuth: 'is' | 'set';
+  isCheckAuth?: boolean;
 }
 
-function BookmarkButton({offerId, isFavorite, variant, width, height, textIcon, checkAuth}: BookmarkButtonProps): JSX.Element {
+function BookmarkButton({offerId, isFavorite, variant, width, height, textIcon, isCheckAuth}: BookmarkButtonProps): JSX.Element {
   const dispatch = useAppDispatch();
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
   const navigate = useNavigate();
@@ -28,17 +28,12 @@ function BookmarkButton({offerId, isFavorite, variant, width, height, textIcon, 
   ), [ variant, isFavorite ]);
 
   const handleFavoriteStatusClick = () => {
-    if (authorizationStatus === AuthorizationStatus.Auth) {
-      dispatch(changeFavoriteOfferStatusAction({
-        offerId: offerId,
-        status: Number(!isFavorite ? 1 : 0),
-      }));
-    } else {
-      navigate(AppRoute.Login);
+    if (isCheckAuth) {
+      if (authorizationStatus !== AuthorizationStatus.Auth) {
+        navigate(AppRoute.Login);
+      }
     }
-  };
 
-  const handleFavoriteStatusAuthorizationClick = () => {
     dispatch(changeFavoriteOfferStatusAction({
       offerId: offerId,
       status: Number(!isFavorite ? 1 : 0),
@@ -49,16 +44,7 @@ function BookmarkButton({offerId, isFavorite, variant, width, height, textIcon, 
     <button
       className={classList}
       type="button"
-
-      onClick={() => {
-        if (checkAuth === 'is') {
-          handleFavoriteStatusClick();
-        }
-
-        if (checkAuth === 'set') {
-          handleFavoriteStatusAuthorizationClick();
-        }
-      }}
+      onClick={handleFavoriteStatusClick}
     >
       <svg className={`${variant}__bookmark-icon`} width={width} height={height}>
         <use xlinkHref="#icon-bookmark"/>

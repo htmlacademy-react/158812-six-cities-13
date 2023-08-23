@@ -11,10 +11,10 @@ type PlaceCardProps = {
   variant: 'cities' | 'favorites' | 'near-places';
   handleCardMouseEnter?: (id: string) => void;
   handleCardMouseLeave?: () => void;
-  checkAuth: 'is' | 'set';
+  isCheckAuth?: boolean;
 }
 
-function PlaceCard({offer, variant, handleCardMouseEnter, handleCardMouseLeave, checkAuth}: PlaceCardProps): JSX.Element {
+function PlaceCard({offer, variant, handleCardMouseEnter, handleCardMouseLeave, isCheckAuth}: PlaceCardProps): JSX.Element {
 
   const classList = useMemo(() => cn(
     `${variant}__card`,
@@ -68,7 +68,7 @@ function PlaceCard({offer, variant, handleCardMouseEnter, handleCardMouseLeave, 
             offerId={offer.id}
             isFavorite={offer.isFavorite}
             textIcon={'In bookmarks'}
-            checkAuth={checkAuth}
+            isCheckAuth={isCheckAuth}
           />
         </div>
         <div className="place-card__rating rating">
