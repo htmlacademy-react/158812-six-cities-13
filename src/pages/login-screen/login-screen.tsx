@@ -1,9 +1,13 @@
-import Header from '../../components/header/header';
+import HeaderMemo from '../../components/header/header';
 import {useRef, FormEvent} from 'react';
-import {useAppDispatch} from '../../hooks';
+import {useAppDispatch, useAppSelector} from '../../hooks';
 import {loginAction} from '../../store/api-actions';
 import { AuthData } from '../../types/auth-data';
 import { toast } from 'react-toastify';
+import { Link, Navigate } from 'react-router-dom';
+import { AppRoute, AuthorizationStatus, CITIES } from '../../const';
+import { getAuthorizationStatus } from '../../store/user-process/selectors';
+import { changeCity } from '../../store/app-process/app-process';
 
 function LoginScreen(): JSX.Element {
 
@@ -12,6 +16,11 @@ function LoginScreen(): JSX.Element {
   const regex = /^(?=.*\d)(?=.*[a-z])\S*$/i;
 
   const dispatch = useAppDispatch();
+
+  const userAuthorizationStatus = useAppSelector(getAuthorizationStatus);
+  if (userAuthorizationStatus === AuthorizationStatus.Auth) {
+    return <Navigate to={AppRoute.Main}/>;
+  }
 
   const onSubmit = (authData: AuthData) => {
     dispatch(loginAction(authData));
@@ -33,9 +42,12 @@ function LoginScreen(): JSX.Element {
     }
   };
 
+  const city = Object.values(CITIES);
+  const randomCity = city[Math.floor(Math.random() * city.length)];
+
   return (
     <div className="page page--gray page--login">
-      <Header />
+      <HeaderMemo />
 
       <main className="page__main page__main--login">
         <div className="page__login-container container">
@@ -74,9 +86,15 @@ function LoginScreen(): JSX.Element {
           </section>
           <section className="locations locations--login locations--current">
             <div className="locations__item">
-              <a className="locations__item-link" href="#">
-                <span>Amsterdam</span>
-              </a>
+              <Link
+                className="locations__item-link"
+                to={AppRoute.Main}
+                onClick={() => {
+                  dispatch(changeCity(randomCity));
+                }}
+              >
+                <span>{randomCity}</span>
+              </Link>
             </div>
           </section>
         </div>

@@ -1,12 +1,10 @@
 import { useParams } from 'react-router-dom';
-import Header from '../../components/header/header';
-import { calcRating } from '../../utils/utils';
-import cn from 'classnames';
+import { calcRating, getReviews } from '../../utils/utils';
 import Map from '../../components/map/map';
 import { useEffect } from 'react';
 import { AuthorizationStatus, TypeOffer } from '../../const';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { fetchOfferAction, fetchNearbyOffersAction, fetchReviewsOfferAction } from '../../store/api-actions';
+import { fetchOfferAction, fetchNearbyOffersAction, fetchReviewsOfferAction} from '../../store/api-actions';
 import LoadingScreen from '../loading-screen/loading-screen';
 import NotFoundScreen from '../not-found-screen/not-found-screen';
 import NearbyPlacesList from '../../components/nearby-places-list/nearby-places-list';
@@ -14,6 +12,9 @@ import ReviewsList from '../../components/reviews-list/reviews-list';
 import ReviewForm from '../../components/review-form/review-form';
 import { getComments, getCommentsDataLoadingStatus, getNearbyOffers, getNearbyOffersDataLoadingStatus, getOffer, getOfferDataLoadingStatus } from '../../store/app-data/selectors';
 import { getAuthorizationStatus } from '../../store/user-process/selectors';
+import HeaderMemo from '../../components/header/header';
+import BookmarkButton from '../../components/bookmark-button/bookmark-button';
+import cn from 'classnames';
 
 function OfferScreen(): JSX.Element {
   const dispatch = useAppDispatch();
@@ -22,25 +23,22 @@ function OfferScreen(): JSX.Element {
 
   const currentOffer = useAppSelector(getOffer);
   const nearby = useAppSelector(getNearbyOffers);
-  const comments = useAppSelector(getComments);
+  const currentComments = useAppSelector(getComments);
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
 
   const isDetailsOfferLoaded = useAppSelector(getOfferDataLoadingStatus);
   const isOfferNearbyDataLoading = useAppSelector(getNearbyOffersDataLoadingStatus);
   const isReviewsDataLoading = useAppSelector(getCommentsDataLoadingStatus);
 
-  const currentComments = comments?.slice(-10);
   const nearbyOffersList = nearby?.slice(0, 3);
 
   useEffect(() => {
-    if(currentId) {
-      dispatch(fetchOfferAction(currentId));
-      dispatch(fetchNearbyOffersAction(currentId));
-      dispatch(fetchReviewsOfferAction(currentId));
-    }
+    dispatch(fetchOfferAction(currentId));
+    dispatch(fetchNearbyOffersAction(currentId));
+    dispatch(fetchReviewsOfferAction(currentId));
   }, [dispatch, currentId]);
 
-  if (isDetailsOfferLoaded || isOfferNearbyDataLoading || isReviewsDataLoading) {
+  if (authorizationStatus === AuthorizationStatus.Unknown || isDetailsOfferLoaded || isOfferNearbyDataLoading || isReviewsDataLoading) {
     return (
       <LoadingScreen />
     );
@@ -52,7 +50,7 @@ function OfferScreen(): JSX.Element {
 
   return (
     <div className="page">
-      <Header isUserBlock />
+      <HeaderMemo isUserBlock />
 
       <main className="page__main page__main--offer">
         <section className="offer">
@@ -75,18 +73,15 @@ function OfferScreen(): JSX.Element {
                 <h1 className="offer__name">
                   {currentOffer.title}
                 </h1>
-                <button
-                  className={cn(
-                    'offer__bookmark-button',
-                    'button',
-                    {'offer__bookmark-button--active': currentOffer.isFavorite},
-                  )}
-                >
-                  <svg className="offer__bookmark-icon" width={31} height={33}>
-                    <use xlinkHref="#icon-bookmark"/>
-                  </svg>
-                  <span className="visually-hidden">To bookmarks</span>
-                </button>
+                <BookmarkButton
+                  variant='offer'
+                  width={31}
+                  height={33}
+                  offerId={currentId}
+                  isFavorite={currentOffer.isFavorite}
+                  textIcon={'To bookmarks'}
+                  isCheckAuth
+                />
               </div>
               <div className="offer__rating rating">
                 <div className="offer__stars rating__stars">
@@ -100,10 +95,10 @@ function OfferScreen(): JSX.Element {
                   {TypeOffer[currentOffer.type]}
                 </li>
                 <li className="offer__feature offer__feature--bedrooms">
-                  {currentOffer.bedrooms} Bedrooms
+                  {currentOffer.bedrooms} {currentOffer.bedrooms > 1 ? 'Bedrooms' : 'Bedroom'}
                 </li>
                 <li className="offer__feature offer__feature--adults">
-                  Max {currentOffer.maxAdults} adults
+                  Max {currentOffer.maxAdults} {currentOffer.maxAdults > 1 ? 'adults' : 'adult'}
                 </li>
               </ul>
               <div className="offer__price">
@@ -119,7 +114,13 @@ function OfferScreen(): JSX.Element {
               <div className="offer__host">
                 <h2 className="offer__host-title">Meet the host</h2>
                 <div className="offer__host-user user">
-                  <div className="offer__avatar-wrapper offer__avatar-wrapper--pro user__avatar-wrapper">
+                  <div
+                    className={cn(
+                      'offer__avatar-wrapper',
+                      'user__avatar-wrapper',
+                      {'offer__avatar-wrapper--pro': currentOffer.host.isPro}
+                    )}
+                  >
                     <img className="offer__avatar user__avatar" src={currentOffer.host.avatarUrl} width={74} height={74} alt={'Host avatar'}/>
                   </div>
                   <span className="offer__user-name">
@@ -141,7 +142,8 @@ function OfferScreen(): JSX.Element {
               </div>
               <section className="offer__reviews reviews">
                 <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{currentComments?.length}</span></h2>
-                {currentComments && <ReviewsList reviews={currentComments} />}
+                {currentComments && <ReviewsList reviews={getReviews(currentComments)} />}
+
                 {authorizationStatus === AuthorizationStatus.Auth && <ReviewForm offerId={currentId} />}
               </section>
             </div>

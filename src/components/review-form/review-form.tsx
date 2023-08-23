@@ -1,4 +1,4 @@
-import { FormEvent, Fragment, useEffect, useMemo, useState } from 'react';
+import { FormEvent, Fragment, useCallback, useEffect, useMemo, useState } from 'react';
 import { useAppDispatch } from '../../hooks';
 import { CommentData } from '../../types/comment-data';
 import { postCommentAction } from '../../store/api-actions';
@@ -42,13 +42,17 @@ function ReviewForm({offerId}: ReviewFormProps): JSX.Element {
     }
   }, [isValid]);
 
-  const handleInputChange = (evt: React.ChangeEvent<HTMLInputElement>) => {
+  const handleInputChange = useCallback((evt: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({...formData, rating: Number(evt.target.value)});
-  };
+  },
+  [formData]
+  );
 
-  const handleTextareaChange = (evt: React.ChangeEvent<HTMLTextAreaElement>) => {
+  const handleTextareaChange = useCallback((evt: React.ChangeEvent<HTMLTextAreaElement>) => {
     setFormData({...formData, comment: evt.target.value});
-  };
+  },
+  [formData]
+  );
 
   const resetData = (evt: FormEvent<HTMLFormElement>) => {
     setFormData({...formData, comment: '', rating: EMPTY_RATING});
@@ -73,6 +77,7 @@ function ReviewForm({offerId}: ReviewFormProps): JSX.Element {
     }
 
     resetData(evt);
+
   };
 
   return (

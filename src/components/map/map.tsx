@@ -1,30 +1,29 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useMemo, useRef } from 'react';
 import 'leaflet/dist/leaflet.css';
 import {URL_MARKER_DEFAULT, URL_MARKER_CURRENT} from '../../const';
 import {Icon, Marker, layerGroup} from 'leaflet';
 import useMap from '../../hooks/use-map';
 import cn from 'classnames';
-import {City, Offer} from '../../types/offers';
-import leaflet from 'leaflet';
+import {City, Offer, DetailsOffer} from '../../types/offers';
 
 type MapProps = {
   city: City;
   offers: Offer[];
   selectedPoint?: string | null;
   variant: 'cities' | 'offer';
-  currentOffer?: Offer;
+  currentOffer?: DetailsOffer;
 };
 
 const defaultCustomIcon = new Icon({
   iconUrl: URL_MARKER_DEFAULT,
   iconSize: [27, 39],
-  iconAnchor: [13, 39]
+  iconAnchor: [13.5, 39]
 });
 
 const currentCustomIcon = new Icon({
   iconUrl: URL_MARKER_CURRENT,
   iconSize: [27, 39],
-  iconAnchor: [13, 39]
+  iconAnchor: [13.5, 39]
 });
 
 function Map(props: MapProps): JSX.Element {
@@ -39,12 +38,16 @@ function Map(props: MapProps): JSX.Element {
       map.setView([city.location.latitude, city.location.longitude], city.location.zoom);
 
       if (currentOffer) {
-        leaflet.marker({
+        const marker = new Marker({
           lat: currentOffer.location.latitude,
           lng: currentOffer.location.longitude,
-        }, {
-          icon:  currentCustomIcon,
-        }).addTo(map);
+        });
+
+        marker
+          .setIcon(
+            currentCustomIcon
+          )
+          .addTo(map);
       }
 
       offers?.forEach((offer) => {
@@ -69,12 +72,14 @@ function Map(props: MapProps): JSX.Element {
 
   }, [map, offers, selectedPoint, city, currentOffer]);
 
+  const classList = useMemo(() => cn(
+    `${variant}__map`,
+    'map'
+  ), [ variant ]);
+
   return (
     <section
-      className={cn(
-        `${variant}__map`,
-        'map'
-      )}
+      className={classList}
       ref={mapRef}
       style={{height: '100%', minHeight: '579px'}}
     />
