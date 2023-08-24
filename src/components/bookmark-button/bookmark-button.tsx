@@ -33,11 +33,12 @@ function BookmarkButton({offerId, isFavorite, variant, width, height, textIcon, 
         navigate(AppRoute.Login);
       }
     }
-
-    dispatch(changeFavoriteOfferStatusAction({
-      offerId: offerId,
-      status: Number(!isFavorite ? 1 : 0),
-    }));
+    if (authorizationStatus === AuthorizationStatus.Auth) {
+      dispatch(changeFavoriteOfferStatusAction({
+        offerId: offerId,
+        status: Number(!isFavorite ? 1 : 0),
+      }));
+    }
   };
 
   return (

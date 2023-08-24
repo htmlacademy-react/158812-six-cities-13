@@ -17,8 +17,10 @@ function UserBlock(): JSX.Element {
   const favoriteOffersCount = useAppSelector(getFavoriteOffersCount);
 
   useEffect(() => {
-    dispatch(fetchFavoriteOffersAction());
-  }, [dispatch]);
+    if (isLoggedIn) {
+      dispatch(fetchFavoriteOffersAction());
+    }
+  }, [dispatch, isLoggedIn]);
 
   return (
     <nav className="header__nav">
