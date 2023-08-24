@@ -47,7 +47,7 @@ function Map(props: MapProps): JSX.Element {
           .setIcon(
             currentCustomIcon
           )
-          .addTo(map);
+          .addTo(markerLayer);
       }
 
       offers?.forEach((offer) => {
@@ -62,7 +62,7 @@ function Map(props: MapProps): JSX.Element {
               ? currentCustomIcon
               : defaultCustomIcon
           )
-          .addTo(map);
+          .addTo(markerLayer);
       });
 
       return () => {
