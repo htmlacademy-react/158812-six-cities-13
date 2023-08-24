@@ -3,7 +3,7 @@ import Footer from '../../components/footer/footer';
 import HeaderMemo from '../../components/header/header';
 import PlaceCard from '../../components/place-card/place-card';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { getFavoriteOffers, getFavoriteOffersCount} from '../../store/app-data/selectors';
+import { getFavoriteOffers, getFavoriteOffersCount } from '../../store/app-data/selectors';
 import cn from 'classnames';
 import { Link } from 'react-router-dom';
 import { changeCity } from '../../store/app-process/app-process';

@@ -1,4 +1,4 @@
-import {TypeOffer} from '../const';
+import { TypeOffer } from '../const';
 
 export type Point = {
   latitude: number;

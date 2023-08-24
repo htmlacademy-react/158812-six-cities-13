@@ -1,7 +1,7 @@
-import {useState, memo} from 'react';
+import { useState, memo } from 'react';
 import cn from 'classnames';
-import {SortingType} from '../../const';
-import {useAppDispatch} from '../../hooks';
+import { SortingType } from '../../const';
+import { useAppDispatch } from '../../hooks';
 import { changeSort } from '../../store/app-process/app-process';
 
 type PlacesSortingProps = {

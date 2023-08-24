@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { AppData } from '../../types/state';
-import {NameSpace} from '../../const';
+import { NameSpace } from '../../const';
 import { fetchOfferAction, fetchOffersAction, fetchNearbyOffersAction, fetchReviewsOfferAction, postCommentAction, fetchFavoriteOffersAction, changeFavoriteOfferStatusAction } from '../api-actions';
 import { toast } from 'react-toastify';
 

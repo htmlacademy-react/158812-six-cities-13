@@ -2,24 +2,13 @@ import { FormEvent, Fragment, useCallback, useEffect, useMemo, useState } from '
 import { useAppDispatch } from '../../hooks';
 import { CommentData } from '../../types/comment-data';
 import { postCommentAction } from '../../store/api-actions';
+import { EMPTY_RATING, MAX_COMMENT_LENGTH, MAX_RATING, MIN_COMMENT_LENGTH, RATING_VALUES } from '../../const';
 
 type ReviewFormProps = {
   offerId: string;
 }
 
 function ReviewForm({offerId}: ReviewFormProps): JSX.Element {
-
-  const RATING_VALUES = [
-    {value: 5, title: 'perfect'},
-    {value: 4, title: 'good'},
-    {value: 3, title: 'not bad'},
-    {value: 2, title: 'terribly'},
-    {value: 1, title: 'badly'},
-  ];
-  const MIN_COMMENT_LENGTH = 50;
-  const MAX_COMMENT_LENGTH = 300;
-  const EMPTY_RATING = 0;
-  const MAX_RATING = 5;
 
   const [formData, setFormData] = useState({
     rating: EMPTY_RATING,

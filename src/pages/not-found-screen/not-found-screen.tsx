@@ -1,4 +1,4 @@
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 const styledSection: React.CSSProperties = {
   display: 'flex',
