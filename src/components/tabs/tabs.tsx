@@ -1,7 +1,7 @@
-import {CITIES, AppRoute} from '../../const';
+import { CITIES, AppRoute } from '../../const';
 import cn from 'classnames';
-import {Link} from 'react-router-dom';
-import {useAppDispatch} from '../../hooks';
+import { Link } from 'react-router-dom';
+import { useAppDispatch } from '../../hooks';
 import { changeCity } from '../../store/app-process/app-process';
 import { memo } from 'react';
 

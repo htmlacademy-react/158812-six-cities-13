@@ -1,5 +1,5 @@
 import { Review } from '../../types/reviews';
-import {calcRating} from '../../utils/utils';
+import { calculateRating } from '../../utils/utils';
 import dayjs from 'dayjs';
 
 type ReviewsListProps = {
@@ -21,7 +21,7 @@ function ReviewItem ({review}: ReviewsListProps): JSX.Element {
       <div className="reviews__info">
         <div className="reviews__rating rating">
           <div className="reviews__stars rating__stars">
-            <span style={{ width: calcRating(review.rating) }}/>
+            <span style={{ width: calculateRating(review.rating) }}/>
             <span className="visually-hidden">Rating</span>
           </div>
         </div>

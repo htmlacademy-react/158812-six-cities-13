@@ -1,11 +1,11 @@
 import HeaderMemo from '../../components/header/header';
-import {useRef, FormEvent} from 'react';
-import {useAppDispatch, useAppSelector} from '../../hooks';
-import {loginAction} from '../../store/api-actions';
+import { useRef, FormEvent } from 'react';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { loginAction } from '../../store/api-actions';
 import { AuthData } from '../../types/auth-data';
 import { toast } from 'react-toastify';
 import { Link, Navigate } from 'react-router-dom';
-import { AppRoute, AuthorizationStatus, CITIES } from '../../const';
+import { AppRoute, AuthorizationStatus, CITIES, REGEX_EMAIL } from '../../const';
 import { getAuthorizationStatus } from '../../store/user-process/selectors';
 import { changeCity } from '../../store/app-process/app-process';
 
@@ -13,7 +13,6 @@ function LoginScreen(): JSX.Element {
 
   const loginRef = useRef<HTMLInputElement | null>(null);
   const passwordRef = useRef<HTMLInputElement | null>(null);
-  const regex = /^(?=.*\d)(?=.*[a-z])\S*$/i;
 
   const dispatch = useAppDispatch();
 
@@ -30,7 +29,7 @@ function LoginScreen(): JSX.Element {
     evt.preventDefault();
 
     if (loginRef.current !== null && passwordRef.current !== null) {
-      if (!regex.test(passwordRef.current.value)) {
+      if (!REGEX_EMAIL.test(passwordRef.current.value)) {
         toast.warn('The password must have at least one letter and one symbol and no spaces');
         return;
       }
@@ -42,8 +41,8 @@ function LoginScreen(): JSX.Element {
     }
   };
 
-  const city = Object.values(CITIES);
-  const randomCity = city[Math.floor(Math.random() * city.length)];
+  const cities = Object.values(CITIES);
+  const randomCity = cities[Math.floor(Math.random() * cities.length)];
 
   return (
     <div className="page page--gray page--login">

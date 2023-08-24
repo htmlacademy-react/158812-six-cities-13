@@ -1,6 +1,6 @@
-import {PayloadAction, createSlice} from '@reduxjs/toolkit';
-import {NameSpace, DEFAULT_ACTIVE_CITY, DEFAULT_SORTING_OPTION} from '../../const';
-import {AppProcess} from '../../types/state';
+import { PayloadAction, createSlice } from '@reduxjs/toolkit';
+import { NameSpace, DEFAULT_ACTIVE_CITY, DEFAULT_SORTING_OPTION } from '../../const';
+import { AppProcess } from '../../types/state';
 
 const initialState: AppProcess = {
   city: DEFAULT_ACTIVE_CITY,

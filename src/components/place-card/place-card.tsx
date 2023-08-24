@@ -1,8 +1,8 @@
-import {Offer} from '../../types/offers';
-import {Link} from 'react-router-dom';
-import {calcRating} from '../../utils/utils';
+import { Offer } from '../../types/offers';
+import { Link } from 'react-router-dom';
+import { calculateRating } from '../../utils/utils';
 import cn from 'classnames';
-import {TypeOffer} from '../../const';
+import { TypeOffer } from '../../const';
 import { useMemo } from 'react';
 import BookmarkButton from '../bookmark-button/bookmark-button';
 
@@ -73,7 +73,7 @@ function PlaceCard({offer, variant, handleCardMouseEnter, handleCardMouseLeave, 
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
-            <span style={{ width: calcRating(offer.rating) }} />
+            <span style={{ width: calculateRating(offer.rating) }} />
             <span className="visually-hidden">Rating</span>
           </div>
         </div>

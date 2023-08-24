@@ -1,10 +1,10 @@
 import { useParams } from 'react-router-dom';
-import { calcRating, getReviews } from '../../utils/utils';
+import { calculateRating, getReviews } from '../../utils/utils';
 import Map from '../../components/map/map';
 import { useEffect } from 'react';
 import { AuthorizationStatus, TypeOffer } from '../../const';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { fetchOfferAction, fetchNearbyOffersAction, fetchReviewsOfferAction} from '../../store/api-actions';
+import { fetchOfferAction, fetchNearbyOffersAction, fetchReviewsOfferAction } from '../../store/api-actions';
 import LoadingScreen from '../loading-screen/loading-screen';
 import NotFoundScreen from '../not-found-screen/not-found-screen';
 import NearbyPlacesList from '../../components/nearby-places-list/nearby-places-list';
@@ -22,7 +22,7 @@ function OfferScreen(): JSX.Element {
   const currentId = String(useParams().id);
 
   const currentOffer = useAppSelector(getOffer);
-  const nearby = useAppSelector(getNearbyOffers);
+  const nearbyOffers = useAppSelector(getNearbyOffers);
   const currentComments = useAppSelector(getComments);
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
 
@@ -30,7 +30,7 @@ function OfferScreen(): JSX.Element {
   const isOfferNearbyDataLoading = useAppSelector(getNearbyOffersDataLoadingStatus);
   const isReviewsDataLoading = useAppSelector(getCommentsDataLoadingStatus);
 
-  const nearbyOffersList = nearby?.slice(0, 3);
+  const nearbyOffersList = nearbyOffers?.slice(0, 3);
 
   useEffect(() => {
     dispatch(fetchOfferAction(currentId));
@@ -85,7 +85,7 @@ function OfferScreen(): JSX.Element {
               </div>
               <div className="offer__rating rating">
                 <div className="offer__stars rating__stars">
-                  <span style={{ width: calcRating(currentOffer.rating) }} />
+                  <span style={{ width: calculateRating(currentOffer.rating) }} />
                   <span className="visually-hidden">Rating</span>
                 </div>
                 <span className="offer__rating-value rating__value">{currentOffer.rating}</span>

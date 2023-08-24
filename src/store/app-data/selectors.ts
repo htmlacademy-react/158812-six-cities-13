@@ -1,4 +1,4 @@
-import {NameSpace} from '../../const';
+import { NameSpace } from '../../const';
 import { Offer, DetailsOffer } from '../../types/offers';
 import { Review } from '../../types/reviews';
 import { State } from '../../types/state';

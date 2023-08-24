@@ -1,17 +1,17 @@
-import {Route, Routes} from 'react-router-dom';
-import {AppRoute} from '../../const';
+import { Route, Routes } from 'react-router-dom';
+import { AppRoute } from '../../const';
 import MainScreen from '../../pages/main-screen/main-screen';
 import LoginScreen from '../../pages/login-screen/login-screen';
 import FavoritesScreen from '../../pages/favorites-screen/favorites-screen';
 import OfferScreen from '../../pages/offer-screen/offer-screen';
 import NotFoundScreen from '../../pages/not-found-screen/not-found-screen';
 import PrivateRoute from '../private-route/private-route';
-import {useAppSelector} from '../../hooks';
+import { useAppSelector } from '../../hooks';
 import LoadingScreen from '../../pages/loading-screen/loading-screen';
 import HistoryRouter from '../history-route/history-route';
 import browserHistory from '../../browser-history';
-import {getAuthorizationStatus, getAuthCheckedStatus} from '../../store/user-process/selectors';
-import {getOffersDataLoadingStatus, getErrorStatus} from '../../store/app-data/selectors';
+import { getAuthorizationStatus, getAuthCheckedStatus } from '../../store/user-process/selectors';
+import { getOffersDataLoadingStatus, getErrorStatus } from '../../store/app-data/selectors';
 import ErrorScreen from '../../pages/error-screen/error-screen';
 
 function App(): JSX.Element {

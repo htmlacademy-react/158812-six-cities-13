@@ -51,3 +51,16 @@ export enum NameSpace {
   App = 'APP',
   User = 'USER',
 }
+
+export const RATING_VALUES = [
+  {value: 5, title: 'perfect'},
+  {value: 4, title: 'good'},
+  {value: 3, title: 'not bad'},
+  {value: 2, title: 'terribly'},
+  {value: 1, title: 'badly'},
+];
+export const MIN_COMMENT_LENGTH = 50;
+export const MAX_COMMENT_LENGTH = 300;
+export const EMPTY_RATING = 0;
+export const MAX_RATING = 5;
+export const REGEX_EMAIL = /^(?=.*\d)(?=.*[a-z])\S*$/i;
