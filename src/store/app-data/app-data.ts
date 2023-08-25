@@ -16,7 +16,6 @@ const initialState: AppData = {
   isReviewsDataLoading: false,
   hasError: false,
   favoriteOffers: [],
-  isFavoriteStatusChanged: false,
 };
 
 export const appData = createSlice({
@@ -85,18 +84,10 @@ export const appData = createSlice({
         state.statusComment = Status.Error;
         toast.warn('Error sending comment! Try again later');
       })
-      .addCase(fetchFavoriteOffersAction.pending, (state) => {
-        state.isFavoriteStatusChanged = true;
-      })
       .addCase(fetchFavoriteOffersAction.fulfilled, (state, action) => {
         state.favoriteOffers = action.payload;
-        state.isFavoriteStatusChanged = false;
-      })
-      .addCase(fetchFavoriteOffersAction.rejected, (state) => {
-        state.isFavoriteStatusChanged = false;
       })
       .addCase(changeFavoriteOfferStatusAction.fulfilled, (state, action) => {
-        state.isFavoriteStatusChanged = false;
         const index = state.offers.findIndex((offer) => offer.id === action.payload.id);
         state.offers = [
           ...state.offers.slice(0, index),
