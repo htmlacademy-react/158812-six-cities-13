@@ -30,5 +30,4 @@ export type AppData = {
   isReviewsDataLoading: boolean;
   hasError: boolean;
   favoriteOffers: Offer[];
-  isFavoriteStatusChanged: boolean;
 };
