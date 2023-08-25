@@ -1,6 +1,6 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { AppData } from '../../types/state';
-import { NameSpace } from '../../const';
+import { NameSpace, Status } from '../../const';
 import { fetchOfferAction, fetchOffersAction, fetchNearbyOffersAction, fetchReviewsOfferAction, postCommentAction, fetchFavoriteOffersAction, changeFavoriteOfferStatusAction } from '../api-actions';
 import { toast } from 'react-toastify';
 
@@ -9,6 +9,7 @@ const initialState: AppData = {
   offer: null,
   nearby: [],
   comments: [],
+  statusComment: Status.Idle,
   isOffersDataLoading: false,
   isDetailsOfferDataLoading: false,
   isOfferNearbyDataLoading: false,
@@ -24,7 +25,10 @@ export const appData = createSlice({
   reducers: {
     resetFavoriteStatus: (state) => {
       state.favoriteOffers = [];
-    }
+    },
+    setCommentStatus: (state, action: PayloadAction<string>) => {
+      state.statusComment = action.payload;
+    },
   },
   extraReducers(builder) {
     builder
@@ -70,10 +74,15 @@ export const appData = createSlice({
       .addCase(fetchReviewsOfferAction.rejected, (state) => {
         state.isReviewsDataLoading = false;
       })
+      .addCase(postCommentAction.pending, (state) => {
+        state.statusComment = Status.Loading;
+      })
       .addCase(postCommentAction.fulfilled, (state, action) => {
         state.comments.push(action.payload);
+        state.statusComment = Status.Success;
       })
-      .addCase(postCommentAction.rejected, () => {
+      .addCase(postCommentAction.rejected, (state) => {
+        state.statusComment = Status.Error;
         toast.warn('Error sending comment! Try again later');
       })
       .addCase(fetchFavoriteOffersAction.pending, (state) => {
@@ -117,4 +126,4 @@ export const appData = createSlice({
   }
 });
 
-export const {resetFavoriteStatus} = appData.actions;
+export const {resetFavoriteStatus, setCommentStatus} = appData.actions;
