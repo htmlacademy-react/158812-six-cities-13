@@ -64,3 +64,10 @@ export const MAX_COMMENT_LENGTH = 300;
 export const EMPTY_RATING = 0;
 export const MAX_RATING = 5;
 export const REGEX_EMAIL = /^(?=.*\d)(?=.*[a-z])\S*$/i;
+
+export enum Status {
+  Idle = 'idle',
+  Loading = 'loading',
+  Success = 'success',
+  Error = 'error'
+}

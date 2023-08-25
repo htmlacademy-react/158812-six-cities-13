@@ -1,8 +1,10 @@
 import { FormEvent, Fragment, useCallback, useEffect, useMemo, useState } from 'react';
-import { useAppDispatch } from '../../hooks';
+import { useAppDispatch, useAppSelector } from '../../hooks';
 import { CommentData } from '../../types/comment-data';
 import { postCommentAction } from '../../store/api-actions';
-import { EMPTY_RATING, MAX_COMMENT_LENGTH, MAX_RATING, MIN_COMMENT_LENGTH, RATING_VALUES } from '../../const';
+import { EMPTY_RATING, MAX_COMMENT_LENGTH, MAX_RATING, MIN_COMMENT_LENGTH, RATING_VALUES, Status } from '../../const';
+import { getCommentStatus } from '../../store/app-data/selectors';
+import { setCommentStatus } from '../../store/app-data/app-data';
 
 type ReviewFormProps = {
   offerId: string;
@@ -18,6 +20,8 @@ function ReviewForm({offerId}: ReviewFormProps): JSX.Element {
 
   const dispatch = useAppDispatch();
 
+  const postCommentStatus = useAppSelector(getCommentStatus);
+
   const [isSubmitDisabled, setIsSubmitDisabled] = useState(true);
   const [isSending, setIsSending] = useState(false);
 
@@ -31,6 +35,13 @@ function ReviewForm({offerId}: ReviewFormProps): JSX.Element {
     }
   }, [isValid]);
 
+  useEffect(() => {
+    if (postCommentStatus === Status.Success) {
+      dispatch(setCommentStatus(Status.Idle));
+      setFormData({...formData, comment: '', rating: EMPTY_RATING});
+    }
+  }, [dispatch, formData, postCommentStatus]);
+
   const handleInputChange = useCallback((evt: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({...formData, rating: Number(evt.target.value)});
   },
@@ -42,11 +53,6 @@ function ReviewForm({offerId}: ReviewFormProps): JSX.Element {
   },
   [formData]
   );
-
-  const resetForm = useCallback((evt: FormEvent<HTMLFormElement>) => {
-    setFormData({...formData, comment: '', rating: EMPTY_RATING});
-    evt.currentTarget.reset();
-  }, [formData]);
 
   const onSubmit = async (newComment: CommentData) => await dispatch(postCommentAction(newComment));
 
@@ -64,8 +70,6 @@ function ReviewForm({offerId}: ReviewFormProps): JSX.Element {
         setIsSending(false);
       });
     }
-
-    resetForm(evt);
   };
 
   return (

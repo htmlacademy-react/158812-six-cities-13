@@ -22,6 +22,7 @@ export type AppData = {
   offers: Offer[];
   offer: DetailsOffer | null;
   comments: Review[];
+  statusComment: string;
   nearby: Offer[];
   isOffersDataLoading: boolean;
   isDetailsOfferDataLoading: boolean;
